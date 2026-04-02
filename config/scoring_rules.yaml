@@ -1,0 +1,69 @@
+# Rule-based scoring configuration
+# Scores are base scores; platform_weights multiply final scores
+
+frequency:
+  entity_count_3: 40
+  entity_count_4_plus: 50
+  each_additional_repeat: 10
+
+temporal:
+  cross_channel_same_platform_24h: 30
+  cross_platform_24h: 40
+  same_channel_48h: 15
+
+similarity:
+  script_match_above_80: 20
+  script_match_above_90: 30
+  keyword_cluster_match: 15
+  same_campaign_type: 10
+
+channel_quality:
+  members_1000_plus: 20
+  members_500_plus: 10
+  contains_external_links: 20
+  contains_phone_number: 15
+  scam_language_detected: 20
+  testimonials_present: 10
+  new_channel_under_30d: -10  # Penalty for brand new channels
+
+source_weights:
+  telegram: 1.0
+  facebook: 0.7
+  tiktok: 0.6
+  reddit: 0.5
+  x: 0.5
+  web_seed: 0.8
+
+risk_thresholds:
+  low: 40
+  medium: 60
+  high: 80
+  critical: 95
+
+alert_tiers:
+  log_only:
+    min_score: 0
+    max_score: 39
+    action: log
+  low_priority:
+    min_score: 40
+    max_score: 59
+    action: alert_low
+  medium_priority:
+    min_score: 60
+    max_score: 79
+    action: alert_medium
+  high_priority:
+    min_score: 80
+    max_score: 94
+    action: alert_high
+  critical:
+    min_score: 95
+    max_score: 100
+    action: alert_critical
+
+campaign_clustering:
+  entity_similarity_threshold: 0.7
+  temporal_window_hours: 24
+  min_entities_for_campaign: 3
+  min_channels_for_campaign: 2

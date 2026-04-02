@@ -1,0 +1,95 @@
+# Seed sources for initial entity collection
+seed_sources:
+  - name: MySCAM.info
+    url: https://myscam.info
+    type: complaint_db
+    platform: web
+    weight: 0.8
+    priority: high
+    entity_types:
+      - phone
+      - bank_account
+      - domain
+
+  - name: KenaScam.com
+    url: https://kenascam.com
+    type: complaint_db
+    platform: web
+    weight: 0.8
+    priority: high
+    entity_types:
+      - phone
+      - bank_account
+      - url
+
+  - name: FraudWatch Malaysia
+    url: https://fraudwatch.my
+    type: complaint_db
+    platform: web
+    weight: 0.7
+    priority: medium
+    entity_types:
+      - phone
+      - domain
+
+# Telegram channel discovery keywords per campaign type
+telegram_keywords:
+  investment:
+    - pelaburan
+    - crypto signal
+    - forex VIP
+    - IPO private
+    - robot trading
+    - uang gratis
+    - profit harian
+    - signal forex
+    - trading auto
+
+  job_task:
+    - kerja part time
+    - task earning
+    - like tiktok dapat duit
+    - misi sederhana
+    - dapat duit
+    - rm50 sehari
+    - kerja mudah
+    - tugas kecil
+
+  aid_gov:
+    - bantuan kerajaan
+    - RM500 bantuan
+    - BKM bantuan
+    - layak bantuan
+    - register bantuan
+    - bantuannya
+    - RM1000 percuma
+
+  phishing:
+    - OTP
+    - login verify
+    - account suspended
+    - verifikasi
+    - kansel akaun
+    - tukar password
+
+# Platform weights for multi-source scoring
+platform_weights:
+  telegram: 1.0
+  facebook: 0.7
+  tiktok: 0.6
+  reddit: 0.5
+  x: 0.5
+  web: 0.8
+
+# Collection settings
+collection:
+  telegram:
+    messages_per_channel: 100
+    max_channels_per_keyword: 20
+    rate_limit_seconds: 2
+    demo_mode: true  # Set to false with real Telegram credentials
+
+  web:
+    request_timeout_seconds: 30
+    max_retries: 3
+    delay_between_requests_seconds: 5

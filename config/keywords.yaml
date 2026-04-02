@@ -1,0 +1,85 @@
+# Scam keyword dictionary by category
+# Key: category name, Value: list of (keyword, weight) tuples
+
+categories:
+  investment:
+    priority: high
+    keywords:
+      - [pelaburan, 15]
+      - [crypto, 15]
+      - [forex, 15]
+      - [signal vip, 20]
+      - [ipo private, 20]
+      - [robot trading, 15]
+      - [uang gratis, 20]
+      - [profit harian, 20]
+      - [hedge fund, 15]
+      - [trading auto, 15]
+      - [modal免费, 20]
+      - [deposit rm100, 15]
+      - [wang gratuit, 20]
+
+  job_task:
+    priority: high
+    keywords:
+      - [kerja part time, 15]
+      - [task earning, 15]
+      - [like tiktok, 15]
+      - [misi sederhana, 15]
+      - [dapat duit, 15]
+      - [rm50 sehari, 20]
+      - [kerja mudah, 15]
+      - [tugas kecil, 15]
+      - [free rm50, 20]
+      - [subscribe dapat, 15]
+      - [like video, 10]
+      - [share link, 15]
+
+  aid_gov:
+    priority: high
+    keywords:
+      - [bantuan kerajaan, 20]
+      - [rm500, 25]
+      - [bkm, 20]
+      - [layak, 15]
+      - [register bantuan, 20]
+      - [bantuannya, 15]
+      - [rm1000 percuma, 25]
+      - [wang ehsan, 20]
+      - [iakaun, 15]
+      - [bantuan@, 20]
+
+  urgency:
+    priority: medium
+    keywords:
+      - [segera, 10]
+      - [terdesak, 10]
+      - [hanya hari ini, 15]
+      - [terhad, 10]
+      - [的最后机会, 10]
+      - [限时, 10]
+      - [hujan, 10]
+      - [akhirat, 10]
+      - [expired, 10]
+      - [segera hubungi, 15]
+
+  phishing:
+    priority: medium
+    keywords:
+      - [otp, 20]
+      - [verifikasi, 15]
+      - [login, 15]
+      - [suspended, 15]
+      - [kansel, 15]
+      - [akaun, 10]
+      - [tukar password, 20]
+      - [secure, 10]
+      - [verify, 15]
+      - [confirm identity, 15]
+
+# Language variants (Malay, Indonesian, English, Chinese)
+languages:
+  - ms  # Malay
+  - id  # Indonesian
+  - en  # English
+  - zh  # Chinese

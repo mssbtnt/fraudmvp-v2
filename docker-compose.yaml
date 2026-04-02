@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: fraud-mvp-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: fraud-mvp-postgres
+    environment:
+      POSTGRES_USER: fraud_mvp
+      POSTGRES_PASSWORD: fraud_mvp
+      POSTGRES_DB: fraud_mvp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fraud_mvp"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - with-postgres
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fraud-mvp-app
+    env_file:
+      - .env
+    volumes:
+      - ./config:/app/config:ro
+      - ./db:/app/db
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - app
+
+  # Collector agent only
+  collector:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fraud-mvp-collector
+    env_file:
+      - .env
+    command: python -m agents.collector
+    volumes:
+      - ./config:/app/config:ro
+      - ./db:/app/db
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - collector
+
+  # Web scraper only
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fraud-mvp-scraper
+    env_file:
+      - .env
+    command: python -m services.scraper.web_scraper
+    volumes:
+      - ./config:/app/config:ro
+      - ./db:/app/db
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - scraper
+
+volumes:
+  redis_data:
+  postgres_data:
