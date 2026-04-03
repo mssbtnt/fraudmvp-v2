@@ -45,6 +45,8 @@ logging.basicConfig(
 log = logging.getLogger("collector")
 
 
+# ─── RawMessage dataclass ──────────────────────────────────────────────────────
+
 @dataclass
 class RawMessage:
     """Normalized raw message from any platform."""
@@ -65,6 +67,21 @@ class RawMessage:
     @staticmethod
     def from_json(data: str) -> "RawMessage":
         return RawMessage(**json.loads(data))
+
+
+def _to_dict(obj):
+    """Convert a variety of object types to dict."""
+    if isinstance(obj, dict):
+        return obj
+    if hasattr(obj, "__dict__"):
+        return vars(obj)
+    if hasattr(obj, "to_dict"):
+        return obj.to_dict()
+    try:
+        from dataclasses import asdict
+        return asdict(obj)
+    except Exception:
+        return {"repr": repr(obj)}
 
 
 # ─── FraudCollectorAgent ──────────────────────────────────────────────────────
@@ -149,9 +166,18 @@ class FraudCollectorAgent:
                     log.info(f"  keyword='{keyword}' → {len(channels)} channels")
 
                     for ch in channels:
-                        ch["campaign_type"] = campaign_type
-                        ch["discovery_keyword"] = keyword
-                        discovered.append(ch)
+                        # Convert channel object to dict, handle both demo and real objects
+                        ch_dict = _to_dict(ch)
+                        # Ensure required fields exist
+                        ch_info = {
+                            "channel_id": ch_dict.get("channel_id") or ch_dict.get("id"),
+                            "username": ch_dict.get("username") or ch_dict.get("username_"),
+                            "title": ch_dict.get("title") or ch_dict.get("title_"),
+                            "member_count": ch_dict.get("member_count") or ch_dict.get("participant_count") or ch_dict.get("member_count", 0),
+                        }
+                        ch_info["campaign_type"] = campaign_type
+                        ch_info["discovery_keyword"] = keyword
+                        discovered.append(ch_info)
 
                     # Rate limit between keywords
                     await asyncio.sleep(collection_cfg.get("rate_limit_seconds", 2))
@@ -230,8 +256,20 @@ class FraudCollectorAgent:
             try:
                 channels = await self.telegram.find_channels_by_keyword(value, limit=5)
                 for ch in channels:
-                    ch["pivot_entity"] = value
-                    ch["pivot_type"] = etype
+                    # Attach pivot info
+                    ch_dict = _to_dict(ch)
+                    ch_dict["pivot_entity"] = value
+                    ch_dict["pivot_type"] = etype
+                    # Convert back to dict (since we will use the dict directly)
+                    ch_info = {
+                        "channel_id": ch_dict.get("channel_id") or ch_dict.get("id"),
+                        "username": ch_dict.get("username") or ch_dict.get("username_"),
+                        "title": ch_dict.get("title") or ch_dict.get("title_"),
+                        "member_count": ch_dict.get("member_count") or ch_dict.get("participant_count") or ch_dict.get("member_count", 0),
+                        "campaign_type": "pivot",
+                        "discovery_keyword": value,
+                    }
+                    discovered.append(ch_info)
                 total += len(channels)
                 await asyncio.sleep(2)
 

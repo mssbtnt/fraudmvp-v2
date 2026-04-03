@@ -17,9 +17,6 @@ uvicorn==0.29.0
 pydantic==2.7.1
 pydantic-settings==2.2.1
 
-# LLM / Ollama
-ollama==0.1.48
-
 # Config & utilities
 python-dotenv==1.0.1
 python-dateutil==2.9.0

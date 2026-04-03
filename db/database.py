@@ -51,23 +51,25 @@ class Database:
             log.warning("schema.sql not found — skipping auto-migrate")
             return
 
+        # Check which tables already exist
         with self.conn() as conn:
             existing = conn.execute(
                 "SELECT name FROM sqlite_master WHERE type='table'"
             ).fetchall()
             table_names = {r[0] for r in existing}
 
-            schema = self.SCHEMA_SQL.read_text()
-            for statement in schema.split(";"):
-                stmt = stmt.strip()
-                if not stmt or stmt.startswith("--"):
-                    continue
-                # Get table name from CREATE TABLE
-                if stmt.startswith("CREATE TABLE"):
-                    match = [t for t in table_names if t in stmt]
-                    if not match:
-                        conn.executescript(stmt)
-                        log.info(f"Created table: {match[0] if match else 'unknown'}")
+        # If all expected tables exist, skip
+        expected = {"entities", "entity_edges", "campaigns", "sources",
+                    "scraped_messages", "alert_log"}
+        if expected.issubset(table_names):
+            log.info("Schema already up to date")
+            return
+
+        log.info("Running schema migration...")
+        schema = self.SCHEMA_SQL.read_text()
+        with self.conn() as conn:
+            conn.executescript(schema)
+        log.info("Schema migration complete")
 
     @contextmanager
     def conn(self) -> Generator[sqlite3.Connection, None, None]:
