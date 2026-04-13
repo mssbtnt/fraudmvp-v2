@@ -7,7 +7,7 @@ Responsibilities:
 - Classify scam type using keyword matching + LLM (optional)
 - Deduplicate entities (by value+type)
 - Write entities to DB
-- Push extracted entities to scored_entities queue
+- Optionally push extracted entities to extracted_entities queue
 """
 
 from __future__ import annotations
@@ -126,7 +126,7 @@ class FraudExtractorAgent:
     3. Normalize and deduplicate
     4. Classify scam type via KeywordExtractor
     5. Write to DB (entities table)
-    6. Push to extracted_entities queue
+    6. Optionally push to extracted_entities queue
     """
 
     BATCH_SIZE = 50
@@ -304,7 +304,11 @@ class FraudExtractorAgent:
 
         return count, entities
 
-    def process_batch(self, batch_size: int = BATCH_SIZE) -> dict:
+    def process_batch(
+        self,
+        batch_size: int = BATCH_SIZE,
+        write_to_queue: bool = True,
+    ) -> dict:
         """
         Pop a batch from the queue and process.
         Returns stats dict.
@@ -312,6 +316,7 @@ class FraudExtractorAgent:
         extracted = 0
         messages_processed = 0
         entity_types: dict[str, int] = {}
+        queued_payloads: list[str] = []
 
         for _ in range(batch_size):
             raw = self.queue.pop_from_queue("raw_messages")
@@ -326,9 +331,11 @@ class FraudExtractorAgent:
                 for entity in entities:
                     entity_types[entity.type] = entity_types.get(entity.type, 0) + 1
 
-                # Push to next queue
-                for entity in entities:
-                    self.queue.push_to_queue("extracted_entities", entity.to_json())
+                if write_to_queue:
+                    queued_payloads.extend(entity.to_json() for entity in entities)
+
+        if write_to_queue and queued_payloads:
+            self.queue.push_to_queue_batch("extracted_entities", queued_payloads)
 
         return {
             "messages_processed": messages_processed,
@@ -339,7 +346,12 @@ class FraudExtractorAgent:
 
     # ── Run loop ─────────────────────────────────────────────────────────────
 
-    def run(self, batch_size: int = BATCH_SIZE, max_batches: int = 100) -> dict:
+    def run(
+        self,
+        batch_size: int = BATCH_SIZE,
+        max_batches: int = 100,
+        write_to_queue: bool = True,
+    ) -> dict:
         """
         Process all messages currently in the queue.
         Runs up to max_batches iterations.
@@ -351,11 +363,11 @@ class FraudExtractorAgent:
         all_type_counts: dict[str, int] = {}
 
         for i in range(max_batches):
-            result = self.process_batch(batch_size)
+            result = self.process_batch(batch_size, write_to_queue=write_to_queue)
             extracted = result["entities_extracted"]
             messages = result["messages_processed"]
 
-            if extracted == 0:
+            if messages == 0:
                 log.info("Queue empty — stopping")
                 break
 
