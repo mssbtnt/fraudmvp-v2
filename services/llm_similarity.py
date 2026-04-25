@@ -16,6 +16,8 @@ from typing import Optional
 import httpx
 from dotenv import load_dotenv
 
+from services.campaign_types import normalize_campaign_type
+
 load_dotenv()
 log = logging.getLogger("llm_similarity")
 
@@ -149,31 +151,106 @@ class ScriptSimilarityScorer:
 
 class KeywordExtractor:
     """
-    Extract scam-relevant keywords from text using the LLM.
-    Falls back to regex-based extraction when LLM is unavailable.
+    Extract scam-relevant keywords from the checked-in YAML config.
+
+    The public contract remains:
+    - extract(text) -> {category: [(keyword, weight), ...]}
+    - keyword_score(text) -> float
+    - top_category(text) -> (category, score)
     """
 
-    CATEGORIES = ["investment", "job_task", "aid_gov", "phishing", "urgency"]
+    DEFAULT_CATEGORY = "urgency"
 
-    def __init__(self):
-        self._keyword_map: dict[str, float] = {}
+    def __init__(self, config_path: Optional[str] = None):
+        self._config_path = config_path
+        self._keyword_map: dict[str, tuple[str, float]] = {}
+        self._exclusions: list[tuple[str, str, float]] = []
+        self._regex_patterns: list[tuple[str, re.Pattern[str], str, float]] = []
+        self._scam_type_keywords: dict[str, list[str]] = {}
+        self.CATEGORIES: list[str] = []
         self._load_yaml_keywords()
 
     def _load_yaml_keywords(self):
         """Load keywords from config/keywords.yaml."""
         import yaml
         from pathlib import Path
-        cfg = Path(__file__).parent.parent / "config" / "keywords.yaml"
+        cfg = (
+            Path(self._config_path)
+            if self._config_path
+            else Path(__file__).parent.parent / "config" / "keywords.yaml"
+        )
         if not cfg.exists():
             return
         data = yaml.safe_load(cfg.read_text())
-        for cat, cat_data in data.get("categories", {}).items():
-            for kw_entry in cat_data.get("keywords", []):
-                if isinstance(kw_entry, list) and len(kw_entry) >= 2:
-                    keyword, weight = kw_entry[0], kw_entry[1]
-                    self._keyword_map[keyword.lower()] = (cat, weight)
-                elif isinstance(kw_entry, str):
-                    self._keyword_map[kw_entry.lower()] = (cat, 10)
+
+        self._scam_type_keywords = {}
+        for category, details in data.get("scam_types", {}).items():
+            normalized_category = normalize_campaign_type(category)
+            self._scam_type_keywords.setdefault(normalized_category, [])
+            self._scam_type_keywords[normalized_category].extend(
+                kw.lower() for kw in details.get("keywords", [])
+            )
+
+        phrase_sections = ("primary", "secondary", "slang", "community_flags")
+        for section in phrase_sections:
+            for item in data.get(section, []):
+                phrase = str(item.get("phrase", "")).strip().lower()
+                if not phrase:
+                    continue
+                weight = float(item.get("weight", 10) or 10)
+                category = self._infer_category(phrase)
+                self._keyword_map[phrase] = (category, weight)
+
+        for item in data.get("exclusions", []):
+            phrase = str(item.get("phrase", "")).strip().lower()
+            if not phrase:
+                continue
+            penalty = float(item.get("by", 0) or 0)
+            category = self._infer_category(phrase)
+            self._exclusions.append((phrase, category, penalty))
+
+        for item in data.get("regex_patterns", []):
+            pattern = item.get("pattern")
+            if not pattern:
+                continue
+            try:
+                compiled = re.compile(pattern, re.IGNORECASE)
+            except re.error:
+                continue
+            name = str(item.get("name", "regex"))
+            weight = float(item.get("weight", 0) or 0)
+            category = self._infer_category(name)
+            extract_meta = item.get("extract", {}) or {}
+            extract_type = str(extract_meta.get("type", "")).strip().lower()
+            if extract_type:
+                category = self._infer_category(extract_type)
+            self._regex_patterns.append((name, compiled, category, weight))
+
+        categories = set(self._scam_type_keywords) | {self.DEFAULT_CATEGORY}
+        categories.update(category for category, _ in self._keyword_map.values())
+        categories.update(category for _, category, _ in self._exclusions)
+        categories.update(category for _, _, category, _ in self._regex_patterns)
+        self.CATEGORIES = sorted(categories)
+
+    def _infer_category(self, phrase: str) -> str:
+        phrase = phrase.lower()
+        for category, keywords in self._scam_type_keywords.items():
+            if any(phrase == kw or phrase in kw or kw in phrase for kw in keywords):
+                return normalize_campaign_type(category)
+
+        if any(token in phrase for token in ("qr", "touch n go")):
+            return "phishing"
+        if any(token in phrase for token in ("bantuan", "kerajaan", "bkm", "wang ehsan")):
+            return "aid_gov"
+        if any(token in phrase for token in ("otp", "login", "verify", "verifikasi", "bank")):
+            return "phishing"
+        if any(token in phrase for token in ("kerja", "jawatan", "task", "tiktok")):
+            return "job_task"
+        if any(token in phrase for token in ("deposit", "bayar")):
+            return "job_task"
+        if any(token in phrase for token in ("untung", "pelaburan", "invest", "forex", "crypto", "trading")):
+            return "investment"
+        return self.DEFAULT_CATEGORY
 
     def extract(self, text: str) -> dict[str, list[tuple[str, float]]]:
         """
@@ -182,10 +259,34 @@ class KeywordExtractor:
         """
         text_lower = text.lower()
         found: dict[str, list[tuple[str, float]]] = {c: [] for c in self.CATEGORIES}
+        seen_by_category: dict[str, set[str]] = {c: set() for c in self.CATEGORIES}
 
         for keyword, (cat, weight) in self._keyword_map.items():
             if keyword in text_lower:
-                found[cat].append((keyword, weight))
+                if keyword not in seen_by_category[cat]:
+                    found[cat].append((keyword, weight))
+                    seen_by_category[cat].add(keyword)
+
+        for name, pattern, cat, weight in self._regex_patterns:
+            matched = pattern.search(text) is not None
+            if not matched and name == "suspicious_tld":
+                matched = re.search(
+                    r"(?:https?://)?[\w.-]+\.(?:xyz|top|tk|ga|ml|cf|click|link|work|loan)\b",
+                    text,
+                    re.IGNORECASE,
+                ) is not None
+            if matched:
+                marker = f"regex:{name}"
+                if marker not in seen_by_category[cat]:
+                    found[cat].append((marker, weight))
+                    seen_by_category[cat].add(marker)
+
+        for phrase, cat, penalty in self._exclusions:
+            if phrase in text_lower:
+                marker = f"exclude:{phrase}"
+                if marker not in seen_by_category[cat]:
+                    found[cat].append((marker, -penalty))
+                    seen_by_category[cat].add(marker)
 
         return {k: v for k, v in found.items() if v}
 
@@ -198,11 +299,32 @@ class KeywordExtractor:
 
     def top_category(self, text: str) -> tuple[str, float]:
         """Return the highest-scoring category and its score."""
+        text_lower = text.lower()
         by_cat = self.extract(text)
-        if not by_cat:
+        category_scores = {
+            category: sum(weight for _, weight in matches)
+            for category, matches in by_cat.items()
+        }
+
+        fallback_terms = {
+            **self._scam_type_keywords,
+            "aid_gov": ["bantuan", "kerajaan", "bkm", "wang ehsan", "rm500", "rm1000"],
+        }
+        for category, keywords in fallback_terms.items():
+            score = category_scores.get(category, 0.0)
+            for keyword in keywords:
+                if keyword in text_lower:
+                    score += 10.0
+            if score:
+                category_scores[category] = score
+
+        if not category_scores:
             return "unknown", 0.0
-        best = max(by_cat.items(), key=lambda x: sum(w for _, w in x[1]))
-        return best[0], sum(w for _, w in best[1])
+
+        best_category, best_score = max(category_scores.items(), key=lambda item: item[1])
+        if best_score <= 0:
+            return "unknown", 0.0
+        return best_category, best_score
 
 
 if __name__ == "__main__":

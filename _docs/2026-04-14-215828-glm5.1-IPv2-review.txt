@@ -1,0 +1,231 @@
+  Implementation Plan Analysis
+
+  Overall Assessment
+
+  The plan is well-researched, accurate in its root cause analysis, and sound in
+   its phased approach. The core thesis — that split ownership of persistence
+  (Redis queues vs scraped_messages) is the primary architectural problem — is
+  correct and supported by the code. However, I found several issues in the
+  codebase that the plan underestimates or misses entirely.
+
+  ---
+  What the Plan Gets Right
+
+  1. Root cause diagnosis — Confirmed: scraped_messages has 0 rows, 2840/2865
+  entities lack edges, and the daily pipeline omits
+  Telegram/Reddit/OpenSanctions.
+  2. Current runtime flow (Section 2.1) — Accurate. The shell pipeline runs
+  rss_collector → web_scraper → semakmule_scraper → extractor → scorer →
+  alerter, and most collectors push only to Redis, not scraped_messages.
+  3. services.pipeline disconnect — Confirmed. ingest_from_db() queries
+  scraped_messages (empty), and _run_alert() doesn't actually invoke the alerter
+   — it just returns a status dict (alerter.py:259).
+  4. Entity edges gap — Confirmed. Only 314 edges exist for 2865 entities. Most
+  entities were bulk-imported (BNM/SC) without corresponding edges.
+  5. Queue-first batch as canonical model — This is the correct call. Rewriting
+  to DB-first would be more invasive than making the current path coherent.
+  6. Phase ordering — Fix persistence before adding sources, fix contract before
+   backfills. This is right.
+  7. Daily Report State Machine (appendix) — Well-designed. The current alerter
+  (alerter.py:259-271) sends "No New Alert Found Today" regardless of whether
+  data was actually processed, which is misleading.
+
+  ---
+  Issues the Plan Misses or Underestimates
+
+  1. CRITICAL BUG: group_collector.py will crash at runtime
+
+  agents/group_collector.py:210:
+  queue.push_raw_message(raw)
+
+  QueueHandler has no push_raw_message method — only push_to_queue(queue_name, 
+  data). This is a AttributeError at runtime. The plan doesn't catch this bug.
+
+  2. RawMessage duplication is worse than described
+
+  The plan mentions "ad hoc collector-specific field drift" (Section 1, Phase
+  1), but the reality is four separate RawMessage class definitions:
+
+  ┌───────────────────────────────┬─────────────┬────────────┬──────────────┐
+  │             File              │    Type     │    Has     │   Fields     │
+  │                               │             │ from_json  │    match?    │
+  ├───────────────────────────────┼─────────────┼────────────┼──────────────┤
+  │ agents/collector.py:52        │ @dataclass  │ Yes        │ Canonical    │
+  ├───────────────────────────────┼─────────────┼────────────┼──────────────┤
+  │ agents/rss_collector.py:137   │ @dataclass  │ No         │ Missing      │
+  │                               │             │            │ from_json    │
+  ├───────────────────────────────┼─────────────┼────────────┼──────────────┤
+  │ agents/group_collector.py:96  │ Regular     │ Yes        │ Different    │
+  │                               │ class       │            │ __init__     │
+  ├───────────────────────────────┼─────────────┼────────────┼──────────────┤
+  │ agents/reddit_collector.py:52 │ @dataclass  │ No         │ No from_json │
+  └───────────────────────────────┴─────────────┴────────────┴──────────────┘
+
+  Phase 1 should note that the consolidation isn't just "normalize drift" — it's
+   eliminating 4 competing implementations.
+
+  3. Schema constraint drift between database.py and schema.sql
+
+  database.py:_ensure_schema() creates the entities table with a CHECK
+  constraint allowing only 7 types:
+  CHECK(type IN ('phone','bank_account','domain','wallet','url','email','ip'))
+
+  But schema.sql and the scorer's extractor.py use 17 types including
+  company_name, telegram_channel, whatsapp_link, etc.
+
+  Same for campaigns — database.py allows only 5 types, while schema.sql allows
+  10 (loan_shark, romance, ecommerce, qr, macau).
+
+  Impact: If the DB was created by _ensure_schema() (which runs on every
+  Database() instantiation), entities with expanded types will be silently 
+  rejected by the CHECK constraint. The migration script
+  (scripts/migrate_schema_v2.py) fixes this via RENAME→recreate→reimport, but
+  the plan's Phase 7 doesn't flag this as a data loss issue.
+
+  4. Hardcoded Reddit credentials — a security emergency
+
+  services/scraper/reddit_scraper.py:146-147:
+  reddit_email = os.getenv("REDDIT_EMAIL", "themupkin@gmail.com")
+  reddit_password = os.getenv("REDDIT_PASSWORD", "Bro99Peace")
+
+  The plan's Phase 4 says "remove hardcoded fallback Reddit credentials" but
+  this should be flagged as Priority 0 — these are live credentials committed to
+   source control. They need to be rotated immediately, not as part of a phased
+  plan.
+
+  5. group_collector.py already writes to scraped_messages
+
+  agents/group_collector.py:214-230 already does INSERT OR IGNORE INTO 
+  scraped_messages and deduplication against scraped_messages.text_hash. The
+  plan's Phase 2 (persist raw messages durably) should note that this pattern
+  already exists and should be generalized, not created from scratch.
+
+  6. migrate_schema_v2.py uses entities_old rename — confirms Phase 7 concern
+
+  scripts/migrate_schema_v2.py:237:
+  conn.execute("ALTER TABLE entities RENAME TO entities_old")
+
+  This creates a window where entities doesn't exist and any concurrent pipeline
+   operation will fail. The plan's Phase 7 is correct to investigate this, but
+  the cause is now proven: running the migration script while the pipeline is
+  active will cause the entities_old errors. The fix is to ensure migrations are
+   never run concurrently with the pipeline.
+
+  7. SemakMule top-10 pushes have empty message_hash
+
+  services/scraper/semakmule_scraper.py:401,417:
+  "message_hash": "",
+
+  This means deduplication by message_hash won't work for SemakMule top-10
+  entries. Every pipeline run will re-queue the same top-10 banks/phones,
+  inflating entity counts.
+
+  8. services.pipeline._run_score() calls scorer.run() which returns a dict, not
+   campaigns
+
+  services/pipeline.py:226-229:
+  campaigns = scorer.run()
+  by_risk = {"critical": 0, "high": 0, "medium": 0, "low": 0}
+  for c in campaigns:
+      by_risk[c.risk_level] = ...
+
+  But FraudScorerAgent.run() returns a dict (not a list of Campaign objects).
+  This will crash with TypeError: 'dict' object is not iterable if the pipeline
+  module's run command is ever used.
+
+  ---
+  Plan Recommendations
+
+  Add before Phase 0:
+
+  - Priority 0: Rotate and remove the hardcoded Reddit credentials from
+  reddit_scraper.py. This is a security breach.
+  - Bug fix: group_collector.py:210 — change queue.push_raw_message(raw) to
+  queue.push_to_queue("raw_messages", raw.to_json()).
+  - Bug fix: services/pipeline.py:228 — scorer.run() returns a dict, not a list
+  of Campaign objects.
+
+  Modify Phase 1 (Canonical Raw Message):
+
+  - Note there are 4 competing RawMessage implementations, not just drift.
+  - The shared module should also fix the message_hash issue in SemakMule (empty
+   strings).
+
+  Modify Phase 2 (Durable Persistence):
+
+  - Note that group_collector.py already has a working scraped_messages INSERT
+  pattern — generalize it to Database.upsert_scraped_message() rather than
+  building from scratch.
+
+  Modify Phase 5 (Edge Repair):
+
+  - Must also fix the database.py CHECK constraint drift. Without expanding the
+  entity type CHECK, new entity types from the extractor (e.g., company_name,
+  telegram_channel) will be silently rejected.
+
+  Modify Phase 7 (entities_old):
+
+  - Root cause is now confirmed: migrate_schema_v2.py renames entities to
+  entities_old during the dump-recreate-reimport pattern. The fix is to add an
+  advisory lock or make the pipeline fail-fast when the schema is in an
+  inconsistent state.
+
+  Add to Daily Report Logic:
+
+  - The state machine design in the appendix is solid. I'd add that the alerter
+  should also emit pipeline_failure when Redis is unreachable (currently it
+  silently falls back to no-op mode per queue_handler.py:70-73).
+
+  ---
+  Summary Table
+
+  ┌────────────────────────┬───────────────┬────────────────────────────────┐
+  │      Plan Section      │    Verdict    │             Notes              │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Root cause (split      │ Correct       │ Confirmed by code              │
+  │ persistence)           │               │                                │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Current state          │ Accurate      │ DB counts match                │
+  │ assessment             │               │                                │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Target model           │ Right choice  │ Lowest risk path               │
+  │ (queue-first)          │               │                                │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 0 (baseline)     │ Good          │ Add credential rotation first  │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 1 (raw message   │ Needed        │ Underestimates 4-way           │
+  │ contract)              │               │ duplication                    │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 2                │ Needed        │ Build on group_collector       │
+  │ (scraped_messages)     │               │ pattern                        │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 3 (Telegram      │ Correct       │ agents.collector already       │
+  │ integration)           │               │ handles it                     │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 4 (Reddit)       │ Correct       │ Credential issue is Priority 0 │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 5 (edge repair)  │ Needed        │ Must also fix CHECK constraint │
+  │                        │               │  drift                         │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 6 (derived       │ Sound         │ ingest_from_db is a dead path  │
+  │ tables)                │               │ until Phase 2                  │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 7 (entities_old) │ Correct       │ Root cause now confirmed       │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 8 (reliability)  │ Good          │ SemakMule retry + empty        │
+  │                        │               │ message_hash fix               │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 9 (pipeline      │ Correct       │ Missing Telegram +             │
+  │ script)                │               │ OpenSanctions                  │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 10 (API          │ Accurate      │ Trigger endpoints are          │
+  │ contract)              │               │ manual-only                    │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Phase 11 (tests/docs)  │ Needed        │ Pipeline._run_score has a bug  │
+  │                        │               │ tests would catch              │
+  ├────────────────────────┼───────────────┼────────────────────────────────┤
+  │ Daily report state     │ Well-designed │ Addresses real ambiguity in    │
+  │ machine                │               │ alerter                        │
+  └────────────────────────┴───────────────┴────────────────────────────────┘
+
+✻ Baked for 10m 42s

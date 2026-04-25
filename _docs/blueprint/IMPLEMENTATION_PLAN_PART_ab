@@ -1,0 +1,138 @@
+| `cross_reference.py` | `tests/test_cross_reference.py` | Exact match, fuzzy match, no match, batch check, BNM/SC lookup |
+| `victim_signal.py` | `tests/test_victim_signal.py` | Pattern detection, amount extraction, score computation, edge cases |
+| `alert_builder.py` | `tests/test_alert_builder.py` | Narrative generation, chunking, formatting, cross-reference inclusion |
+| `trend_detector.py` | `tests/test_trend_detector.py` | EMA computation, spike detection, stable/declining trends |
+| `entity_linker.py` | `tests/test_entity_linker.py` | Co-occurrence, shared phone, campaign clustering |
+| `scam_classifier.py` | `tests/test_scam_classifier.py` | Type classification, rule-based, LLM, cross-reference tiers |
+
+### 13.2 Integration Tests
+
+| Scenario | Description |
+|----------|-------------|
+| BNM match → Critical alert | Extract entity that matches BNM list → cross-ref boosts to 100 |
+| Victim report → High alert | Message says "kena tipu RM50K" → victim signal detected → boost |
+| Spike → Trend alert | Entity mentions go from 3 → 13 in 7 days → spike detected |
+| Multi-entity campaign | Phone + bank + domain in same message → linked campaign |
+| Cross-platform campaign | Same phone on TG + WhatsApp → same campaign |
+| No false positive | Legitimate business with phone + bank → no cross-ref match → low score |
+
+### 13.3 Test Data
+
+Use the existing 2,890 DB entities as test fixtures. Known BNM/SC entities should always trigger cross-reference matches.
+
+---
+
+## 14. Risk Assessment
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|------------|
+| Fuzzy domain matching false positives | Medium | Medium | Set levenshtein threshold to 2, require ≥80% token overlap for company names |
+| BNM/SC data staleness | High | Low | Schedule monthly re-scrape; show "as of" dates in alerts |
+| SQLite schema migration failure | Low | High | Backup DB before migration; test on copy first |
+| SemakMule still down | High | Medium | Skip SemakMule checks gracefully; show "unavailable" in alerts |
+| LLM cost/rate limits | Medium | Low | Use rule-based classification as primary; LLM only for score ≥ 60 |
+| Alert too long for Telegram | Medium | Low | Message chunking (max 4000 chars per message) |
+| Cross-reference latency | Low | Low | Load known-bad entities into memory at startup (~500KB) |
+
+---
+
+## 15. Timeline
+
+### Phase 1 (This Week: 13-17 April 2026)
+
+| Day | Task | Owner | Output |
+|-----|------|-------|--------|
+| Day 1 | Cross-reference engine + schema migration | Bayang/GLM-5.1 | `services/cross_reference.py`, `scripts/migrate_schema_v2.py` |
+| Day 1 | Expand `entities` CHECK constraint | Bayang | Updated schema.sql |
+| Day 2 | Cross-reference integration in scorer | Bayang | Modified `agents/scorer.py` |
+| Day 2 | Victim signal detector + config | Bayang | `services/victim_signal.py`, `config/victim_signals.yaml` |
+| Day 3 | Alert builder + narrative generation | Bayang | `services/alert_builder.py` |
+| Day 3 | Alert chunking + Telegram delivery | Bayang | Modified `agents/alerter.py` |
+| Day 4 | Integration testing with live data | Bayang | Test results |
+| Day 4 | End-to-end pipeline run | Bayang | Live alerts with cross-ref, victim signals |
+| Day 5 | Bug fixes, documentation | Bayang | Updated README, inline docs |
+
+### Phase 2 (Next Week: 20-24 April 2026)
+
+| Day | Task | Owner | Output |
+|-----|------|-------|--------|
+| Day 1 | Entity linker + campaign_links table | Bayang | `services/entity_linker.py` |
+| Day 2 | Scam type classifier + config | Bayang | `services/scam_classifier.py`, `config/scam_types.yaml` |
+| Day 3 | Campaign type expansion + scorer integration | Bayang | Modified `agents/scorer.py`, `services/campaign_types.py` |
+| Day 4 | Campaign naming + narrative enrichment | Bayang | Modified `services/alert_builder.py` |
+| Day 5 | Integration testing | Bayang | Test results |
+
+### Phase 3 (Following Week: 27 April - 1 May 2026)
+
+| Day | Task | Owner | Output |
+|-----|------|-------|--------|
+| Day 1-2 | Trend detector + entity_mentions table | Bayang | `services/trend_detector.py` |
+| Day 3-4 | Entity relationship graph | Bayang | `services/entity_linker.py` (expanded) |
+| Day 5 | Full pipeline integration test | Bayang | End-to-end validation |
+
+---
+
+## Appendix A: File Structure (After Implementation)
+
+```
+fraud-mvp/
+├── agents/
+│   ├── alerter.py              # MODIFIED — use AlertBuilder
+│   ├── extractor.py
+│   ├── keyword_scorer.py
+│   └── scorer.py               # MODIFIED — cross-ref, victim, trend integration
+├── config/
+│   ├── keywords.yaml
+│   ├── scoring_rules.yaml      # MODIFIED — add cross-ref, victim, trend weights
+│   ├── sources.yaml
+│   ├── victim_signals.yaml     # NEW
+│   └── scam_types.yaml         # NEW
+├── data/
+│   ├── bnm_consumer_alert_list.json
+│   ├── sc_investor_alert_list.json
+│   └── ...
+├── db/
+│   ├── database.py
+│   ├── schema.sql              # MODIFIED — new tables, expanded constraints
+│   └── fraud_mvp.db
+├── services/
+│   ├── alert_builder.py        # NEW — rich narrative generation
+│   ├── alert_formatter.py      # MODIFIED — cross-ref, victim, trend sections
+│   ├── campaign_types.py       # MODIFIED — expanded type map
+│   ├── cross_reference.py      # NEW — BNM/SC/SemakMule cross-referencing
+│   ├── entity_linker.py         # NEW — relationship graph
+│   ├── llm_enhancer.py
+│   ├── llm_similarity.py
+│   ├── queue_handler.py
+│   ├── scam_classifier.py       # NEW — three-tier classification
+│   ├── trend_detector.py        # NEW — EMA spike detection
+│   └── victim_signal.py         # NEW — victim report detection
+├── scripts/
+│   ├── migrate_schema_v2.py    # NEW — DB migration
+│   └── ...
+├── tests/
+│   ├── test_cross_reference.py  # NEW
+│   ├── test_victim_signal.py    # NEW
+│   ├── test_alert_builder.py    # NEW
+│   ├── test_trend_detector.py   # NEW
+│   ├── test_entity_linker.py    # NEW
+│   └── test_scam_classifier.py  # NEW
+└── docs/
+    └── IMPLEMENTATION_PLAN_PHASE1.md  # THIS FILE
+```
+
+---
+
+## Appendix B: Cross-Reference Data Sources
+
+| Source | Entity Count | Entity Types | Update Frequency | Access |
+|--------|-------------|--------------|-----------------|--------|
+| BNM Consumer Alert List | 575 | company_name, domain, telegram_url, facebook_url, whatsapp_link, phone | Monthly (manual re-scrape) | Public web |
+| SC Investor Alert List | 1,474 | company_name, domain, telegram_url, facebook_url, whatsapp_link | Monthly (manual re-scrape) | Public web (JS-heavy) |
+| SemakMule (PDRM) | Unknown | phone, bank_account | Unknown (currently DOWN) | Public web |
+| Internal Pipeline | Growing | phone, bank_account, domain, telegram_url, whatsapp_link | Real-time | SQLite DB |
+| OpenSanctions | ~2,000+ | company_name, domain, url | Weekly | API (requires auth) |
+
+---
+
+*End of Implementation Plan*

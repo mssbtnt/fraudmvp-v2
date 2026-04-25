@@ -1,76 +1,81 @@
-# Seed sources for initial entity collection
+# Malaysian & Southeast Asian Scam Reporting Sources
+# Sources scraped in priority order — accessible sites first
+
 seed_sources:
-  - name: MySCAM.info
-    url: https://myscam.info
-    type: complaint_db
+  # ─── Malaysian Government / CERT (HIGHEST PRIORITY — verified accessible) ────
+  - name: MyCERT Fraud Alerts
+    url: https://www.mycert.org.my
+    type: advisories
     platform: web
-    weight: 0.8
+    weight: 0.95
     priority: high
-    entity_types:
-      - phone
-      - bank_account
-      - domain
+    entity_types: [phone, domain, url, email]
+    notes: Malaysia's official computer emergency response team — live scam advisories
 
-  - name: KenaScam.com
-    url: https://kenascam.com
-    type: complaint_db
+  - name: MyCERT Advisories Index
+    url: https://www.mycert.org.my/portal/index
+    type: advisories
     platform: web
-    weight: 0.8
+    weight: 0.95
     priority: high
-    entity_types:
-      - phone
-      - bank_account
-      - url
+    entity_types: [phone, domain, url]
+    notes: Index page with links to all advisories
 
-  - name: FraudWatch Malaysia
-    url: https://fraudwatch.my
+  # ─── Consumer Advocacy (verified accessible) ─────────────────────────────────
+  - name: Consumers Association of Penang
+    url: https://www.consumer.org.my
     type: complaint_db
     platform: web
-    weight: 0.7
+    weight: 0.75
     priority: medium
-    entity_types:
-      - phone
-      - domain
+    entity_types: [phone, domain, url]
+    notes: Consumer protection organization — scam complaints section
 
-# Telegram channel discovery keywords per campaign type
-telegram_keywords:
-  investment:
-    - pelaburan
-    - crypto signal
-    - forex VIP
-    - IPO private
-    - robot trading
-    - uang gratis
-    - profit harian
-    - signal forex
-    - trading auto
+  # ─── OpenSanctions Government Alert Lists ───────────────────────────────────
+  - name: BNM Financial Consumer Alert (OpenSanctions Mirror)
+    url: https://data.opensanctions.org/datasets/my_consumer_alert_list/targets.nested.json
+    type: gov_alert_list
+    platform: opensanctions
+    weight: 0.95
+    priority: high
+    entity_types: [domain, url, telegram_channel, phone, company_name]
+    notes: Bank Negara Malaysia — unlicensed financial service providers (~1,170 entities)
 
-  job_task:
-    - kerja part time
-    - task earning
-    - like tiktok dapat duit
-    - misi sederhana
-    - dapat duit
-    - rm50 sehari
-    - kerja mudah
-    - tugas kecil
+  - name: SC Investor Alert (OpenSanctions Mirror)
+    url: https://data.opensanctions.org/datasets/my_investor_alert_list/targets.nested.json
+    type: gov_alert_list
+    platform: opensanctions
+    weight: 0.90
+    priority: high
+    entity_types: [domain, url, telegram_channel, phone, company_name]
+    notes: Securities Commission Malaysia — unregistered investment platforms (~1,855 entities)
 
-  aid_gov:
-    - bantuan kerajaan
-    - RM500 bantuan
-    - BKM bantuan
-    - layak bantuan
-    - register bantuan
-    - bantuannya
-    - RM1000 percuma
+# ─── Supplementary — Social Media (trend intelligence, low entity yield) ────────
+  - name: Reddit r/malaysia
+    url: https://www.reddit.com/r/malaysia
+    type: community_forum
+    platform: reddit
+    weight: 0.4
+    priority: low
+    entity_types: [phone, domain, url]
+    notes: General Malaysia subreddit — supplementary research source only; does not feed extraction, scoring, or alerting
+    search_queries: [scam, penipu, tipu, fraud, macau scam, phishing, ah long]
+    max_posts_per_query: 10
+    scrape_mode: search_only
+    session_file: data/reddit_session.json
 
-  phishing:
-    - OTP
-    - login verify
-    - account suspended
-    - verifikasi
-    - kansel akaun
-    - tukar password
+# Telegram seed channels — populate from web-scraped @usernames
+# These are bootstrapped from web sources and resolved via Telethon
+telegram_seeds: []
+
+# Telegram discovery hubs — bots can read messages from these public channels
+telegram_discovery_hubs:
+  - username: spam
+    title: Spam Reports
+  - username: ScamAlertsChannel
+    title: Scam Alerts Channel
+  - username: ExposedScammers
+    title: Exposed Scammers
 
 # Platform weights for multi-source scoring
 platform_weights:
@@ -86,10 +91,29 @@ collection:
   telegram:
     messages_per_channel: 100
     max_channels_per_keyword: 20
-    rate_limit_seconds: 2
-    demo_mode: true  # Set to false with real Telegram credentials
+    rate_limit_seconds: 3
+    demo_mode: false
 
   web:
     request_timeout_seconds: 30
     max_retries: 3
     delay_between_requests_seconds: 5
+    max_pages_per_source: 20
+    extract_telegram_refs: true
+
+  reddit:
+    subreddit: malaysia
+    search_queries: [scam, penipu, tipu, fraud, macau scam, phishing, ah long]
+    max_posts_per_query: 10
+    scrape_mode: search_only
+    use_old_reddit: true
+    session_file: data/reddit_session.json
+    rate_limit_seconds: 5
+    entity_extraction: false
+    trend_intelligence: true
+    pipeline_integration: false
+    promotion:
+      enabled: false
+      min_scam_relevance: 0.67
+      min_text_length: 120
+      require_entity_types: [phones, bank_accounts, whatsapp_links, urls]

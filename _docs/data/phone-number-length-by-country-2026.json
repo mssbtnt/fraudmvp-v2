@@ -1,0 +1,1563 @@
+[
+  {
+    "flagCode": "AU",
+    "country": "Australia",
+    "phoneNumberLengthByCountry_phLengthMax": 15,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 15"
+  },
+  {
+    "flagCode": "DE",
+    "country": "Germany",
+    "phoneNumberLengthByCountry_phLengthMax": 13,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 13"
+  },
+  {
+    "flagCode": "SE",
+    "country": "Sweden",
+    "phoneNumberLengthByCountry_phLengthMax": 13,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 13"
+  },
+  {
+    "flagCode": "AT",
+    "country": "Austria",
+    "phoneNumberLengthByCountry_phLengthMax": 13,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 13"
+  },
+  {
+    "flagCode": "CN",
+    "country": "China",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 12"
+  },
+  {
+    "flagCode": "CZ",
+    "country": "Czechia",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 12"
+  },
+  {
+    "flagCode": "CH",
+    "country": "Switzerland",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 12"
+  },
+  {
+    "flagCode": "RS",
+    "country": "Serbia",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 12"
+  },
+  {
+    "flagCode": "SG",
+    "country": "Singapore",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 12"
+  },
+  {
+    "flagCode": "FI",
+    "country": "Finland",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 12"
+  },
+  {
+    "flagCode": "HR",
+    "country": "Croatia",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 12"
+  },
+  {
+    "flagCode": "ME",
+    "country": "Montenegro",
+    "phoneNumberLengthByCountry_phLengthMax": 12,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 12"
+  },
+  {
+    "flagCode": "PK",
+    "country": "Pakistan",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 11"
+  },
+  {
+    "flagCode": "IT",
+    "country": "Italy",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": null,
+    "phoneNumberLengthByCountry_phLength": "up to 11"
+  },
+  {
+    "flagCode": "KR",
+    "country": "South Korea",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 11"
+  },
+  {
+    "flagCode": "PE",
+    "country": "Peru",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 11"
+  },
+  {
+    "flagCode": "PG",
+    "country": "Papua New Guinea",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 11"
+  },
+  {
+    "flagCode": "PT",
+    "country": "Portugal",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": "9 or 11"
+  },
+  {
+    "flagCode": "SV",
+    "country": "El Salvador",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7, 8 or 11"
+  },
+  {
+    "flagCode": "IE",
+    "country": "Ireland",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 11"
+  },
+  {
+    "flagCode": "UY",
+    "country": "Uruguay",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 11"
+  },
+  {
+    "flagCode": "CY",
+    "country": "Cyprus",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 or 11"
+  },
+  {
+    "flagCode": "LU",
+    "country": "Luxembourg",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 11"
+  },
+  {
+    "flagCode": "VA",
+    "country": "Vatican City",
+    "phoneNumberLengthByCountry_phLengthMax": 11,
+    "phoneNumberLengthByCountry_phLengthMin": null,
+    "phoneNumberLengthByCountry_phLength": "up to 11"
+  },
+  {
+    "flagCode": "IN",
+    "country": "India",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 10"
+  },
+  {
+    "flagCode": "US",
+    "country": "United States",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "ID",
+    "country": "Indonesia",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 10"
+  },
+  {
+    "flagCode": "NG",
+    "country": "Nigeria",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 10"
+  },
+  {
+    "flagCode": "BR",
+    "country": "Brazil",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "BD",
+    "country": "Bangladesh",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 10"
+  },
+  {
+    "flagCode": "RU",
+    "country": "Russia",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "MX",
+    "country": "Mexico",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "JP",
+    "country": "Japan",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": "9 to 10"
+  },
+  {
+    "flagCode": "PH",
+    "country": "Philippines",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 10"
+  },
+  {
+    "flagCode": "VN",
+    "country": "Vietnam",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 10"
+  },
+  {
+    "flagCode": "IR",
+    "country": "Iran",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 10"
+  },
+  {
+    "flagCode": "TR",
+    "country": "Turkey",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "GB",
+    "country": "United Kingdom",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 10"
+  },
+  {
+    "flagCode": "KE",
+    "country": "Kenya",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 10"
+  },
+  {
+    "flagCode": "CO",
+    "country": "Colombia",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 or 10"
+  },
+  {
+    "flagCode": "IQ",
+    "country": "Iraq",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 10"
+  },
+  {
+    "flagCode": "AR",
+    "country": "Argentina",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "CA",
+    "country": "Canada",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "MG",
+    "country": "Madagascar",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": "9 to 10"
+  },
+  {
+    "flagCode": "VE",
+    "country": "Venezuela",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "KP",
+    "country": "North Korea",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 3,
+    "phoneNumberLengthByCountry_phLength": "3 to 10"
+  },
+  {
+    "flagCode": "SY",
+    "country": "Syria",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 10"
+  },
+  {
+    "flagCode": "KZ",
+    "country": "Kazakhstan",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "DO",
+    "country": "Dominican Republic",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(809/829) + 7"
+  },
+  {
+    "flagCode": "GR",
+    "country": "Greece",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": 10
+  },
+  {
+    "flagCode": "BY",
+    "country": "Belarus",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": "9 to 10"
+  },
+  {
+    "flagCode": "NZ",
+    "country": "New Zealand",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 3,
+    "phoneNumberLengthByCountry_phLength": "3 to 10"
+  },
+  {
+    "flagCode": "PR",
+    "country": "Puerto Rico",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(787/939) + 7"
+  },
+  {
+    "flagCode": "QA",
+    "country": "Qatar",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6, 7, 10"
+  },
+  {
+    "flagCode": "NA",
+    "country": "Namibia",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 10"
+  },
+  {
+    "flagCode": "JM",
+    "country": "Jamaica",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(876) + 7"
+  },
+  {
+    "flagCode": "TT",
+    "country": "Trinidad and Tobago",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(868) + 7"
+  },
+  {
+    "flagCode": "EE",
+    "country": "Estonia",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 10"
+  },
+  {
+    "flagCode": "BS",
+    "country": "Bahamas",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(242) + 7"
+  },
+  {
+    "flagCode": "BB",
+    "country": "Barbados",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(246) + 7"
+  },
+  {
+    "flagCode": "LC",
+    "country": "Saint Lucia",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(758) + 7"
+  },
+  {
+    "flagCode": "GU",
+    "country": "Guam",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(671) + 7"
+  },
+  {
+    "flagCode": "GD",
+    "country": "Grenada",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(473) + 7"
+  },
+  {
+    "flagCode": "VC",
+    "country": "Saint Vincent and the Grenadines",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(784) + 7"
+  },
+  {
+    "flagCode": "AG",
+    "country": "Antigua and Barbuda",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(268) + 7"
+  },
+  {
+    "flagCode": "VI",
+    "country": "United States Virgin Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(340) + 7"
+  },
+  {
+    "flagCode": "KY",
+    "country": "Cayman Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(345) + 7"
+  },
+  {
+    "flagCode": "DM",
+    "country": "Dominica",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(767) + 7"
+  },
+  {
+    "flagCode": "BM",
+    "country": "Bermuda",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(441) + 7"
+  },
+  {
+    "flagCode": "TC",
+    "country": "Turks and Caicos Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(649) + 7"
+  },
+  {
+    "flagCode": "KN",
+    "country": "Saint Kitts and Nevis",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(869) + 7"
+  },
+  {
+    "flagCode": "AS",
+    "country": "American Samoa",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(684) + 7"
+  },
+  {
+    "flagCode": "SX",
+    "country": "Sint Maarten",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(721) + 7"
+  },
+  {
+    "flagCode": "VG",
+    "country": "British Virgin Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(284) + 7"
+  },
+  {
+    "flagCode": "SM",
+    "country": "San Marino",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 10"
+  },
+  {
+    "flagCode": "AI",
+    "country": "Anguilla",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(264) + 7"
+  },
+  {
+    "flagCode": "MS",
+    "country": "Montserrat",
+    "phoneNumberLengthByCountry_phLengthMax": 10,
+    "phoneNumberLengthByCountry_phLengthMin": 10,
+    "phoneNumberLengthByCountry_phLength": "(664) + 7"
+  },
+  {
+    "flagCode": "ET",
+    "country": "Ethiopia",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "EG",
+    "country": "Egypt",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 9"
+  },
+  {
+    "flagCode": "CD",
+    "country": "DR Congo",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 9"
+  },
+  {
+    "flagCode": "TZ",
+    "country": "Tanzania",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "TH",
+    "country": "Thailand",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 or 9"
+  },
+  {
+    "flagCode": "FR",
+    "country": "France",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "ZA",
+    "country": "South Africa",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "MM",
+    "country": "Myanmar",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 9"
+  },
+  {
+    "flagCode": "SD",
+    "country": "Sudan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "UG",
+    "country": "Uganda",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "DZ",
+    "country": "Algeria",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 or 9"
+  },
+  {
+    "flagCode": "ES",
+    "country": "Spain",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "AF",
+    "country": "Afghanistan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "YE",
+    "country": "Yemen",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 9"
+  },
+  {
+    "flagCode": "AO",
+    "country": "Angola",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "UA",
+    "country": "Ukraine",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "MA",
+    "country": "Morocco",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "PL",
+    "country": "Poland",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 9"
+  },
+  {
+    "flagCode": "UZ",
+    "country": "Uzbekistan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "MZ",
+    "country": "Mozambique",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "MY",
+    "country": "Malaysia",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 9"
+  },
+  {
+    "flagCode": "GH",
+    "country": "Ghana",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 9"
+  },
+  {
+    "flagCode": "SA",
+    "country": "Saudi Arabia",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "NP",
+    "country": "Nepal",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "LK",
+    "country": "Sri Lanka",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "TW",
+    "country": "Taiwan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "ZM",
+    "country": "Zambia",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "CL",
+    "country": "Chile",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "SN",
+    "country": "Senegal",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "RO",
+    "country": "Romania",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "NL",
+    "country": "Netherlands",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "ZW",
+    "country": "Zimbabwe",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 9"
+  },
+  {
+    "flagCode": "RW",
+    "country": "Rwanda",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "BE",
+    "country": "Belgium",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "JO",
+    "country": "Jordan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 9"
+  },
+  {
+    "flagCode": "AE",
+    "country": "United Arab Emirates",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "TJ",
+    "country": "Tajikistan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "AZ",
+    "country": "Azerbaijan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "IL",
+    "country": "Israel",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "HU",
+    "country": "Hungary",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "LA",
+    "country": "Laos",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "LY",
+    "country": "Libya",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": "8 to 9"
+  },
+  {
+    "flagCode": "KG",
+    "country": "Kyrgyzstan",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "HK",
+    "country": "Hong Kong",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4, 8 to 9"
+  },
+  {
+    "flagCode": "PY",
+    "country": "Paraguay",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 9"
+  },
+  {
+    "flagCode": "BG",
+    "country": "Bulgaria",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 9"
+  },
+  {
+    "flagCode": "SK",
+    "country": "Slovakia",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 to 9"
+  },
+  {
+    "flagCode": "AL",
+    "country": "Albania",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 3,
+    "phoneNumberLengthByCountry_phLength": "3 to 9"
+  },
+  {
+    "flagCode": "IS",
+    "country": "Iceland",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 or 9"
+  },
+  {
+    "flagCode": "GP",
+    "country": "Guadeloupe",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "MQ",
+    "country": "Martinique",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "GF",
+    "country": "French Guiana",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 9,
+    "phoneNumberLengthByCountry_phLength": 9
+  },
+  {
+    "flagCode": "AD",
+    "country": "Andorra",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6, 8 or 9"
+  },
+  {
+    "flagCode": "LI",
+    "country": "Liechtenstein",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 9"
+  },
+  {
+    "flagCode": "MC",
+    "country": "Monaco",
+    "phoneNumberLengthByCountry_phLengthMax": 9,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 9"
+  },
+  {
+    "flagCode": "CI",
+    "country": "Ivory Coast",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "CM",
+    "country": "Cameroon",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "NE",
+    "country": "Niger",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "ML",
+    "country": "Mali",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "BF",
+    "country": "Burkina Faso",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "MW",
+    "country": "Malawi",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 or 8"
+  },
+  {
+    "flagCode": "SO",
+    "country": "Somalia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 to 8"
+  },
+  {
+    "flagCode": "GT",
+    "country": "Guatemala",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "EC",
+    "country": "Ecuador",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "KH",
+    "country": "Cambodia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "GN",
+    "country": "Guinea",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "BJ",
+    "country": "Benin",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "BI",
+    "country": "Burundi",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "BO",
+    "country": "Bolivia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "TN",
+    "country": "Tunisia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "HT",
+    "country": "Haiti",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "HN",
+    "country": "Honduras",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "CU",
+    "country": "Cuba",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 8"
+  },
+  {
+    "flagCode": "SL",
+    "country": "Sierra Leone",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "TM",
+    "country": "Turkmenistan",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "NI",
+    "country": "Nicaragua",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "DK",
+    "country": "Denmark",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "LB",
+    "country": "Lebanon",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "LR",
+    "country": "Liberia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "CF",
+    "country": "Central African Republic",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "OM",
+    "country": "Oman",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "NO",
+    "country": "Norway",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 or 8"
+  },
+  {
+    "flagCode": "CR",
+    "country": "Costa Rica",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "KW",
+    "country": "Kuwait",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 or 8"
+  },
+  {
+    "flagCode": "PA",
+    "country": "Panama",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 or 8"
+  },
+  {
+    "flagCode": "GE",
+    "country": "Georgia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "MN",
+    "country": "Mongolia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "BA",
+    "country": "Bosnia and Herzegovina",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "MD",
+    "country": "Moldova",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "AM",
+    "country": "Armenia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "LT",
+    "country": "Lithuania",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "BW",
+    "country": "Botswana",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "LS",
+    "country": "Lesotho",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "SI",
+    "country": "Slovenia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "LV",
+    "country": "Latvia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 or 8"
+  },
+  {
+    "flagCode": "MK",
+    "country": "North Macedonia",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "BH",
+    "country": "Bahrain",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "SZ",
+    "country": "Eswatini",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "BT",
+    "country": "Bhutan",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "MO",
+    "country": "Macau",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "MT",
+    "country": "Malta",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "CW",
+    "country": "Curacao",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": "7 to 8"
+  },
+  {
+    "flagCode": "GI",
+    "country": "Gibraltar",
+    "phoneNumberLengthByCountry_phLengthMax": 8,
+    "phoneNumberLengthByCountry_phLengthMin": 8,
+    "phoneNumberLengthByCountry_phLength": 8
+  },
+  {
+    "flagCode": "TD",
+    "country": "Chad",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 7"
+  },
+  {
+    "flagCode": "TG",
+    "country": "Togo",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "CG",
+    "country": "Republic of the Congo",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 7"
+  },
+  {
+    "flagCode": "MR",
+    "country": "Mauritania",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "ER",
+    "country": "Eritrea",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "GM",
+    "country": "Gambia",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "GA",
+    "country": "Gabon",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 or 7"
+  },
+  {
+    "flagCode": "GW",
+    "country": "Guinea-Bissau",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "TL",
+    "country": "Timor-Leste",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "MU",
+    "country": "Mauritius",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "FJ",
+    "country": "Fiji",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "KM",
+    "country": "Comoros",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "GY",
+    "country": "Guyana",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "SR",
+    "country": "Suriname",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": "6 to 7"
+  },
+  {
+    "flagCode": "MV",
+    "country": "Maldives",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "CV",
+    "country": "Cape Verde",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "BN",
+    "country": "Brunei",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "BZ",
+    "country": "Belize",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "VU",
+    "country": "Vanuatu",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 or 7"
+  },
+  {
+    "flagCode": "ST",
+    "country": "Sao Tome and Principe",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "WS",
+    "country": "Samoa",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 3,
+    "phoneNumberLengthByCountry_phLength": "3 to 7"
+  },
+  {
+    "flagCode": "FM",
+    "country": "Micronesia",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "AW",
+    "country": "Aruba",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "TO",
+    "country": "Tonga",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 or 7"
+  },
+  {
+    "flagCode": "MH",
+    "country": "Marshall Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "PW",
+    "country": "Palau",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 7,
+    "phoneNumberLengthByCountry_phLength": 7
+  },
+  {
+    "flagCode": "NR",
+    "country": "Nauru",
+    "phoneNumberLengthByCountry_phLengthMax": 7,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": "4 or 7"
+  },
+  {
+    "flagCode": "GQ",
+    "country": "Equatorial Guinea",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "DJ",
+    "country": "Djibouti",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "NC",
+    "country": "New Caledonia",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "PF",
+    "country": "French Polynesia",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "SC",
+    "country": "Seychelles",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "FO",
+    "country": "Faroe Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "GL",
+    "country": "Greenland",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "WF",
+    "country": "Wallis and Futuna",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "TV",
+    "country": "Tuvalu",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": "5 or 6"
+  },
+  {
+    "flagCode": "PM",
+    "country": "Saint Pierre and Miquelon",
+    "phoneNumberLengthByCountry_phLengthMax": 6,
+    "phoneNumberLengthByCountry_phLengthMin": 6,
+    "phoneNumberLengthByCountry_phLength": 6
+  },
+  {
+    "flagCode": "SB",
+    "country": "Solomon Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 5,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": 5
+  },
+  {
+    "flagCode": "KI",
+    "country": "Kiribati",
+    "phoneNumberLengthByCountry_phLengthMax": 5,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": 5
+  },
+  {
+    "flagCode": "CK",
+    "country": "Cook Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 5,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": 5
+  },
+  {
+    "flagCode": "FK",
+    "country": "Falkland Islands",
+    "phoneNumberLengthByCountry_phLengthMax": 5,
+    "phoneNumberLengthByCountry_phLengthMin": 5,
+    "phoneNumberLengthByCountry_phLength": 5
+  },
+  {
+    "flagCode": "TK",
+    "country": "Tokelau",
+    "phoneNumberLengthByCountry_phLengthMax": 4,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": 4
+  },
+  {
+    "flagCode": "NU",
+    "country": "Niue",
+    "phoneNumberLengthByCountry_phLengthMax": 4,
+    "phoneNumberLengthByCountry_phLengthMin": 4,
+    "phoneNumberLengthByCountry_phLength": 4
+  }
+]

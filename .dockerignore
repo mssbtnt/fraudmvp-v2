@@ -1,0 +1,39 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*.egg-info
+venv
+.venv
+
+# Virtual environments
+.env
+.env.local
+.env.production
+
+# IDE
+.vscode
+.idea
+*.swp
+
+# Logs & temp
+logs
+*.log
+
+# Local DB (mount separately)
+# db/fraud_mvp.db
+db/reddit_*.json
+
+# Session files
+*.session
+*.session.*
+
+# Secrets (mount separately)
+.secrets.env
+
+# OS
+.DS_Store
+Thumbs.db

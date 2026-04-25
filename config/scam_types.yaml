@@ -1,0 +1,309 @@
+# Scam Type Definitions — FraudMVP Phase 2
+# 10 canonical scam types with keywords, aliases, descriptions, severity, common entities
+# Used by ScamClassifier (Tier 1) and AlertBuilder
+
+types:
+  investment:
+    label: "Investment Scam"
+    description: "Promises of high returns on investments in forex, crypto, stocks, or other financial instruments. Often involves unlicensed operators."
+    severity: critical
+    keywords:
+      primary:
+        - "pelaburan"
+        - "investment"
+        - "dividen"
+        - "roi"
+        - "profit"
+        - "untung"
+        - "pasaran saham"
+        - "signal trading"
+        - "portfolio"
+        - "pasif income"
+      secondary:
+        - "forex"
+        - "crypto"
+        - "bitcoin"
+        - "ethereum"
+        - "token"
+        - "ico"
+        - "unit trust"
+        - "reits"
+        - "gold investment"
+        - "oil trading"
+    aliases:
+      - "investment_scam"
+      - "forex"
+      - "crypto"
+      - "stock_scam"
+      - "trading_scam"
+    common_entities:
+      - whatsapp_link
+      - phone
+      - telegram_url
+      - domain
+    bnm_listed: true
+    sc_listed: true
+
+  job_task:
+    label: "Job / Task Scam"
+    description: "Fake job offers or task-based scams requiring upfront deposits. Often involves WhatsApp groups for 'missions'."
+    severity: high
+    keywords:
+      primary:
+        - "jawatan kosong"
+        - "kerja sambilan"
+        - "part time"
+        - "task"
+        - "misi"
+        - "deposit"
+        - "kerja mudah"
+        - "bayar deposit"
+      secondary:
+        - "whatsapp link"
+        - "tiktok"
+        - "like and subscribe"
+        - "rating task"
+        - "commission"
+        - "rm50 sehari"
+        - "duit mudah"
+        - "typing job"
+    aliases:
+      - "job_scam"
+      - "deposit_scam"
+      - "task_scam"
+      - "commission_scam"
+    common_entities:
+      - whatsapp_link
+      - phone
+      - telegram_url
+    bnm_listed: false
+    sc_listed: false
+
+  aid_gov:
+    label: "Government Aid Scam"
+    description: "Impersonates government aid programmes (STR, BKM, e-Kasih) to collect personal data or direct victims to fake portals."
+    severity: high
+    keywords:
+      primary:
+        - "bantuan"
+        - "kerajaan"
+        - "bkm"
+        - "layak"
+        - "wang ehsan"
+        - "str"
+        - "e-kasih"
+      secondary:
+        - "pr1ma"
+        - "bsh"
+        - "rm500"
+        - "rm1000"
+        - "mykad"
+        - "bpr"
+        - "geran"
+        - "subsidi"
+        - "skim bantuan"
+    aliases:
+      - "government_aid"
+      - "gov_aid"
+      - "bantuan"
+    common_entities:
+      - domain
+      - phone
+      - url
+    bnm_listed: true
+    sc_listed: false
+
+  phishing:
+    label: "Phishing Scam"
+    description: "Fake bank portals, login pages, or OTP requests designed to steal credentials and financial information."
+    severity: critical
+    keywords:
+      primary:
+        - "otp"
+        - "verifikasi"
+        - "login"
+        - "suspended"
+        - "kansel"
+        - "password"
+        - "link bank palsu"
+        - "akaun"
+      secondary:
+        - "phishing"
+        - "fake bank"
+        - "clone website"
+        - "sms bank"
+        - "email bank"
+        - "verify account"
+        - "unauthorized"
+    aliases:
+      - "qr_scam"
+      - "smishing"
+      - "vishing"
+      - "bank_phishing"
+    common_entities:
+      - domain
+      - phone
+      - email
+    bnm_listed: true
+    sc_listed: true
+
+  loan_shark:
+    label: "Loan Shark / Ah Long"
+    description: "Illegal money lenders (Ah Long) offering quick loans with exorbitant interest rates and harassment tactics."
+    severity: high
+    keywords:
+      primary:
+        - "ah long"
+        - "loan shark"
+        - "pinjaman"
+        - "pemberi wang"
+        - "wang segera"
+        - "interest tinggi"
+        - "cedera"
+      secondary:
+        - "kredit"
+        - "mengugut"
+        - "threaten"
+        - "micro loan"
+        - "quick cash"
+        - "bayar balik"
+        - "sewa beli"
+    aliases:
+      - "ah_long"
+      - "illegal_lending"
+      - "usury"
+    common_entities:
+      - phone
+      - whatsapp_link
+      - bank_account
+    bnm_listed: true
+    sc_listed: false
+
+  romance:
+    label: "Romance / Love Scam"
+    description: "Online relationship scams where perpetrators build emotional connections to extract money. Includes sugar daddy/mummy scams."
+    severity: high
+    keywords:
+      primary:
+        - "love scam"
+        - "sugar daddy"
+        - "sugar mummy"
+        - "jodoh"
+        - "romance"
+        - "dating"
+      secondary:
+        - "sweetheart"
+        - "online dating"
+        - "tinder"
+        - "match"
+        - "overseas"
+        - "military"
+        - "emergency money"
+    aliases:
+      - "romance_scam"
+      - "love_scam"
+      - "sweetheart_scam"
+    common_entities:
+      - whatsapp_link
+      - phone
+      - facebook_url
+    bnm_listed: false
+    sc_listed: false
+
+  ecommerce:
+    label: "E-Commerce Scam"
+    description: "Online purchase scams where goods are never delivered, are counterfeit, or don't match description. Includes fake marketplace listings."
+    severity: medium
+    keywords:
+      primary:
+        - "beli online"
+        - "cod"
+        - "penghantaran"
+        - "barang tak sampai"
+        - "online shop"
+        - "jualan"
+      secondary:
+        - "shopee"
+        - "lazada"
+        - "carousell"
+        - "mudah"
+        - "fake product"
+        - "counterfeit"
+        - "never delivered"
+    aliases:
+      - "shopping_scam"
+      - "online_purchase_scam"
+      - "marketplace_scam"
+    common_entities:
+      - whatsapp_link
+      - phone
+      - domain
+    bnm_listed: false
+    sc_listed: false
+
+  qr:
+    label: "QR Code Scam"
+    description: "Scams involving malicious QR codes that redirect to phishing pages, fake payment portals, or install malware."
+    severity: high
+    keywords:
+      primary:
+        - "scan qr"
+        - "qr code"
+        - "qr promosi"
+        - "qr pembayaran"
+        - "qr scan"
+      secondary:
+        - "qr phishing"
+        - "qr payment"
+        - "barcode scam"
+        - "touch and go qr"
+    aliases:
+      - "qr_scam"
+      - "qr_code_scam"
+    common_entities:
+      - domain
+      - url
+    bnm_listed: false
+    sc_listed: false
+
+  macau:
+    label: "Macau Scam"
+    description: "Call center scams where perpetrators impersonate authorities (police, bank officers, court) to extort money through fear and urgency."
+    severity: critical
+    keywords:
+      primary:
+        - "macau scam"
+        - "scam macau"
+        - "call center"
+        - "telemarketer"
+        - "polis palsu"
+        - "mahkamah"
+      secondary:
+        - "bank officer"
+        - "court summons"
+        - "warrant arrest"
+        - "frozen account"
+        - "investigation"
+        - "urgent transfer"
+    aliases:
+      - "macau_scam"
+      - "call_center_scam"
+    common_entities:
+      - phone
+      - bank_account
+    bnm_listed: true
+    sc_listed: true
+
+  unknown:
+    label: "Unknown / Unclassified"
+    description: "Suspicious activity that doesn't fit any known scam category. Used as fallback when classification confidence is below threshold."
+    severity: low
+    keywords:
+      primary: []
+      secondary: []
+    aliases:
+      - "other"
+      - "unclassified"
+    common_entities: []
+    bnm_listed: false
+    sc_listed: false

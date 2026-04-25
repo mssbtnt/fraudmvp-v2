@@ -29,21 +29,71 @@ log = logging.getLogger("queue_handler")
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 QUEUE_PREFIX = "fraud_mvp:queue:"
 
+# Singleton connection pool — shared across all QueueHandler instances
+_pool: redis.ConnectionPool | None = None
+_client: redis.Redis | None = None
+_client_error: str | None = None
+
+def _redis_retry_kwargs() -> dict:
+    """Build redis-py retry configuration when available."""
+    try:
+        from redis.backoff import ExponentialBackoff
+        from redis.retry import Retry
+    except Exception:
+        return {}
+
+    timeout_error = getattr(redis, "TimeoutError", TimeoutError)
+    return {
+        "retry": Retry(ExponentialBackoff(), 3),
+        "retry_on_error": [redis.ConnectionError, timeout_error],
+        "health_check_interval": 30,
+        "socket_connect_timeout": 5,
+        "socket_timeout": 5,
+    }
+
+
+def _get_pool(redis_url: str = REDIS_URL) -> redis.ConnectionPool:
+    global _pool
+    if _pool is None:
+        _pool = redis.ConnectionPool.from_url(
+            redis_url,
+            decode_responses=True,
+            max_connections=20,
+            **_redis_retry_kwargs(),
+        )
+    return _pool
+
 
 class QueueHandler:
     """
     Redis-backed queue handler with json serialization.
 
     Uses LPUSH + RPOP (FIFO) pattern.
+    Shares a connection pool across all instances.
+    Falls back to no-op mode if Redis is unavailable.
     """
 
     def __init__(self, redis_url: str = REDIS_URL):
+        global _client, _client_error
+        self.client = None
         try:
-            self.client = redis.from_url(redis_url, decode_responses=True)
-            self.client.ping()
-            log.info(f"Connected to Redis at {redis_url}")
-        except redis.ConnectionError as e:
+            if _client is not None:
+                self.client = _client
+                _client_error = None
+                return
+
+            if _client is None:
+                pool = _get_pool(redis_url)
+                client = redis.Redis(connection_pool=pool)
+                client.ping()
+                _client = client
+                _client_error = None
+                log.info(f"Connected to Redis at {redis_url} (pool max_connections=20)")
+            self.client = _client
+        except (redis.ConnectionError, getattr(redis, "TimeoutError", TimeoutError)) as e:
             log.warning(f"Redis unavailable ({e}) — running in no-op mode")
+            _client_error = str(e)
+            _client = None
             self.client = None
 
     def _key(self, queue_name: str) -> str:
@@ -54,6 +104,7 @@ class QueueHandler:
     def push_to_queue(self, queue_name: str, data: str) -> bool:
         """LPUSH a JSON-encoded string to a queue. Returns True on success."""
         if self.client is None:
+            log.warning("Queue push skipped because Redis is unavailable: %s", queue_name)
             return False
         try:
             self.client.lpush(self._key(queue_name), data)
@@ -65,6 +116,8 @@ class QueueHandler:
     def push_to_queue_batch(self, queue_name: str, items: list[str]) -> int:
         """LPUSH multiple items. Returns count pushed."""
         if self.client is None or not items:
+            if items:
+                log.warning("Batch queue push skipped because Redis is unavailable: %s", queue_name)
             return 0
         try:
             key = self._key(queue_name)
@@ -123,6 +176,19 @@ class QueueHandler:
             return False
 
     # ── Convenience ──────────────────────────────────────────────────────────
+
+    def is_available(self) -> bool:
+        """Return True when a live Redis client is available."""
+        return self.client is not None
+
+    def status(self) -> dict:
+        """Return queue backend availability details for preflight/reporting."""
+        return {
+            "available": self.client is not None,
+            "redis_url": REDIS_URL,
+            "mode": "live" if self.client is not None else "no-op",
+            "error": _client_error,
+        }
 
     def push_json(self, queue_name: str, obj: dict) -> bool:
         """Serialize a dict as JSON and push."""

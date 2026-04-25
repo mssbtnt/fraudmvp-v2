@@ -1,0 +1,97 @@
+{
+  "mode": "promotion",
+  "generated_at": "2026-04-25T18:36:25.343147+00:00",
+  "posts_output_path": "/home/mssbai/Desktop/fraud-mvp/data/reddit_malaysia_scams.json",
+  "trends_output_path": "/home/mssbai/Desktop/fraud-mvp/data/reddit_trends_summary.json",
+  "posts_scraped": 67,
+  "trend_summary": {
+    "total_posts": 67,
+    "high_relevance_posts": 25,
+    "posts_with_entities": 2,
+    "query_distribution": {
+      "scam": 10,
+      "penipu": 9,
+      "tipu": 10,
+      "fraud": 9,
+      "macau scam": 10,
+      "phishing": 9,
+      "ah long": 10
+    },
+    "top_scam_keywords": {
+      "scam": 36,
+      "fraud": 11,
+      "penipu": 9,
+      "tipu": 8,
+      "macau scam": 7,
+      "phishing": 6,
+      "ah long": 4,
+      "job scam": 1,
+      "loan shark": 1
+    },
+    "entity_summary": {
+      "total_phones": 2,
+      "total_bank_accounts": 1,
+      "total_whatsapp_links": 0,
+      "total_suspicious_urls": 22
+    }
+  },
+  "promotion_policy": {
+    "enabled": true,
+    "min_scam_relevance": 0.67,
+    "min_text_length": 120,
+    "require_entity_types": [
+      "phones",
+      "bank_accounts",
+      "whatsapp_links",
+      "urls"
+    ]
+  },
+  "promotion_summary": {
+    "qualified_promoted": 2,
+    "persisted": 0,
+    "queued": 2,
+    "skipped": 65,
+    "queue_backend": {
+      "available": true,
+      "redis_url": "redis://localhost:6379",
+      "mode": "live",
+      "error": null
+    },
+    "samples": [
+      {
+        "title": "It's PSA anti illegal 4D lottery from chinese radio station is mostly out of topics?",
+        "url": "https://www.reddit.com/r/malaysia/comments/1bnzczb/its_psa_anti_illegal_4d_lottery_from_chinese/",
+        "reasons": [
+          "scam_relevance>=0.67",
+          "text_length>=120",
+          "has_urls"
+        ],
+        "scam_relevance": 1.0,
+        "entity_counts": {
+          "phones": 0,
+          "bank_accounts": 0,
+          "whatsapp_links": 0,
+          "urls": 2
+        },
+        "message_hash": "4903b7be000f2f9146c0abb30c4077a6b26defba211fd49cfa799ba576b3154c"
+      },
+      {
+        "title": "Scammed at Empire Shopping Gallery",
+        "url": "https://www.reddit.com/r/malaysia/comments/zxgsr2/scammed_at_empire_shopping_gallery/",
+        "reasons": [
+          "scam_relevance>=0.67",
+          "text_length>=120",
+          "has_urls"
+        ],
+        "scam_relevance": 1.0,
+        "entity_counts": {
+          "phones": 0,
+          "bank_accounts": 0,
+          "whatsapp_links": 0,
+          "urls": 1
+        },
+        "message_hash": "fb8324610c9147c00647f1ef3c1cdf3b36c1c8928954fcc0724be1fe16acc0b6"
+      }
+    ]
+  }
+}

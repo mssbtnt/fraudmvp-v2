@@ -1,85 +1,486 @@
-# Scam keyword dictionary by category
-# Key: category name, Value: list of (keyword, weight) tuples
+# ─── Fraud Detection Keywords (Bahasa Malaysia) ────────────────────────────────
+# Tuned for Malaysian market — expanded from real Telegram community analysis
+# Last updated: 2026-04-11
 
-categories:
-  investment:
-    priority: high
-    keywords:
-      - [pelaburan, 15]
-      - [crypto, 15]
-      - [forex, 15]
-      - [signal vip, 20]
-      - [ipo private, 20]
-      - [robot trading, 15]
-      - [uang gratis, 20]
-      - [profit harian, 20]
-      - [hedge fund, 15]
-      - [trading auto, 15]
-      - [modal免费, 20]
-      - [deposit rm100, 15]
-      - [wang gratuit, 20]
+# ─── Primary Keywords ──────────────────────────────────────────────────────────
+# High-confidence scam indicators — weight: 30-45 points
+primary:
+  - phrase: "jawatan kosong"
+    weight: 35
+    notes: "Job scam, often with WhatsApp link"
 
-  job_task:
-    priority: high
-    keywords:
-      - [kerja part time, 15]
-      - [task earning, 15]
-      - [like tiktok, 15]
-      - [misi sederhana, 15]
-      - [dapat duit, 15]
-      - [rm50 sehari, 20]
-      - [kerja mudah, 15]
-      - [tugas kecil, 15]
-      - [free rm50, 20]
-      - [subscribe dapat, 15]
-      - [like video, 10]
-      - [share link, 15]
+  - phrase: "whatsapp link"
+    weight: 40
+    notes: "Redirects to personal WhatsApp - avoids platform oversight"
 
-  aid_gov:
-    priority: high
-    keywords:
-      - [bantuan kerajaan, 20]
-      - [rm500, 25]
-      - [bkm, 20]
-      - [layak, 15]
-      - [register bantuan, 20]
-      - [bantuannya, 15]
-      - [rm1000 percuma, 25]
-      - [wang ehsan, 20]
-      - [iakaun, 15]
-      - [bantuan@, 20]
+  - phrase: "bayar deposit"
+    weight: 38
+    notes: "Pressure to pay deposit before service"
 
-  urgency:
-    priority: medium
-    keywords:
-      - [segera, 10]
-      - [terdesak, 10]
-      - [hanya hari ini, 15]
-      - [terhad, 10]
-      - [的最后机会, 10]
-      - [限时, 10]
-      - [hujan, 10]
-      - [akhirat, 10]
-      - [expired, 10]
-      - [segera hubungi, 15]
+  - phrase: "scan qr"
+    weight: 35
+    notes: "QR code scams - phishing or fake payments"
+
+  - phrase: "janji untung"
+    weight: 35
+    notes: "Guaranteed returns - investment scam language"
+
+  - phrase: "link bank palsu"
+    weight: 42
+    notes: "Fake bank links for phishing"
+
+  - phrase: "telegram investasi"
+    weight: 35
+    notes: "Redirects to Telegram investment group"
+
+  - phrase: "macau scam"
+    weight: 45
+    notes: "Macau scam — one of the top fraud types in Malaysia"
+
+  - phrase: "scam macau"
+    weight: 45
+    notes: "Macau scam variant spelling"
+
+  - phrase: "love scam"
+    weight: 42
+    notes: "Romance / love scam"
+
+  - phrase: "skim cepat kaya"
+    weight: 40
+    notes: "Get-rich-quick scheme — classic Malaysian scam"
+
+  - phrase: "pelaburan haram"
+    weight: 40
+    notes: "Illegal investment scheme"
+
+  - phrase: "pelaburan tipu"
+    weight: 40
+    notes: "Fake investment"
+
+  - phrase: "duit awam"
+    weight: 30
+    notes: "Government funds scam reference"
+
+  - phrase: "ah long"
+    weight: 42
+    notes: "Loan shark reference"
+
+  - phrase: "pinjaman ilegal"
+    weight: 38
+    notes: "Illegal loan offers"
+
+  - phrase: "tng tipu"
+    weight: 38
+    notes: "Touch n Go scam"
+
+  - phrase: "duitnow tipu"
+    weight: 38
+    notes: "DuitNow scam"
+
+  - phrase: "bantuan kerajaan tipu"
+    weight: 40
+    notes: "Fake government aid scam"
+
+  - phrase: "bantuan palsu"
+    weight: 35
+    notes: "Fake aid/assistance"
+
+  - phrase: "buat duit online"
+    weight: 32
+    notes: "Make money online — common job scam hook"
+
+  - phrase: "kerja dari rumah tipu"
+    weight: 35
+    notes: "Work from home scam"
+
+  - phrase: "job scam"
+    weight: 40
+    notes: "Direct mention of job scam"
+
+  - phrase: "e-commerce scam"
+    weight: 38
+    notes: "Online shopping scam"
+
+  - phrase: "palsu"
+    weight: 25
+    notes: "Fake/fraudulent — broad indicator"
+
+  - phrase: "akaun sekat"
+    weight: 35
+    notes: "Frozen bank account — often used in Macau scam calls"
+
+  - phrase: "panggilan telefon palsu"
+    weight: 35
+    notes: "Fake phone call — Macau scam / vishing"
+
+  - phrase: "potong ayam"
+    weight: 38
+    notes: "Loan shark intimidation tactic"
+
+  - phrase: "deposit hilang"
+    weight: 38
+    notes: "Deposit lost — victim report"
+
+  - phrase: "transfer dulu"
+    weight: 35
+    notes: "Transfer first — advance fee scam"
+
+# ─── Secondary Keywords ────────────────────────────────────────────────────────
+# Supporting indicators — weight: 15-28 points
+secondary:
+  - phrase: "hadiah percuma"
+    weight: 25
+  - phrase: "duit cepat"
+    weight: 22
+  - phrase: "promo terhad"
+    weight: 18
+  - phrase: "konfirmasi sekarang"
+    weight: 22
+  - phrase: "jangan tanya"
+    weight: 22
+  - phrase: "sistem automatik"
+    weight: 18
+  - phrase: "kod rujukan"
+    weight: 15
+  - phrase: "whatsapp nombor"
+    weight: 22
+  - phrase: "bayar dahulu"
+    weight: 28
+  - phrase: "akaun bank"
+    weight: 15
+  - phrase: "screenshoot pembayaran"
+    weight: 22
+  - phrase: "link pendaftaran"
+    weight: 20
+  - phrase: "whatsapp sahaja"
+    weight: 25
+  - phrase: "bayar melalui"
+    weight: 15
+  - phrase: "sekarang je"
+    weight: 18
+    notes: "Urgency pressure — act now"
+  - phrase: "last slot"
+    weight: 20
+    notes: "Urgency — limited availability"
+  - phrase: "terhad je"
+    weight: 18
+    notes: "Urgency — limited offer"
+  - phrase: "khas untuk anda"
+    weight: 15
+    notes: "Targeting — special for you"
+  - phrase: "rahsia"
+    weight: 15
+    notes: "Secret method — suspicious"
+  - phrase: "modal minimum"
+    weight: 20
+    notes: "Minimum capital — investment hook"
+  - phrase: "pulangan tetap"
+    weight: 25
+    notes: "Fixed returns — guaranteed return scam"
+  - phrase: "pendapatan pasif"
+    weight: 22
+    notes: "Passive income — common scam hook"
+  - phrase: "daftar percuma"
+    weight: 18
+    notes: "Free registration — phishing hook"
+  - phrase: "bonus daftar"
+    weight: 18
+    notes: "Registration bonus — recruitment hook"
+  - phrase: "referral code"
+    weight: 15
+    notes: "Referral/affiliate — pyramid scheme indicator"
+  - phrase: "downline"
+    weight: 20
+    notes: "MLM/pyramid scheme terminology"
+  - phrase: "network marketing"
+    weight: 18
+    notes: "MLM terminology"
+
+# ─── Slang / Local Terms ───────────────────────────────────────────────────────
+# Malaysian colloquial scam terminology — weight: 8-22 points
+slang:
+  - phrase: "duit mudah"
+    weight: 18
+  - phrase: "scam lah"
+    weight: 18
+  - phrase: "jangan percaya"
+    weight: 12
+  - phrase: "wang cepat"
+    weight: 18
+  - phrase: "deposit je"
+    weight: 22
+  - phrase: "whatsapp je"
+    weight: 18
+  - phrase: "kopi"
+    weight: 10
+    notes: "Can mean 'tip' or be slang for scam schemes"
+  - phrase: "kantoi"
+    weight: 10
+    notes: "Caught/exposed — often in scam reports"
+  - phrase: "tertipu"
+    weight: 12
+  - phrase: "kena tipu"
+    weight: 18
+  - phrase: "kena scam"
+    weight: 22
+  - phrase: "tipu helah"
+    weight: 15
+  - phrase: "con job"
+    weight: 18
+  - phrase: "tipu"
+    weight: 15
+  - phrase: "penipu"
+    weight: 18
+  - phrase: "penipuan"
+    weight: 18
+  - phrase: "makan duit"
+    weight: 20
+    notes: "Eat money — slang for being scammed"
+  - phrase: "potong"
+    weight: 10
+    notes: "Cut — loan shark intimidation"
+  - phrase: "splash"
+    weight: 8
+    notes: "Red paint — loan shark threat"
+  - phrase: "cat merah"
+    weight: 10
+    notes: "Red paint — loan shark threat"
+
+# ─── Exclusion Patterns ────────────────────────────────────────────────────────
+# Reduce false positives — legitimate job/business indicators
+exclusions:
+  - phrase: "kerja tetap"
+    action: "reduce_weight"
+    by: 20
+  - phrase: "jawatan kerajaan"
+    action: "reduce_weight"
+    by: 25
+  - phrase: "interview face to face"
+    action: "reduce_weight"
+    by: 15
+  - phrase: "gaji bulanan"
+    action: "reduce_weight"
+    by: 20
+  - phrase: "kontrak sah"
+    action: "reduce_weight"
+    by: 15
+  - phrase: "kwsp"
+    action: "reduce_weight"
+    by: 15
+    notes: "EPF contribution suggests legitimate job"
+  - phrase: "socso"
+    action: "reduce_weight"
+    by: 15
+  - phrase: "epf"
+    action: "reduce_weight"
+    by: 15
+  - phrase: "kod syarikat"
+    action: "reduce_weight"
+    by: 10
+    notes: "Company registration — legitimate business"
+  - phrase: "ssm"
+    action: "reduce_weight"
+    by: 10
+    notes: "SSM registration — legitimate business"
+  - phrase: "geran perniagaan"
+    action: "reduce_weight"
+    by: 10
+  - phrase: "resit rasmi"
+    action: "reduce_weight"
+    by: 15
+  - phrase: "cod"
+    action: "reduce_weight"
+    by: 20
+    notes: "Cash on delivery — legitimate marketplace"
+  - phrase: "penghantaran percuma"
+    action: "reduce_weight"
+    by: 10
+  - phrase: "service aircond"
+    action: "reduce_weight"
+    by: 15
+    notes: "Legitimate AC service posting"
+  - phrase: "service"
+    action: "reduce_weight"
+    by: 5
+    notes: "Service keyword — too broad alone"
+
+# ─── Community Flag Keywords ───────────────────────────────────────────────────
+# Keywords used by community to flag scams
+community_flags:
+  - phrase: "scam"
+    weight: 30
+    notes: "Direct flag from community members"
+  - phrase: "link scam"
+    weight: 38
+  - phrase: "penipu"
+    weight: 28
+  - phrase: "tipu"
+    weight: 25
+  - phrase: "jangan bayar"
+    weight: 25
+  - phrase: "delete"
+    weight: 15
+    context: "When used with scam context"
+  - phrase: "padam"
+    weight: 15
+    context: "When used with scam context"
+  - phrase: "lapor polis"
+    weight: 25
+    notes: "Report to police — strong scam indicator"
+  - phrase: "buat laporan"
+    weight: 20
+    notes: "Make a report — scam victim language"
+  - phrase: "semak mule"
+    weight: 30
+    notes: "Check SemakMule — confirming scam"
+  - phrase: "bank negara"
+    weight: 20
+    notes: "BNM reference in scam context"
+  - phrase: "polis"
+    weight: 12
+    notes: "Police — in scam context"
+  - phrase: "pdrm"
+    weight: 15
+  - phrase: "cccm"
+    weight: 15
+    notes: "Commercial Crime Command Centre"
+  - phrase: "report"
+    weight: 10
+  - phrase: "warning"
+    weight: 15
+  - phrase: "amaran"
+    weight: 15
+
+# ─── Regex Patterns ─────────────────────────────────────────────────────────────
+# Pattern-based extraction for structured scam indicators
+regex_patterns:
+  - name: "whatsapp_link"
+    pattern: '(?:https?://)?(?:wa\.me|api\.whatsapp\.com/send\?phone=)[^\s]+'
+    weight: 35
+    extract:
+      type: "phone"
+      transform: "extract_phone_from_wa_link"
+
+  - name: "wasap_my_link"
+    pattern: '(?:https?://)?(?:www\.)?wasap\.my/\d+'
+    weight: 30
+    extract:
+      type: "phone"
+      transform: "extract_phone_from_wa_link"
+
+  - name: "suspicious_tld"
+    pattern: '(?:https?://)?[\w\.-]+\.(?:xyz|top|tk|ga|ml|cf|click|link|work|loan)'
+    weight: 30
+    extract:
+      type: "domain"
+
+  - name: "deposit_amount"
+    pattern: '\b(?:deposit|bayar\s+dahulu|bayar\s+dulu)\s*[\d,]+\s*(?:rm|ringgit)\b'
+    weight: 28
+
+  - name: "guaranteed_returns"
+    pattern: '\b(?:janji|jamin)\s*[\d%]+\s*(?:untung|faedah|pulangan)\b'
+    weight: 30
+
+  - name: "qr_code_mention"
+    pattern: '\b(?:scan|skan)\s*qr\b'
+    weight: 28
+
+  - name: "bank_account_my"
+    pattern: '\b(\d{10,16})\b'
+    weight: 10
+    extract:
+      type: "bank_account"
+    context: "Must be near bank-related keywords"
+
+  - name: "touch_n_go"
+    pattern: "\\b(?:touch[\\s\\']?n[\\s\\']?go|tng|t[\\s-]?n[\\s-]?g)\\b"
+    weight: 20
+    notes: "Touch n Go reference — common scam target"
+
+  - name: "duitnow_reference"
+    pattern: "\\bduitnow\\b"
+    weight: 22
+    notes: "DuitNow reference — instant transfer scam vector"
+
+  - name: "macau_scam_indicator"
+    pattern: "\\b(?:macau[\\s-]?scam|scam[\\s-]?macau|panggil[\\s-]?telefon[\\s-]?macau|panggilan[\\s-]?macau)\\b"
+    weight: 45
+    notes: "Macau scam indicators"
+
+  - name: "ah_long_indicator"
+    pattern: "\\b(?:ah[\\s-]?long|loan[\\s-]?shark|pinjaman[\\s-]?ilegal|along[\\s-]?malaysia|potong[\\s-]?ayam)\\b"
+    weight: 40
+    notes: "Loan shark / Ah Long indicators"
+
+  - name: "guaranteed_percentage"
+    pattern: "\\b[\\d]+(?:\\.\\d+)?%\\s*(?:untung|pulangan|return|profit|faedah|gain)\\b"
+    weight: 28
+    notes: "Guaranteed percentage returns — investment scam"
+
+  - name: "fake_gov_aid"
+    pattern: "\\b(?:bantuan[\\s-]?kerajaan[\\s-]?tipu|bantuan[\\s-]?palsu|bkm[\\s-]?tipu|bpr[\\s-]?tipu|str[\\s-]?tipu|bsh[\\s-]?tipu)\\b"
+    weight: 38
+    notes: "Fake government aid references"
+
+  - name: "telegram_invite"
+    pattern: "(?:https?://)?(?:t\\.me/joinchat/|t\\.me/\\+)[^\\s]+"
+    weight: 25
+    notes: "Telegram group invite — recruitment for scams"
+
+  - name: "urgency_pressure"
+    pattern: "\\b(?:sekarang[\\s-]?je|terhad[\\s-]?je|last[\\s-]?slot|slot[\\s-]?terhad|cepat[\\s-]?daftar|daftar[\\s-]?sekarang)\\b"
+    weight: 18
+    notes: "Urgency pressure phrases"
+
+  - name: "transfer_pressure"
+    pattern: "\\b(?:transfer[\\s-]?dulu|bank[\\s-]?in[\\s-]?dulu|bayar[\\s-]?dulu|hantar[\\s-]?duit[\\s-]?dulu)\\b"
+    weight: 32
+    notes: "Advance fee / transfer pressure"
+
+# ─── Scam Types ─────────────────────────────────────────────────────────────────
+# Categorization for detected scams
+scam_types:
+  job_scam:
+    keywords: ["jawatan kosong", "whatsapp link", "kerja sambilan", "kerja dari rumah", "buat duit online", "pendapatan pasif"]
+    weight_threshold: 40
+
+  deposit_scam:
+    keywords: ["deposit", "bayar dahulu", "bayar dulu", "transfer dulu", "bank in dulu", "hantar duit dulu"]
+    weight_threshold: 35
+
+  investment_scam:
+    keywords: ["untung", "pulangan", "investasi", "janji", "jamin", "skim cepat kaya", "pelaburan haram", "modal minimum", "pulangan tetap"]
+    weight_threshold: 40
 
   phishing:
-    priority: medium
-    keywords:
-      - [otp, 20]
-      - [verifikasi, 15]
-      - [login, 15]
-      - [suspended, 15]
-      - [kansel, 15]
-      - [akaun, 10]
-      - [tukar password, 20]
-      - [secure, 10]
-      - [verify, 15]
-      - [confirm identity, 15]
+    keywords: ["link bank", "login", "verify", "akaun", "link palsu", "phishing"]
+    weight_threshold: 35
 
-# Language variants (Malay, Indonesian, English, Chinese)
-languages:
-  - ms  # Malay
-  - id  # Indonesian
-  - en  # English
-  - zh  # Chinese
+  qr_scam:
+    keywords: ["scan qr", "qr code", "touch n go", "tng", "duitnow"]
+    weight_threshold: 30
+
+  macau_scam:
+    keywords: ["macau scam", "scam macau", "panggilan telefon palsu", "akaun sekat", "macau"]
+    weight_threshold: 45
+
+  love_scam:
+    keywords: ["love scam", "romance scam", "teman lelaki palsu", "teman wanita palsu"]
+    weight_threshold: 40
+
+  loan_shark:
+    keywords: ["ah long", "loan shark", "pinjaman ilegal", "potong ayam", "along", "splash", "cat merah"]
+    weight_threshold: 40
+
+  e_commerce_scam:
+    keywords: ["e-commerce scam", "jual beli tipu", "jualan palsu", "produk tak sampai"]
+    weight_threshold: 35
+
+  government_aid_scam:
+    keywords: ["bantuan kerajaan tipu", "bantuan palsu", "bkm tipu", "bpr tipu", "str tipu"]
+    weight_threshold: 38
+
+  tng_scam:
+    keywords: ["tng tipu", "touch n go tipu", "duitnow tipu", "scan qr"]
+    weight_threshold: 35

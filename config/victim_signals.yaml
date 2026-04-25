@@ -1,0 +1,117 @@
+financial_loss:
+- pattern: \b(kena|telah|da|dah|sudah)\s+(tipu|scam|con|penipu)\b
+  weight: 40
+  description: Direct admission of being scammed (Malay + English)
+- pattern: \b(hilang|kehilangan|rugi)\s+(duit|wang|RM|ringgit|money)\b
+  weight: 45
+  description: Loss of money stated
+- pattern: \b(sudah|da|telah)\s+(transfer|bank\s*in|hantar)\s+(duit|RM|wang)\b
+  weight: 35
+  description: Money transferred to scammer
+- pattern: \b(duit|wang|money)\s+(hilang|rugi|tipu|scammed)\b
+  weight: 35
+  description: Money lost/missing
+- pattern: \b(tipu|scam|con)\s+(RM|ringgit|duit|wang)\b
+  weight: 40
+  description: Scam with amount mentioned
+- pattern: \bscammed\b
+  weight: 35
+  description: English 'scammed' keyword
+- pattern: \bkena\s+scam\b
+  weight: 40
+  description: Malay-English hybrid scam admission
+- pattern: \bfraud\b
+  weight: 30
+  description: Fraud keyword
+- pattern: \bdefrauded\b
+  weight: 35
+  description: Defrauded keyword
+police_report:
+- pattern: \b(police|polis)\s+(report|laporan|aduan)\b
+  weight: 35
+  description: Police report mentioned
+- pattern: \b(buat|filed|made)\s+(laporan|report|aduan)\b
+  weight: 30
+  description: Report filed
+- pattern: \bpolis\s+report\b
+  weight: 35
+  description: Police report (English-Malay)
+- pattern: \blaporan\s+polis\b
+  weight: 35
+  description: Laporan polis (Malay)
+- pattern: \breport\s+to\s+(pdrm|polis|bukit\s+aman)\b
+  weight: 30
+  description: Report to police/PDRM
+amount_mentioned:
+- pattern: \bRM[\d,]+(?:\.\d{2})?\b
+  weight: 30
+  description: RM amount (e.g., RM50,000)
+  extract: true
+- pattern: \bRM\s*[\d,]+(?:\.\d{2})?\b
+  weight: 30
+  description: RM amount with space
+  extract: true
+- pattern: \brm\s*[\d,]+(?:\.\d{2})?\b
+  weight: 30
+  description: rm amount (lowercase)
+  extract: true
+- pattern: \b([\d,]+(?:\.\d{2})?)\s*(ringgit|RM)\b
+  weight: 30
+  description: Amount before currency
+  extract: true
+- pattern: \bRM\s*(\d+)[Kk]\b
+  weight: 30
+  description: RM amount with K suffix (e.g., RM3K = RM3,000)
+  extract: true
+  multiplier: 1000
+- pattern: \brm\s*(\d+)[Kk]\b
+  weight: 25
+  description: rm amount with K suffix lowercase (e.g., rm3k)
+  extract: true
+  multiplier: 1000
+- pattern: \bRM\s*(\d+)[Mm]\b
+  weight: 30
+  description: RM amount with M suffix (e.g., RM5M = RM5,000,000)
+  extract: true
+  multiplier: 1000000
+community_warning:
+- pattern: \b(jangan|dont|don_t)\s+(bayar|pay|transfer|hantar|beli)\b
+  weight: 25
+  description: Warning not to pay/transfer
+- pattern: \b(beware|amaran|warning|awas|perhatian)\b
+  weight: 20
+  description: Warning keyword
+- pattern: \b(scam|tipu|penipu|con)\b
+  weight: 30
+  description: Scam keyword
+- pattern: \b(jangan\s+kena)\s+(tipu|scam)\b
+  weight: 35
+  description: Don't get scammed
+- pattern: \bharap\s+banci\b
+  weight: 20
+  description: Hope this helps (warning context)
+- pattern: \bforward\s+ini\b
+  weight: 15
+  description: Forward this (viral warning)
+- pattern: \bsila\s+share\b
+  weight: 15
+  description: Please share (viral warning)
+- pattern: \bsedar\s+diri\b
+  weight: 20
+  description: Self-aware (warning context)
+emotional_distress:
+- pattern: \b(sedih|devastated|teruk|terrible|stress|depressed)\b
+  weight: 15
+  description: Emotional distress keywords
+- pattern: \b(sakit|sakit\s*hati|heartbroken|heartbreak)\b
+  weight: 15
+  description: Heart pain / emotional pain
+- pattern: \b(hilang\s+semua|hancur|binasa|musnah)\b
+  weight: 20
+  description: Lost everything
+- pattern: \b(tak\s+tahu\s+apa\s+nak\s+buat)\b
+  weight: 15
+  description: Don't know what to do
+- pattern: \b(suicide|bunuh\s*diri|tak\s+nak\s+hidup)\b
+  weight: 25
+  description: Suicidal ideation — critical signal

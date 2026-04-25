@@ -1,0 +1,1211 @@
+# FraudMVP Alert Intelligence — Implementation Plan
+
+**Version:** 1.0  
+**Date:** 12/04/2026  
+**Author:** Bayang (GLM-5.1)  
+**Status:** DRAFT — Pending review
+
+---
+
+## Table of Contents
+
+1. [Problem Statement](#1-problem-statement)
+2. [Current State Assessment](#2-current-state-assessment)
+3. [Architecture Overview](#3-architecture-overview)
+4. [Phase 1 — Cross-Reference Engine](#4-phase-1--cross-reference-engine)
+5. [Phase 1 — Rich Alert Narratives](#5-phase-1--rich-alert-narratives)
+6. [Phase 1 — Victim Signal Detection](#6-phase-1--victim-signal-detection)
+7. [Phase 2 — Campaign Clustering](#7-phase-2--campaign-clustering)
+8. [Phase 2 — Scam Type Classification](#8-phase-2--scam-type-classification)
+9. [Phase 3 — Trend & Spike Detection](#9-phase-3--trend--spike-detection)
+10. [Phase 3 — Entity Relationship Graph](#10-phase-3--entity-relationship-graph)
+11. [Database Schema Changes](#11-database-schema-changes)
+12. [Configuration Changes](#12-configuration-changes)
+13. [Testing Strategy](#13-testing-strategy)
+14. [Risk Assessment](#14-risk-assessment)
+15. [Timeline](#15-timeline)
+
+---
+
+## 1. Problem Statement
+
+FraudMVP currently extracts entities (phones, bank accounts, domains, etc.) from Telegram messages and web sources, but the **alerts it produces are shallow** — just a list of entities with a numeric score. The pipeline lacks:
+
+| Gap | Impact |
+|-----|--------|
+| **No cross-referencing** | Entities flagged as "suspicious" might already be confirmed fraud by BNM/SC — we don't check |
+| **No campaign linking** | Same scammer using 3 bank accounts + 1 phone across 5 messages appears as 4 separate alerts |
+| **No narrative** | Alerts say "Score: 75" but don't explain WHY or what action to take |
+| **No victim signal detection** | "Kena tipu RM50K" is ignored — we miss real harm evidence |
+| **No scam type classification** | All alerts look the same regardless of scam type |
+| **No trend detection** | 50 mentions of a new entity in 2 days = spike, but we don't detect it |
+| **No relationship mapping** | One phone number linking 5 "different" companies = same operator, but we don't see it |
+
+---
+
+## 2. Current State Assessment
+
+### 2.1 Database (SQLite — `db/fraud_mvp.db`)
+
+**Current tables:**
+
+| Table | Purpose | Rows |
+|-------|---------|------|
+| `entities` | Extracted entities (phone, bank, domain, etc.) | 2,890 |
+| `entity_edges` | Channel/message context for each entity | ~276 |
+| `campaigns` | Clustered scam campaigns | ~25 |
+| `sources` | Scraping source metadata | — |
+| `scraped_messages` | Raw scraped messages with dedup | — |
+| `alert_log` | Alert delivery tracking | — |
+
+**Entity types in DB:**
+
+| Type | Count | Source |
+|------|-------|--------|
+| `company_name` | 572 | BNM Consumer Alert |
+| `domain` | 214 | BNM + SC |
+| `telegram_url` | 167 | SC Investor Alert |
+| `facebook_url` | 125 | BNM + SC |
+| `whatsapp_link` | 23 | BNM + SC |
+| `phone` | 14 | Telegram + BNM |
+| `bank_account` | 14 | Telegram |
+| `facebook_page` | 13 | BNM + SC |
+
+**Key issue:** The `entities` table CHECK constraint was expanded to include BNM/SC types (`company_name`, `facebook_url`, etc.) but the **schema.sql** file is stale — it still only allows the original 7 types. The `campaigns` table CHECK constraint also limits `campaign_type` to 5 values.
+
+### 2.2 Pipeline Flow (Current)
+
+```
+Telegram Scraper → Extractor → Redis Queue → Scorer → Redis Queue → Alerter → Telegram
+                                         ↑                    ↑
+                                    keyword_scorer        llm_enhancer
+                                              ↑
+                                        scoring_rules.yaml
+```
+
+**Missing steps:** No cross-reference against known-bad DB, no enrichment step, no narrative generation, no trend tracking.
+
+### 2.3 Scoring (Current)
+
+The scorer (`agents/scorer.py`) does:
+1. Build entity graph from DB
+2. Score frequency (entity count ≥3 → +40)
+3. Score temporal (cross-channel spread <24h → +30)
+4. Score content (keyword matching, LLM similarity)
+5. Score channel quality (Telegram presence → +20)
+6. LLM boost (+5 to +15 based on risk level)
+7. Cluster by shared channels → campaigns
+
+**Missing:** Cross-reference score boost, SemakMule verification, victim signal detection, scam type classification, trend/spike detection.
+
+### 2.4 Alert Formatting (Current)
+
+The alerter (`agents/alerter.py`) calls `format_alert()` from `services/alert_formatter.py`, which produces:
+
+```
+🟠 SCAM ALERT — Investment Scam (HIGH)
+📌 3 key entities flagged across 2 sources
+ └─ 📱 🇲🇾 +60123456789 (seen 3x)
+ └─ 🏦 123456789012 (Maybank) (seen 2x)
+
+✅ Verify at SemakMule: https://semakmule.rmp.gov.my
+📱 Block calls/SMS from unknown overseas numbers.
+🏦 Never transfer to an unverified account.
+⚠️ Report to PDRM immediately if you already transferred.
+
+🔍 Matched: skim cepat kaya, pelaburan haram
+```
+
+**Missing:** Cross-reference confirmation, victim reports, trend data, entity relationships, scam type narrative.
+
+---
+
+## 3. Architecture Overview
+
+### 3.1 New Pipeline Flow (Proposed)
+
+```
+Telegram Scraper ──┐
+Web Scraper ───────┤
+Reddit Scraper ────┤──→ Extractor ──→ Cross-Ref Engine ──→ Enhanced Scorer ──→ Alert Builder ──→ Telegram
+BNM Alert List ───┤                      ↑                      ↑
+SC Investor Alert ─┤                 known_bad_db          victim_signals
+SemakMule ─────────┘                      ↑                      ↑
+                                    (2,890 entities)      (pattern matching)
+```
+
+### 3.2 New/Modified Components
+
+| Component | Type | Description |
+|-----------|------|-------------|
+| `services/cross_reference.py` | **NEW** | Cross-reference extracted entities against known-bad DB |
+| `services/victim_signal.py` | **NEW** | Detect victim reports in message text |
+| `services/alert_builder.py` | **NEW** | Build rich, actionable alert narratives |
+| `services/trend_detector.py` | **NEW** | Detect entity mention spikes and emerging threats |
+| `services/entity_linker.py` | **NEW** | Link co-occurring entities into relationship graph |
+| `agents/scorer.py` | **MODIFY** | Add cross-reference boost, victim signal, trend score |
+| `agents/alerter.py` | **MODIFY** | Use new alert builder |
+| `services/alert_formatter.py` | **MODIFY** | Add cross-reference, victim, trend sections |
+| `services/campaign_types.py` | **MODIFY** | Add more scam types |
+| `db/schema.sql` | **MODIFY** | Add new tables, expand CHECK constraints |
+| `config/scoring_rules.yaml` | **MODIFY** | Add cross-reference weights |
+
+---
+
+## 4. Phase 1 — Cross-Reference Engine
+
+**Goal:** Every extracted entity is checked against 2,890 known-bad entities in real-time. A match = instant **Critical** boost with source attribution.
+
+### 4.1 Design
+
+```python
+# services/cross_reference.py
+
+class CrossReferenceEngine:
+    """
+    Check extracted entities against known-bad databases:
+    - BNM Consumer Alert List (575 companies, 251 domains, etc.)
+    - SC Investor Alert List (1,474 entities, 574 websites, 161 TG links, etc.)
+    - SemakMule (when available — currently DOWN)
+    - Internal historical data (previously flagged entities)
+    """
+    
+    def check_entity(self, value: str, entity_type: str) -> CrossReferenceResult:
+        """
+        Check a single entity against all known-bad databases.
+        Returns: match status, source, date listed, related entities.
+        """
+        ...
+    
+    def check_batch(self, entities: list[dict]) -> list[CrossReferenceResult]:
+        """Batch check multiple entities."""
+        ...
+    
+    def find_related(self, value: str) -> list[RelatedEntity]:
+        """Find entities linked to this value (same source, same campaign)."""
+        ...
+```
+
+### 4.2 Cross-Reference Result Structure
+
+```python
+@dataclass
+class CrossReferenceResult:
+    value: str                          # The entity value checked
+    entity_type: str                    # phone, bank_account, domain, etc.
+    matched: bool                       # Whether a match was found
+    sources: list[MatchSource]          # Where the match came from
+    related_entities: list[dict]        # Other entities from same source entry
+    confidence: float                    # 0.0-1.0 match confidence
+    risk_boost: int                      # Score boost (0-50)
+
+@dataclass  
+class MatchSource:
+    database: str       # "BNM Consumer Alert List", "SC Investor Alert List", "SemakMule"
+    listed_date: str     # Date the entity was listed
+    entity_name: str     # Name of the fraudulent entity
+    status: str          # "confirmed", "suspected", "verified"
+```
+
+### 4.3 Matching Strategy
+
+| Entity Type | Matching Method | Confidence |
+|-------------|----------------|------------|
+| `phone` | Exact match (after normalisation: strip `+60`, spaces, dashes) | 0.95 |
+| `bank_account` | Exact match (digits only) | 0.95 |
+| `domain` | Exact + fuzzy (levenshtein ≤2 for phishing domains like `maybank-my.com` vs `maybank.com.my`) | 0.80-0.95 |
+| `telegram_url` | Exact match on channel/group name | 0.95 |
+| `whatsapp_link` | Exact match on phone number extracted from URL | 0.90 |
+| `facebook_url` | Exact match on page name | 0.90 |
+| `company_name` | Fuzzy match (levenshtein, token overlap) | 0.70-0.85 |
+
+### 4.4 Scoring Integration
+
+When a cross-reference match is found, the scorer applies a **Cross-Reference Boost**:
+
+| Match Source | Boost |
+|-------------|-------|
+| BNM Consumer Alert List | **+50** (confirmed unauthorised by central bank) |
+| SC Investor Alert List | **+45** (confirmed unauthorised by securities commission) |
+| SemakMule (PDRM) | **+50** (police-verified fraud) |
+| Internal historical flag | **+20** (previously flagged by our pipeline) |
+
+This is **additive** to the base score, capped at 100. A single BNM match on an entity that already scored 50 → 100 (Critical).
+
+### 4.5 Implementation Steps
+
+1. **Create `services/cross_reference.py`** with `CrossReferenceEngine` class
+2. **Add `cross_reference` table to DB schema** for caching match results:
+   ```sql
+   CREATE TABLE IF NOT EXISTS cross_references (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       entity_id INTEGER NOT NULL,
+       source_db TEXT NOT NULL,          -- 'bnm', 'sc', 'semakmule', 'internal'
+       source_entity_name TEXT,           -- Name from the source listing
+       match_confidence REAL DEFAULT 0.0, -- 0.0-1.0
+       listed_date TEXT,                 -- When the entity was listed
+       status TEXT DEFAULT 'confirmed',  -- confirmed, suspected, verified
+       checked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY (entity_id) REFERENCES entities(id)
+   );
+   CREATE INDEX IF NOT EXISTS idx_cross_ref_entity ON cross_references(entity_id);
+   CREATE INDEX IF NOT EXISTS idx_cross_ref_source ON cross_references(source_db);
+   ```
+3. **Load known-bad entities into memory** at scorer startup (2,890 entities → ~500KB, negligible)
+4. **Add cross-reference check** in `scorer.py` after entity graph construction (Step 1.5)
+5. **Update `scoring_rules.yaml`** with cross-reference weights
+6. **Write tests** with known BNM/SC entities
+
+### 4.6 Fuzzy Matching for Domains
+
+For domain matching, we need to catch phishing domains that differ by 1-2 characters:
+
+```python
+def fuzzy_domain_match(query: str, known_domains: list[str], threshold: int = 2) -> list[str]:
+    """
+    Find domains within levenshtein distance of threshold.
+    Catches: maybank-my.com vs maybank.com.my, c1mb.com vs cimb.com
+    """
+    matches = []
+    query_lower = query.lower().replace("www.", "")
+    for domain in known_domains:
+        domain_lower = domain.lower().replace("www.", "")
+        # Check exact match first
+        if query_lower == domain_lower:
+            matches.append((domain, 0))  # exact
+            continue
+        # Check if query is subdomain of known domain
+        if query_lower.endswith("." + domain_lower):
+            matches.append((domain, 1))  # subdomain
+            continue
+        # Levenshtein distance for close matches
+        if len(query_lower) > 5:  # Skip short domains (too many false positives)
+            dist = levenshtein_distance(query_lower, domain_lower)
+            if dist <= threshold:
+                matches.append((domain, dist))
+    return sorted(matches, key=lambda x: x[1])
+```
+
+---
+
+## 5. Phase 1 — Rich Alert Narratives
+
+**Goal:** Transform alerts from "Score: 75, entities found" to actionable intelligence briefings.
+
+### 5.1 Current vs. Proposed Alert Format
+
+**Current (flat):**
+```
+🟠 SCAM ALERT — Investment Scam (HIGH)
+📌 3 key entities flagged across 2 sources
+ └─ 📱 +60123456789 (seen 3x)
+ └─ 🏦 123456789012 (Maybank)
+✅ Verify at SemakMule
+🔍 Matched: skim cepat kaya
+```
+
+**Proposed (rich):**
+```
+🚨 CRITICAL — Confirmed Fraud Entity
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📱 +601-2345-6789
+   ⚠️ CONFIRMED: Listed on BNM Consumer Alert (15/03/2026)
+   ⚠️ CONFIRMED: Listed on SC Investor Alert (as "ABC Investment Sdn Bhd")
+   📊 7-day trend: ↑ 340% (3 → 13 mentions)
+   🔗 Co-occurs with: Maybank 1234-5678-9012 (5x), t.me/abc_invest (8x)
+
+🏦 Maybank 1234-5678-9012
+   ⚠️ PDRM VERIFIED — 23x reported on SemakMule
+   📊 First seen: 01/04/2026 | Last seen: 10/04/2026
+   🔗 Same campaigns as: +601-9876-5432, +601-5555-1234
+
+📋 Campaign: Investment Scam — "ABC Capital Group"
+   📅 Active since: 01/04/2026
+   📊 15 messages across 2 channels
+   🎯 Type: Pig-butchering / fake investment platform
+
+💬 Victim Reports:
+   • "kena tipu RM50K" (TG, 08/04/2026)
+   • "hilang duit, dah buat police report" (TG, 06/04/2026)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ Actions:
+   1. Verify at SemakMule: https://semakmule.rmp.gov.my
+   2. Report to PDRM (commercial crime): 03-2610 1559
+   3. Report to BNM: 1-300-88-5465
+   4. Block +601-2345-6789 on all devices
+```
+
+### 5.2 Alert Builder Architecture
+
+```python
+# services/alert_builder.py
+
+@dataclass
+class AlertNarrative:
+    risk_level: str           # critical, high, medium, low
+    scam_type: str            # investment, job_task, phishing, etc.
+    headline: str             # "CRITICAL — Confirmed Fraud Entity"
+    entities: list[EntityNarrative]
+    campaign: CampaignNarrative
+    victim_reports: list[VictimReport]
+    trend: TrendNarrative
+    actions: list[str]
+    confidence: float
+
+@dataclass
+class EntityNarrative:
+    value: str
+    entity_type: str
+    risk_level: str
+    cross_references: list[CrossReferenceResult]
+    trend: str                # "↑ 340% (3 → 13 mentions)"
+    co_occurs_with: list[str] # Related entities
+    first_seen: str
+    last_seen: str
+    count: int
+    formatted: str            # Pre-formatted for Telegram
+
+@dataclass
+class CampaignNarrative:
+    name: str                 # Auto-generated from entities + type
+    scam_type: str
+    active_since: str
+    message_count: int
+    channel_count: int
+    platforms: list[str]
+
+@dataclass
+class VictimReport:
+    text: str                # Original message snippet
+    source: str              # Channel/platform
+    date: str
+    severity: str            # "financial_loss", "attempted", "warning"
+
+@dataclass
+class TrendNarrative:
+    direction: str            # "↑", "↓", "→"
+    percentage: int          # 340
+    previous: int            # 3
+    current: int             # 13
+    period: str              # "7-day"
+```
+
+### 5.3 Implementation Steps
+
+1. **Create `services/alert_builder.py`** with `AlertBuilder` class
+2. **Modify `agents/alerter.py`** to use `AlertBuilder` instead of raw `format_alert()`
+3. **Keep `services/alert_formatter.py`** as a fallback for simple alerts
+4. **Add Telegram message chunking** (max 4096 chars per message — rich alerts may exceed this)
+5. **Add HTML formatting** for Telegram (bold, italic, links)
+
+### 5.4 Telegram Message Chunking
+
+```python
+def chunk_message(text: str, max_length: int = 4000) -> list[str]:
+    """
+    Split a long alert into multiple Telegram messages.
+    Each chunk must be ≤4096 chars and not break mid-entity.
+    """
+    chunks = []
+    current_chunk = ""
+    
+    for line in text.split("\n"):
+        if len(current_chunk) + len(line) + 1 > max_length:
+            chunks.append(current_chunk)
+            current_chunk = line + "\n"
+        else:
+            current_chunk += line + "\n"
+    
+    if current_chunk:
+        chunks.append(current_chunk)
+    
+    # Add continuation headers
+    for i, chunk in enumerate(chunks):
+        if i > 0:
+            chunk = f"[{i+1}/{len(chunks)}] " + chunk
+        chunks[i] = chunk
+    
+    return chunks
+```
+
+---
+
+## 6. Phase 1 — Victim Signal Detection
+
+**Goal:** Detect and extract evidence of financial loss from message text near flagged entities.
+
+### 6.1 Victim Signal Patterns
+
+```yaml
+# config/victim_signals.yaml — Proposed
+
+financial_loss:
+  - pattern: '\b(kena|telah|da)\s+(tipu|scam|con|penipu)\b'
+    weight: 40
+    category: financial_loss
+    
+  - pattern: '\b(hilang|kehilangan|rugi)\s+(duit|wang|RM|ringgit|money)\b'
+    weight: 45
+    category: financial_loss
+    
+  - pattern: '\bRM[\d,]+(?:\.\d{2})?\b'
+    weight: 30
+    category: amount_mentioned
+    extract: true   # Extract the amount
+    
+  - pattern: '\b(police|polis)\s+(report|laporan)\b'
+    weight: 35
+    category: police_report
+    
+  - pattern: '\b(buat|filed|made)\s+(laporan|report|aduan)\b'
+    weight: 30
+    category: police_report
+    
+  - pattern: '\b(sudah|da|telah)\s+(transfer|bank\s*in|hantar)\s+(duit|RM|wang)\b'
+    weight: 35
+    category: financial_loss
+
+attempted_scam:
+  - pattern: '\b(jangan|don\'t)\s+(bayar|pay|transfer|hantar)\b'
+    weight: 25
+    category: community_warning
+    
+  - pattern: '\b(beware|amaran|warning|awas)\b'
+    weight: 20
+    category: community_warning
+    
+  - pattern: '\b(scam|tipu|penipu|con)\b'
+    weight: 30
+    category: community_flag
+
+emotional_distress:
+  - pattern: '\b(sedih|devastated|teruk|terrible)\b'
+    weight: 15
+    category: emotional
+    
+  - pattern: '\b(sakit|sakit\s*hati|heartbroken)\b'
+    weight: 15
+    category: emotional
+```
+
+### 6.2 Victim Signal Engine
+
+```python
+# services/victim_signal.py
+
+class VictimSignalDetector:
+    """
+    Detect victim reports in message text near flagged entities.
+    
+    Uses regex patterns with weighted scoring to identify:
+    - Financial loss ("kena tipu RM50K")
+    - Police reports ("dah buat police report")
+    - Community warnings ("jangan bayar, ni scam")
+    - Emotional distress ("sedih, hilang semua duit")
+    """
+    
+    def detect_signals(self, text: str) -> list[VictimSignal]:
+        """Extract victim signals from a message."""
+        ...
+    
+    def extract_amounts(self, text: str) -> list[dict]:
+        """Extract monetary amounts: RM50,000 → {"amount": 50000, "currency": "RM"}"""
+        ...
+    
+    def compute_victim_score(self, signals: list[VictimSignal]) -> int:
+        """
+        Compute a victim impact score (0-30).
+        Higher = more evidence of real harm.
+        """
+        ...
+```
+
+### 6.3 Scoring Integration
+
+Victim signals add to the base score:
+
+| Signal Category | Score Boost |
+|----------------|-------------|
+| Financial loss confirmed | **+25** |
+| Police report mentioned | **+20** |
+| Community warning | **+15** |
+| Monetary amount > RM10K | **+10** |
+| Emotional distress | **+5** |
+
+### 6.4 Implementation Steps
+
+1. **Create `config/victim_signals.yaml`** with detection patterns
+2. **Create `services/victim_signal.py`** with `VictimSignalDetector` class
+3. **Add `victim_signals` table to DB schema** for storing detected signals:
+   ```sql
+   CREATE TABLE IF NOT EXISTS victim_signals (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       message_id INTEGER,
+       entity_id INTEGER,
+       signal_type TEXT NOT NULL,      -- 'financial_loss', 'police_report', 'community_warning', 'emotional'
+       pattern_matched TEXT,            -- The regex pattern that matched
+       extracted_text TEXT,             -- The matching text snippet
+       extracted_amount REAL,           -- If monetary amount was extracted
+       weight INTEGER DEFAULT 0,
+       detected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY (message_id) REFERENCES scraped_messages(id),
+       FOREIGN KEY (entity_id) REFERENCES entities(id)
+   );
+   ```
+4. **Integrate into `agents/scorer.py`** — add victim signal detection in Step 4
+5. **Integrate into `services/alert_builder.py`** — include victim reports in narrative
+
+---
+
+## 7. Phase 2 — Campaign Clustering
+
+**Goal:** Link co-occurring entities into campaigns. Same scammer using 3 bank accounts + 1 phone = one campaign, not four separate alerts.
+
+### 7.1 Current Clustering (Problem)
+
+Current `scorer.py` clusters entities by **shared channels** only. This misses:
+- Entities that appear in different channels but belong to the same operation
+- Entities linked by the same phone number (e.g., WhatsApp + Telegram)
+- Temporal patterns (entities appearing within 24h in different sources)
+
+### 7.2 Proposed: Multi-Link Clustering
+
+```python
+class EntityLinker:
+    """
+    Link entities into campaigns using multiple signals:
+    1. Co-occurrence in same message
+    2. Same channel within 24h window
+    3. Shared contact info (phone in WhatsApp + Telegram)
+    4. Domain similarity (phishing domains with same registrar)
+    5. Semantic similarity (LLM-classified same scam type)
+    """
+    
+    def link_entities(self, entities: list[dict]) -> list[CampaignCluster]:
+        """
+        Build campaign clusters using union-find on entity relationships.
+        Two entities are linked if they share ANY of the above signals.
+        """
+        ...
+```
+
+### 7.3 Campaign Clustering Algorithm
+
+```
+1. Build entity graph where edges = co-occurrence signals
+2. Use union-find to merge connected components
+3. Score each component:
+   - Entity count (more = larger operation)
+   - Channel diversity (more = wider reach)
+   - Time span (shorter = more urgent)
+   - Cross-reference matches (confirmed = higher risk)
+4. Generate campaign narrative from component
+```
+
+### 7.4 DB Changes
+
+```sql
+-- Add campaign_links for explicit entity-to-campaign relationships
+CREATE TABLE IF NOT EXISTS campaign_links (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    campaign_id INTEGER NOT NULL,
+    entity_id INTEGER NOT NULL,
+    link_type TEXT NOT NULL,     -- 'co_occurrence', 'shared_phone', 'shared_domain', 'semantic'
+    confidence REAL DEFAULT 1.0, -- How confident the link is
+    detected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (campaign_id) REFERENCES campaigns(id),
+    FOREIGN KEY (entity_id) REFERENCES entities(id),
+    UNIQUE(campaign_id, entity_id, link_type)
+);
+
+-- Expand campaign_type to include more scam types
+-- (requires recreating the campaigns table due to CHECK constraint)
+```
+
+### 7.5 Implementation Steps
+
+1. **Create `services/entity_linker.py`** with `EntityLinker` class
+2. **Add `campaign_links` table** to schema
+3. **Expand `campaign_type` CHECK constraint** to include new types:
+   ```sql
+   campaign_type TEXT NOT NULL CHECK(campaign_type IN (
+       'investment', 'job_task', 'aid_gov', 'phishing', 'unknown',
+       'loan_shark', 'romance', 'ecommerce', 'qr', 'macau'
+   ))
+   ```
+4. **Update `services/campaign_types.py`** with new types and labels
+5. **Modify `agents/scorer.py`** to use `EntityLinker` for clustering
+6. **Add campaign naming** (auto-generate from dominant entity + type)
+
+---
+
+## 8. Phase 2 — Scam Type Classification
+
+**Goal:** Automatically classify detected campaigns into specific scam types with narrative descriptions.
+
+### 8.1 Classification Strategy
+
+Three-tier classification:
+
+| Tier | Method | When Used | Confidence |
+|------|--------|-----------|------------|
+| 1. Rule-based | Keyword + entity pattern matching | All alerts | 0.7-0.95 |
+| 2. LLM | Gemma 4 analysis | Score ≥ 60 | 0.6-0.85 |
+| 3. Cross-reference | Match against BNM/SC category | Match found | 0.9-1.0 |
+
+### 8.2 Scam Type Definitions
+
+```yaml
+# config/scam_types.yaml — Proposed
+
+scam_types:
+  investment:
+    name: "Investment Scam"
+    aliases: ["pelaburan haram", "skim cepat kaya", "forex scam", "crypto scam"]
+    description: "Unsolicited investment promises with guaranteed returns"
+    keywords: ["untung", "pulangan", "investasi", "janji", "jamin", "modal minimum", "pulangan tetap"]
+    entity_patterns:
+      - types: ["bank_account", "phone", "whatsapp_link"]
+        min_count: 2
+        description: "Investment funnel: phone/WhatsApp → bank account → deposit"
+      - types: ["domain", "telegram_url"]
+        min_count: 1
+        description: "Fake investment platform with Telegram recruitment"
+    severity: high
+    action_advice: "Report to SC Malaysia, do not transfer any funds"
+    
+  job_task:
+    name: "Job / Task Scam"
+    aliases: ["job scam", "task scam", "kerja sambilan tipu"]
+    description: "Fake job offers requiring upfront payment or task completion"
+    keywords: ["jawatan kosong", "whatsapp link", "kerja dari rumah", "buat duit online", "pendapatan pasif"]
+    entity_patterns:
+      - types: ["whatsapp_link", "phone"]
+        min_count: 1
+        description: "Job scam funnel: WhatsApp contact → deposit → task"
+    severity: high
+    action_advice: "Verify job listing on official portal, never pay for job offers"
+    
+  loan_shark:
+    name: "Loan Shark / Ah Long"
+    aliases: ["ah long", "along", "pinjaman ilegal", "loan shark"]
+    description: "Illegal money lending with harassment"
+    keywords: ["ah long", "pinjaman ilegal", "potong ayam", "splash", "cat merah"]
+    entity_patterns:
+      - types: ["phone"]
+        min_count: 1
+        description: "Loan shark contact number"
+    severity: high
+    action_advice: "Report to PDRM, do not engage with lender"
+    
+  romance:
+    name: "Romance / Love Scam"
+    aliases: ["love scam", "romance scam", "pig butchering"]
+    description: "Online relationship leading to financial requests"
+    keywords: ["love scam", "romance", "sugar daddy", "sugar mummy", "cinta palsu"]
+    entity_patterns:
+      - types: ["phone", "whatsapp_link"]
+        min_count: 1
+        description: "Romance scam contact"
+    severity: high
+    action_advice: "Never send money to someone you haven't met in person"
+    
+  phishing:
+    name: "Phishing Scam"
+    aliases: ["phishing", "link bank palsu", "macau scam", "vishing"]
+    description: "Fake links/calls to steal credentials"
+    keywords: ["link bank palsu", "scan qr", "akaun sekat", "panggilan telefon palsu", "macau scam"]
+    entity_patterns:
+      - types: ["domain"]
+        min_count: 1
+        description: "Phishing domain"
+    severity: critical
+    action_advice: "Do not click links, verify directly with bank"
+    
+  ecommerce:
+    name: "E-Commerce Scam"
+    aliases: ["e-commerce scam", "jualan palsu", "jual beli tipu"]
+    description: "Fake online sales or non-delivery"
+    keywords: ["e-commerce scam", "jualan palsu", "produk tak sampai", "bayar deposit"]
+    entity_patterns:
+      - types: ["bank_account", "phone"]
+        min_count: 1
+        description: "Payment collection point"
+    severity: medium
+    action_advice: "Use COD or trusted platforms, check seller reviews"
+    
+  government_aid:
+    name: "Government Aid Scam"
+    aliases: ["bantuan kerajaan tipu", "BKM tipu", "STR tipu"]
+    description: "Fake government financial aid offers"
+    keywords: ["bantuan kerajaan tipu", "bantuan palsu", "BKM", "STR"]
+    entity_patterns:
+      - types: ["whatsapp_link", "phone"]
+        min_count: 1
+        description: "Scam contact for fake government aid"
+    severity: high
+    action_advice: "Verify at official gov portal, never share IC/bank details via WhatsApp"
+```
+
+### 8.3 Implementation Steps
+
+1. **Create `config/scam_types.yaml`** with full type definitions
+2. **Create `services/scam_classifier.py`** with three-tier classification
+3. **Update `services/campaign_types.py`** with expanded type map
+4. **Integrate into `agents/scorer.py`** — use classifier instead of simple keyword map
+5. **Update `services/alert_builder.py`** — use scam type for narrative generation
+
+---
+
+## 9. Phase 3 — Trend & Spike Detection
+
+**Goal:** Detect when an entity's mention frequency suddenly increases (spike = emerging threat).
+
+### 9.1 Trend Detection Algorithm
+
+```python
+class TrendDetector:
+    """
+    Detect entity mention spikes using exponential moving average (EMA).
+    
+    A spike is detected when the current period's mention count exceeds
+    the EMA by more than 2x the standard deviation.
+    """
+    
+    def compute_ema(self, counts: list[int], span: int = 7) -> list[float]:
+        """Compute exponential moving average of mention counts."""
+        ...
+    
+    def detect_spikes(self, entity_id: int, window_days: int = 7) -> SpikeResult:
+        """
+        Check if an entity is experiencing a mention spike.
+        Returns: direction, percentage change, current vs previous counts.
+        """
+        ...
+    
+    def get_trend_narrative(self, entity_id: int) -> str:
+        """Generate human-readable trend narrative for alerts."""
+        ...
+```
+
+### 9.2 DB Changes
+
+```sql
+-- Entity mention tracking (for trend detection)
+CREATE TABLE IF NOT EXISTS entity_mentions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    entity_id INTEGER NOT NULL,
+    date DATE NOT NULL,
+    mention_count INTEGER DEFAULT 1,
+    channel_count INTEGER DEFAULT 0,
+    platforms TEXT DEFAULT '[]',  -- JSON array of platforms seen
+    PRIMARY KEY (entity_id, date),
+    FOREIGN KEY (entity_id) REFERENCES entities(id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_mentions_entity_date ON entity_mentions(entity_id, date);
+```
+
+### 9.3 Spike Detection Logic
+
+```
+For each entity:
+1. Get mention counts for last 30 days
+2. Compute 7-day EMA
+3. Current count vs 7-day average:
+   - >200% → SPIKE (↑ 200%+)
+   - >100% → RISING (↑ 100-200%)
+   - >50% → INCREASING (↑ 50-100%)
+   - Within ±50% → STABLE (→)
+   - >50% below → DECLINING (↓)
+4. Alert boost:
+   - SPIKE: +20
+   - RISING: +15
+   - INCREASING: +10
+```
+
+### 9.4 Implementation Steps
+
+1. **Create `services/trend_detector.py`** with `TrendDetector` class
+2. **Add `entity_mentions` table** to schema
+3. **Add daily mention aggregation** — run as part of pipeline or cron
+4. **Integrate into `agents/scorer.py`** — add trend boost to scoring
+5. **Integrate into `services/alert_builder.py`** — show trend in alert narrative
+
+---
+
+## 10. Phase 3 — Entity Relationship Graph
+
+**Goal:** Build a relationship graph showing how entities are connected. One phone → 5 "different" companies = same operator.
+
+### 10.1 Graph Structure
+
+```sql
+-- Entity relationships
+CREATE TABLE IF NOT EXISTS entity_relationships (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_entity_id INTEGER NOT NULL,
+    target_entity_id INTEGER NOT NULL,
+    relationship_type TEXT NOT NULL,   -- 'co_occurs', 'shared_phone', 'shared_domain', 'same_campaign', 'registered_to'
+    confidence REAL DEFAULT 1.0,
+    evidence TEXT,                    -- JSON: message IDs, channels, dates
+    first_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    count INTEGER DEFAULT 1,
+    FOREIGN KEY (source_entity_id) REFERENCES entities(id),
+    FOREIGN KEY (target_entity_id) REFERENCES entities(id),
+    UNIQUE(source_entity_id, target_entity_id, relationship_type)
+);
+
+CREATE INDEX IF NOT EXISTS idx_rel_source ON entity_relationships(source_entity_id);
+CREATE INDEX IF NOT EXISTS idx_rel_target ON entity_relationships(target_entity_id);
+CREATE INDEX IF NOT EXISTS idx_rel_type ON entity_relationships(relationship_type);
+```
+
+### 10.2 Relationship Types
+
+| Type | Description | Detection Method |
+|------|-------------|-----------------|
+| `co_occurs` | Appear in same message | Direct extraction |
+| `shared_phone` | Same phone in WhatsApp + Telegram | URL pattern matching |
+| `shared_domain` | Domains hosted on same IP/registrar | WHOIS/DNS lookup (future) |
+| `same_campaign` | Clustered by scorer | Campaign assignment |
+| `registered_to` | Phone number registered to company name | Cross-reference with BNM/SC data |
+
+### 10.3 Implementation Steps
+
+1. **Create `services/entity_linker.py`** with `EntityLinker` class
+2. **Add `entity_relationships` table** to schema
+3. **Build co-occurrence relationships** during entity extraction
+4. **Build shared-phone relationships** by extracting phone from WhatsApp links
+5. **Build same-campaign relationships** from scorer output
+6. **Add relationship queries** for alert narrative ("same operator as...")
+7. **(Future) Add WHOIS/DNS enrichment** for domain relationships
+
+---
+
+## 11. Database Schema Changes
+
+### 11.1 New Tables
+
+```sql
+-- Cross-reference results cache
+CREATE TABLE IF NOT EXISTS cross_references (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    entity_id INTEGER NOT NULL,
+    source_db TEXT NOT NULL,           -- 'bnm', 'sc', 'semakmule', 'internal'
+    source_entity_name TEXT,
+    match_confidence REAL DEFAULT 0.0,
+    listed_date TEXT,
+    status TEXT DEFAULT 'confirmed',
+    checked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (entity_id) REFERENCES entities(id)
+);
+CREATE INDEX IF NOT EXISTS idx_cross_ref_entity ON cross_references(entity_id);
+CREATE INDEX IF NOT EXISTS idx_cross_ref_source ON cross_references(source_db);
+
+-- Victim signal detections
+CREATE TABLE IF NOT EXISTS victim_signals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    message_id INTEGER,
+    entity_id INTEGER,
+    signal_type TEXT NOT NULL,          -- 'financial_loss', 'police_report', 'community_warning', 'emotional'
+    pattern_matched TEXT,
+    extracted_text TEXT,
+    extracted_amount REAL,
+    weight INTEGER DEFAULT 0,
+    detected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (message_id) REFERENCES scraped_messages(id),
+    FOREIGN KEY (entity_id) REFERENCES entities(id)
+);
+
+-- Entity mention tracking (trend detection)
+CREATE TABLE IF NOT EXISTS entity_mentions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    entity_id INTEGER NOT NULL,
+    date DATE NOT NULL,
+    mention_count INTEGER DEFAULT 1,
+    channel_count INTEGER DEFAULT 0,
+    platforms TEXT DEFAULT '[]',
+    FOREIGN KEY (entity_id) REFERENCES entities(id),
+    UNIQUE(entity_id, date)
+);
+CREATE INDEX IF NOT EXISTS idx_mentions_entity_date ON entity_mentions(entity_id, date);
+
+-- Campaign entity links
+CREATE TABLE IF NOT EXISTS campaign_links (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    campaign_id INTEGER NOT NULL,
+    entity_id INTEGER NOT NULL,
+    link_type TEXT NOT NULL,            -- 'co_occurrence', 'shared_phone', 'shared_domain', 'semantic'
+    confidence REAL DEFAULT 1.0,
+    detected_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (campaign_id) REFERENCES campaigns(id),
+    FOREIGN KEY (entity_id) REFERENCES entities(id),
+    UNIQUE(campaign_id, entity_id, link_type)
+);
+
+-- Entity relationships
+CREATE TABLE IF NOT EXISTS entity_relationships (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_entity_id INTEGER NOT NULL,
+    target_entity_id INTEGER NOT NULL,
+    relationship_type TEXT NOT NULL,
+    confidence REAL DEFAULT 1.0,
+    evidence TEXT,
+    first_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    count INTEGER DEFAULT 1,
+    FOREIGN KEY (source_entity_id) REFERENCES entities(id),
+    FOREIGN KEY (target_entity_id) REFERENCES entities(id),
+    UNIQUE(source_entity_id, target_entity_id, relationship_type)
+);
+CREATE INDEX IF NOT EXISTS idx_rel_source ON entity_relationships(source_entity_id);
+CREATE INDEX IF NOT EXISTS idx_rel_target ON entity_relationships(target_entity_id);
+CREATE INDEX IF NOT EXISTS idx_rel_type ON entity_relationships(relationship_type);
+```
+
+### 11.2 Modified Tables
+
+**`entities` table** — Expand CHECK constraint:
+
+```sql
+-- Current CHECK constraint (in schema.sql, STALE):
+CHECK(type IN ('phone','bank_account','domain','wallet','url','email','ip'))
+
+-- Actual CHECK constraint (already applied to running DB):
+CHECK(type IN (
+    'phone','bank_account','domain','wallet','url','email','ip',
+    'company_name','facebook_url','facebook_page','telegram_url',
+    'telegram_channel','whatsapp_link','whatsapp_contact'
+))
+
+-- Proposed expanded CHECK constraint:
+CHECK(type IN (
+    'phone','bank_account','domain','wallet','url','email','ip',
+    'company_name','facebook_url','facebook_page','telegram_url',
+    'telegram_channel','whatsapp_link','whatsapp_contact',
+    'app_url','instagram_url','twitter_url'
+))
+```
+
+**`campaigns` table** — Expand CHECK constraint:
+
+```sql
+-- Current:
+CHECK(campaign_type IN ('investment', 'job_task', 'aid_gov', 'phishing', 'unknown'))
+
+-- Proposed:
+CHECK(campaign_type IN (
+    'investment', 'job_task', 'aid_gov', 'phishing', 'unknown',
+    'loan_shark', 'romance', 'ecommerce', 'qr', 'macau'
+))
+```
+
+### 11.3 Schema Migration Strategy
+
+Since SQLite doesn't support `ALTER TABLE ... MODIFY CONSTRAINT`, we need to:
+
+1. **Create migration script** `scripts/migrate_schema_v2.py`
+2. **Dump existing data** from affected tables
+3. **Recreate tables** with new CHECK constraints
+4. **Re-import data**
+5. **Create new tables** (cross_references, victim_signals, etc.)
+6. **Run in test mode first** on a copy of the DB
+
+---
+
+## 12. Configuration Changes
+
+### 12.1 `config/scoring_rules.yaml` Additions
+
+```yaml
+# ── Cross-Reference Scoring ───────────────────────────────────────────────────
+cross_reference:
+  bnm_match_boost: 50           # BNM Consumer Alert List match
+  sc_match_boost: 45            # SC Investor Alert List match
+  semakmule_match_boost: 50     # PDRM SemakMule match
+  internal_match_boost: 20      # Previously flagged by our pipeline
+  fuzzy_domain_threshold: 2    # Levenshtein distance for domain matching
+  company_name_similarity: 0.85 # Token overlap ratio for company names
+
+# ── Victim Signal Scoring ────────────────────────────────────────────────────
+victim_signals:
+  financial_loss_boost: 25
+  police_report_boost: 20
+  community_warning_boost: 15
+  high_amount_boost: 10         # Amount > RM10,000
+  emotional_distress_boost: 5
+
+# ── Trend Scoring ────────────────────────────────────────────────────────────
+trend:
+  spike_boost: 20               # >200% increase in mentions
+  rising_boost: 15              # 100-200% increase
+  increasing_boost: 10          # 50-100% increase
+  ema_span: 7                   # Days for moving average
+  window_days: 30               # Total lookback period
+
+# ── Entity Relationship Scoring ──────────────────────────────────────────────
+entity_relationships:
+  co_occurrence_weight: 10     # Same message
+  shared_phone_weight: 25      # Phone shared across WhatsApp + TG
+  shared_domain_weight: 20     # Domain hosted with other bad domains
+  same_campaign_weight: 15     # Same campaign cluster
+  min_confidence: 0.5          # Minimum confidence to create relationship
+```
+
+### 12.2 New Config File: `config/victim_signals.yaml`
+
+See [Section 6.1](#61-victim-signal-patterns) for the full YAML.
+
+### 12.3 New Config File: `config/scam_types.yaml`
+
+See [Section 8.2](#82-scam-type-definitions) for the full YAML.
+
+---
+
+## 13. Testing Strategy
+
+### 13.1 Unit Tests
+
+| Module | Test File | Key Tests |
+|--------|-----------|-----------|
+| `cross_reference.py` | `tests/test_cross_reference.py` | Exact match, fuzzy match, no match, batch check, BNM/SC lookup |
+| `victim_signal.py` | `tests/test_victim_signal.py` | Pattern detection, amount extraction, score computation, edge cases |
+| `alert_builder.py` | `tests/test_alert_builder.py` | Narrative generation, chunking, formatting, cross-reference inclusion |
+| `trend_detector.py` | `tests/test_trend_detector.py` | EMA computation, spike detection, stable/declining trends |
+| `entity_linker.py` | `tests/test_entity_linker.py` | Co-occurrence, shared phone, campaign clustering |
+| `scam_classifier.py` | `tests/test_scam_classifier.py` | Type classification, rule-based, LLM, cross-reference tiers |
+
+### 13.2 Integration Tests
+
+| Scenario | Description |
+|----------|-------------|
+| BNM match → Critical alert | Extract entity that matches BNM list → cross-ref boosts to 100 |
+| Victim report → High alert | Message says "kena tipu RM50K" → victim signal detected → boost |
+| Spike → Trend alert | Entity mentions go from 3 → 13 in 7 days → spike detected |
+| Multi-entity campaign | Phone + bank + domain in same message → linked campaign |
+| Cross-platform campaign | Same phone on TG + WhatsApp → same campaign |
+| No false positive | Legitimate business with phone + bank → no cross-ref match → low score |
+
+### 13.3 Test Data
+
+Use the existing 2,890 DB entities as test fixtures. Known BNM/SC entities should always trigger cross-reference matches.
+
+---
+
+## 14. Risk Assessment
+
+| Risk | Likelihood | Impact | Mitigation |
+|------|-----------|--------|------------|
+| Fuzzy domain matching false positives | Medium | Medium | Set levenshtein threshold to 2, require ≥80% token overlap for company names |
+| BNM/SC data staleness | High | Low | Schedule monthly re-scrape; show "as of" dates in alerts |
+| SQLite schema migration failure | Low | High | Backup DB before migration; test on copy first |
+| SemakMule still down | High | Medium | Skip SemakMule checks gracefully; show "unavailable" in alerts |
+| LLM cost/rate limits | Medium | Low | Use rule-based classification as primary; LLM only for score ≥ 60 |
+| Alert too long for Telegram | Medium | Low | Message chunking (max 4000 chars per message) |
+| Cross-reference latency | Low | Low | Load known-bad entities into memory at startup (~500KB) |
+
+---
+
+## 15. Timeline
+
+### Phase 1 (This Week: 13-17 April 2026)
+
+| Day | Task | Owner | Output |
+|-----|------|-------|--------|
+| Day 1 | Cross-reference engine + schema migration | Bayang/GLM-5.1 | `services/cross_reference.py`, `scripts/migrate_schema_v2.py` |
+| Day 1 | Expand `entities` CHECK constraint | Bayang | Updated schema.sql |
+| Day 2 | Cross-reference integration in scorer | Bayang | Modified `agents/scorer.py` |
+| Day 2 | Victim signal detector + config | Bayang | `services/victim_signal.py`, `config/victim_signals.yaml` |
+| Day 3 | Alert builder + narrative generation | Bayang | `services/alert_builder.py` |
+| Day 3 | Alert chunking + Telegram delivery | Bayang | Modified `agents/alerter.py` |
+| Day 4 | Integration testing with live data | Bayang | Test results |
+| Day 4 | End-to-end pipeline run | Bayang | Live alerts with cross-ref, victim signals |
+| Day 5 | Bug fixes, documentation | Bayang | Updated README, inline docs |
+
+### Phase 2 (Next Week: 20-24 April 2026)
+
+| Day | Task | Owner | Output |
+|-----|------|-------|--------|
+| Day 1 | Entity linker + campaign_links table | Bayang | `services/entity_linker.py` |
+| Day 2 | Scam type classifier + config | Bayang | `services/scam_classifier.py`, `config/scam_types.yaml` |
+| Day 3 | Campaign type expansion + scorer integration | Bayang | Modified `agents/scorer.py`, `services/campaign_types.py` |
+| Day 4 | Campaign naming + narrative enrichment | Bayang | Modified `services/alert_builder.py` |
+| Day 5 | Integration testing | Bayang | Test results |
+
+### Phase 3 (Following Week: 27 April - 1 May 2026)
+
+| Day | Task | Owner | Output |
+|-----|------|-------|--------|
+| Day 1-2 | Trend detector + entity_mentions table | Bayang | `services/trend_detector.py` |
+| Day 3-4 | Entity relationship graph | Bayang | `services/entity_linker.py` (expanded) |
+| Day 5 | Full pipeline integration test | Bayang | End-to-end validation |
+
+---
+
+## Appendix A: File Structure (After Implementation)
+
+```
+fraud-mvp/
+├── agents/
+│   ├── alerter.py              # MODIFIED — use AlertBuilder
+│   ├── extractor.py
+│   ├── keyword_scorer.py
+│   └── scorer.py               # MODIFIED — cross-ref, victim, trend integration
+├── config/
+│   ├── keywords.yaml
+│   ├── scoring_rules.yaml      # MODIFIED — add cross-ref, victim, trend weights
+│   ├── sources.yaml
+│   ├── victim_signals.yaml     # NEW
+│   └── scam_types.yaml         # NEW
+├── data/
+│   ├── bnm_consumer_alert_list.json
+│   ├── sc_investor_alert_list.json
+│   └── ...
+├── db/
+│   ├── database.py
+│   ├── schema.sql              # MODIFIED — new tables, expanded constraints
+│   └── fraud_mvp.db
+├── services/
+│   ├── alert_builder.py        # NEW — rich narrative generation
+│   ├── alert_formatter.py      # MODIFIED — cross-ref, victim, trend sections
+│   ├── campaign_types.py       # MODIFIED — expanded type map
+│   ├── cross_reference.py      # NEW — BNM/SC/SemakMule cross-referencing
+│   ├── entity_linker.py         # NEW — relationship graph
+│   ├── llm_enhancer.py
+│   ├── llm_similarity.py
+│   ├── queue_handler.py
+│   ├── scam_classifier.py       # NEW — three-tier classification
+│   ├── trend_detector.py        # NEW — EMA spike detection
+│   └── victim_signal.py         # NEW — victim report detection
+├── scripts/
+│   ├── migrate_schema_v2.py    # NEW — DB migration
+│   └── ...
+├── tests/
+│   ├── test_cross_reference.py  # NEW
+│   ├── test_victim_signal.py    # NEW
+│   ├── test_alert_builder.py    # NEW
+│   ├── test_trend_detector.py   # NEW
+│   ├── test_entity_linker.py    # NEW
+│   └── test_scam_classifier.py  # NEW
+└── docs/
+    └── IMPLEMENTATION_PLAN_PHASE1.md  # THIS FILE
+```
+
+---
+
+## Appendix B: Cross-Reference Data Sources
+
+| Source | Entity Count | Entity Types | Update Frequency | Access |
+|--------|-------------|--------------|-----------------|--------|
+| BNM Consumer Alert List | 575 | company_name, domain, telegram_url, facebook_url, whatsapp_link, phone | Monthly (manual re-scrape) | Public web |
+| SC Investor Alert List | 1,474 | company_name, domain, telegram_url, facebook_url, whatsapp_link | Monthly (manual re-scrape) | Public web (JS-heavy) |
+| SemakMule (PDRM) | Unknown | phone, bank_account | Unknown (currently DOWN) | Public web |
+| Internal Pipeline | Growing | phone, bank_account, domain, telegram_url, whatsapp_link | Real-time | SQLite DB |
+| OpenSanctions | ~2,000+ | company_name, domain, url | Weekly | API (requires auth) |
+
+---
+
+*End of Implementation Plan*

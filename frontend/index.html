@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fraud MVP Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="background-grid" aria-hidden="true"></div>
+  <header class="hero">
+    <div class="hero-copy">
+      <h1>i-FraudShield Platform</h1>
+    </div>
+  </header>
+
+  <nav class="top-nav" aria-label="Dashboard sections">
+    <a href="#executive">Executive</a>
+    <a href="#campaigns">Campaigns</a>
+    <a href="#alerts">Alerts</a>
+    <a href="#evidence">Evidence</a>
+  </nav>
+
+  <main>
+    <section id="status-banner" class="status-banner hidden"></section>
+
+    <section id="executive" class="panel">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Executive Dashboard</p>
+          <h2>Operations and intelligence overview</h2>
+        </div>
+        <p id="generated-at" class="generated-at">Waiting for data</p>
+      </div>
+
+      <div id="operations-cards" class="card-grid"></div>
+
+      <div class="split-grid">
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Freshness and queue health</h3>
+            <span id="freshness-pill" class="pill neutral">Unknown</span>
+          </div>
+          <div id="freshness-details" class="metric-list"></div>
+          <div id="queue-health" class="queue-list"></div>
+        </article>
+
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Top active campaigns</h3>
+            <span class="subtle-label">Recent</span>
+          </div>
+          <div id="top-campaigns" class="stack-list"></div>
+        </article>
+      </div>
+
+      <div class="triple-grid">
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Risk distribution</h3>
+            <span class="subtle-label">All campaigns</span>
+          </div>
+          <div id="risk-distribution" class="bar-chart"></div>
+        </article>
+
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Campaign trend</h3>
+            <span class="subtle-label">Last 30 days</span>
+          </div>
+          <div id="campaign-trend" class="spark-list"></div>
+        </article>
+
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Scam-type distribution</h3>
+            <span class="subtle-label">All campaigns</span>
+          </div>
+          <div id="scam-types" class="bar-chart compact"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="campaigns" class="panel">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Campaigns</p>
+          <h2>Recent campaigns and drilldown</h2>
+        </div>
+      </div>
+      <div class="split-grid">
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Recent campaigns</h3>
+            <span class="subtle-label">Click for evidence</span>
+          </div>
+          <div id="campaign-list" class="stack-list interactive"></div>
+        </article>
+
+        <article class="subpanel drilldown">
+          <div class="subpanel-head">
+            <h3>Campaign detail</h3>
+            <span id="campaign-detail-pill" class="pill neutral">No selection</span>
+          </div>
+          <div id="campaign-detail" class="detail-panel empty-state">
+            Select a campaign to inspect risk, entities, evidence, and alert history.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="alerts" class="panel">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Alerts</p>
+          <h2>Recent alert output</h2>
+        </div>
+      </div>
+      <div id="alert-list" class="alert-grid"></div>
+    </section>
+
+    <section id="evidence" class="panel">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Evidence & Quality</p>
+          <h2>Why the output should be trusted</h2>
+        </div>
+      </div>
+
+      <div id="evidence-cards" class="card-grid"></div>
+
+      <div class="triple-grid">
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Cross-reference sources</h3>
+            <span class="subtle-label">BNM, SC, internal</span>
+          </div>
+          <div id="cross-reference-sources" class="bar-chart"></div>
+        </article>
+
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Victim signal detections</h3>
+            <span class="subtle-label">Pattern breakdown</span>
+          </div>
+          <div id="victim-signal-breakdown" class="bar-chart compact"></div>
+        </article>
+
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Alert reason breakdown</h3>
+            <span class="subtle-label">Scoring explanations</span>
+          </div>
+          <div id="alert-reasons" class="bar-chart compact"></div>
+        </article>
+      </div>
+
+      <div class="split-grid">
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Top reused entities</h3>
+            <span class="subtle-label">High reuse signals concentration</span>
+          </div>
+          <div id="top-entities" class="stack-list"></div>
+        </article>
+
+        <article class="subpanel">
+          <div class="subpanel-head">
+            <h3>Most active channels and platforms</h3>
+            <span class="subtle-label">Last 30 days</span>
+          </div>
+          <div id="active-channels" class="stack-list"></div>
+          <div id="active-platforms" class="platform-list"></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <template id="empty-template">
+    <div class="empty-state">No data available yet.</div>
+  </template>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>

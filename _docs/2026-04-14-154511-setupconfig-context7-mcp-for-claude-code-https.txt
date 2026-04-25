@@ -1,0 +1,57 @@
+ ▐▛███▜▌   Claude Code v2.1.107
+▝▜█████▛▘  glm-5.1:cloud · API Usage Billing
+  ▘▘ ▝▝    ~/Desktop/fraud-mvp
+
+❯ /mcp 
+  ⎿  MCP dialog dismissed
+
+❯ setup/config context7 mcp for claude code:                                    
+  https://github.com/upstash/context7 and this is the context7 api:             
+  ctx7sk-fce992d6-38ee-4d54-b121-69630ada3830                                   
+
+● Let me check the Context7 repo for the exact MCP configuration format.
+
+● Fetch(https://github.com/upstash/context7)
+  ⎿  Received 355KB (200 OK)
+
+  Searched for 2 patterns, read 1 file, listed 1 directory (ctrl+o to expand)
+
+● I can see your existing settings. I'll add the Context7 MCP server using the
+  remote URL approach (faster, no local install needed) with your API key.
+
+● Update(~/.claude/settings.json)
+  ⎿  Added 6 lines
+       5        "type": "stdio",
+       6        "command": "playwright-mcp",
+       7        "args": []
+       8 +    },                                                         
+       9 +    "context7": {                                              
+      10 +      "url": "https://mcp.context7.com/mcp",                   
+      11 +      "headers": {                                             
+      12 +        "CONTEXT7_API_KEY": "ctx7sk-fce992d6-38ee-4d54-b121-696
+         +30ada3830"                                                     
+      13 +      }                                                        
+      14      }
+      15    }
+      16  }
+
+● Context7 MCP server is now configured. Here's what was added:
+
+  - Server: context7 using the remote URL (https://mcp.context7.com/mcp)
+  - Auth: Your API key passed via the CONTEXT7_API_KEY header
+
+  The config will take effect on the next Claude Code session restart. You'll
+  have two new tools available:
+
+  1. resolve-library-id — find a library by name (e.g., "fastapi",
+  "telegram-bot-api")
+  2. query-docs — fetch up-to-date documentation for a resolved library
+
+  To start using it, restart Claude Code (exit and re-launch), then you can ask
+  things like "look up the latest FastAPI docs for middleware" and I'll use
+  Context7 to pull accurate, version-specific documentation.
+
+✻ Sautéed for 1m 31s
+
+❯ /exit                                                                         
+  ⎿  See ya!

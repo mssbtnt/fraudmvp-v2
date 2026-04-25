@@ -1,6 +1,5 @@
-version: '3.8'
-
 services:
+  # ── Always-on infrastructure ──────────────────────────────
   redis:
     image: redis:7-alpine
     container_name: fraud-mvp-redis
@@ -13,78 +12,114 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
-  postgres:
-    image: postgres:16-alpine
-    container_name: fraud-mvp-postgres
-    environment:
-      POSTGRES_USER: fraud_mvp
-      POSTGRES_PASSWORD: fraud_mvp
-      POSTGRES_DB: fraud_mvp
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U fraud_mvp"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    profiles:
-      - with-postgres
-
+  # ── App services ─────────────────────────────────────────
   app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: fraud-mvp-app
     env_file:
-      - .env
+      - path: .env
+        required: true
+      - path: .env.docker
+        required: false
+    environment:
+      # Overrides from .env when running inside Docker
+      - REDIS_URL=redis://fraud-mvp-redis:6379
+      - DATABASE_URL=sqlite:///./db/fraud_mvp.db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - ./config:/app/config:ro
       - ./db:/app/db
+    ports:
+      - "8000:8000"
     depends_on:
       redis:
         condition: service_healthy
     profiles:
       - app
+    restart: unless-stopped
 
-  # Collector agent only
+  # Daily pipeline runner (triggered by systemd timer on host)
   collector:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: fraud-mvp-collector
     env_file:
-      - .env
-    command: python -m agents.collector
+      - path: .env
+        required: true
+      - path: .env.docker
+        required: false
+    environment:
+      - REDIS_URL=redis://fraud-mvp-redis:6379
+      - DATABASE_URL=sqlite:///./db/fraud_mvp.db
+    command: ["python", "-m", "agents.collector"]
     volumes:
       - ./config:/app/config:ro
       - ./db:/app/db
+      - ./logs:/app/logs
     depends_on:
       redis:
         condition: service_healthy
     profiles:
       - collector
+    restart: unless-stopped
 
-  # Web scraper only
+  # Web scraper (MyCERT, Consumer.org.my, SemakMule)
   scraper:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: fraud-mvp-scraper
     env_file:
-      - .env
-    command: python -m services.scraper.web_scraper
+      - path: .env
+        required: true
+      - path: .env.docker
+        required: false
+    environment:
+      - REDIS_URL=redis://fraud-mvp-redis:6379
+      - DATABASE_URL=sqlite:///./db/fraud_mvp.db
+    command: ["python", "-m", "services.scraper.web_scraper"]
     volumes:
       - ./config:/app/config:ro
       - ./db:/app/db
+      - ./logs:/app/logs
     depends_on:
       redis:
         condition: service_healthy
     profiles:
       - scraper
+    restart: unless-stopped
+
+  # SemakMule scraper (PDRM verification data)
+  semakmule:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fraud-mvp-semakmule
+    env_file:
+      - path: .env
+        required: true
+      - path: .env.docker
+        required: false
+    environment:
+      - REDIS_URL=redis://fraud-mvp-redis:6379
+      - DATABASE_URL=sqlite:///./db/fraud_mvp.db
+    command: ["python", "-m", "services.scraper.semakmule_scraper"]
+    volumes:
+      - ./config:/app/config:ro
+      - ./db:/app/db
+      - ./logs:/app/logs
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - scraper
+    restart: unless-stopped
 
 volumes:
   redis_data:
-  postgres_data:

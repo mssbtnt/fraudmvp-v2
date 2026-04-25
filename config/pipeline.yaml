@@ -1,0 +1,24 @@
+# FraudMVP Pipeline Configuration
+
+pipeline:
+  ingest_batch_size: 100
+  score_threshold: 60        # Minimum score to form a campaign
+  alert_threshold: 70        # Minimum score to send alert
+  run_interval_minutes: 60   # How often the pipeline runs
+  max_campaigns_per_run: 50  # Cap campaigns per pipeline run
+
+  # Ingestion sources
+  sources:
+    - name: telegram
+      enabled: true
+      queue: scraped:telegram
+    - name: whatsapp
+      enabled: false
+      queue: scraped:whatsapp
+
+# Alert delivery
+alert:
+  telegram_enabled: true
+  log_enabled: true
+  min_risk_for_telegram: medium  # medium, high, critical
+  chunk_size: 4000

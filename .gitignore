@@ -39,3 +39,14 @@ openclaw_data/
 # Temp
 *.tmp
 *.swp
+
+# Telegram sessions (security risk)
+*.session
+*.session-journal
+
+# DB backups (large, regenerated)
+db/*.backup*
+db/*.full-backup*
+
+# Debug HTML output
+data/*debug*

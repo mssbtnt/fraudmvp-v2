@@ -1,30 +1,54 @@
 # Rule-based scoring configuration
 # Scores are base scores; platform_weights multiply final scores
+# Updated: 2026-04-11 — tuned for Malaysian market with multi-signal combos
 
 frequency:
-  entity_count_3: 40
-  entity_count_4_plus: 50
-  each_additional_repeat: 10
+  entity_count_3: 50
+  entity_count_4_plus: 65
+  each_additional_repeat: 12
 
 temporal:
   cross_channel_same_platform_24h: 30
-  cross_platform_24h: 40
-  same_channel_48h: 15
+  cross_platform_24h: 45
+  same_channel_48h: 18
 
 similarity:
-  script_match_above_80: 20
-  script_match_above_90: 30
-  keyword_cluster_match: 15
-  same_campaign_type: 10
+  script_match_above_80: 22
+  script_match_above_90: 35
+  keyword_cluster_match: 18
+  same_campaign_type: 12
 
 channel_quality:
-  members_1000_plus: 20
-  members_500_plus: 10
-  contains_external_links: 20
+  members_1000_plus: 22
+  members_500_plus: 12
+  contains_external_links: 25
   contains_phone_number: 15
-  scam_language_detected: 20
+  scam_language_detected: 22
   testimonials_present: 10
   new_channel_under_30d: -10  # Penalty for brand new channels
+
+# Entity-based scoring — boosted for Malaysian scam patterns
+entity_weights:
+  phone: 15          # Up from 8 — phone numbers are primary contact vectors
+  whatsapp_link: 25  # Up from 15 — wa.me/wasap.my are top scam vectors
+  suspicious_url: 30 # Up from 20 — suspicious TLDs are strong indicators
+  bank_account: 20   # Up from 10 — bank accounts indicate financial intent
+  email: 8           # Low — emails are rarely the primary vector in MY scams
+  domain: 15         # Moderate — suspicious domains are secondary indicators
+  qr_code: 20        # New — QR code scams are rising in Malaysia
+
+# Multi-signal combination bonuses
+# These are additive bonuses when multiple high-risk signals appear together
+combo_bonuses:
+  phone_plus_url: 15         # Phone + URL = recruitment funnel
+  phone_plus_deposit: 20     # Phone + deposit pressure = advance fee scam
+  phone_plus_bank: 25        # Phone + bank account = direct financial vector
+  url_plus_deposit: 15       # URL + deposit = phishing or e-commerce scam
+  phone_plus_url_deposit: 35 # All three = high-confidence scam
+  phone_plus_urgency: 10     # Phone + urgency words = pressure tactic
+  whatsapp_plus_deposit: 22  # WhatsApp + deposit = extremely common MY scam pattern
+  whatsapp_plus_bank: 20     # WhatsApp + bank account = direct financial scam
+  phone_plus_scam_keyword: 18 # Phone + scam keyword = likely fraud contact
 
 source_weights:
   telegram: 1.0
@@ -61,6 +85,47 @@ alert_tiers:
     min_score: 95
     max_score: 100
     action: alert_critical
+
+# ── Cross-Reference Scoring ───────────────────────────────────────────────────
+# Boosts applied when an entity matches a known-bad database (BNM, SC, SemakMule)
+cross_reference:
+  bnm_match_boost: 50           # BNM Consumer Alert List match (central bank confirmed)
+  sc_match_boost: 45            # SC Investor Alert List match (securities commission confirmed)
+  semakmule_match_boost: 50    # PDRM SemakMule match (police-verified)
+  internal_match_boost: 20      # Previously flagged by our pipeline
+  fuzzy_domain_threshold: 2    # Levenshtein distance for domain matching
+  company_name_similarity: 0.6 # Token overlap ratio for company names
+
+# ── Victim Signal Scoring ────────────────────────────────────────────────────
+# Boosts applied when victim signals are detected near flagged entities
+victim_signals:
+  financial_loss_boost: 25      # Direct admission of being scammed
+  police_report_boost: 20      # Police report mentioned
+  community_warning_boost: 15  # Community warning keywords
+  high_amount_boost: 10         # Monetary amount > RM10,000
+  emotional_distress_boost: 5   # Emotional distress signals
+  max_victim_boost: 50         # Cap on total victim signal boost
+
+# ── Trend Scoring ────────────────────────────────────────────────────────────
+# Boosts applied based on mention frequency trends
+trend:
+  spike_boost: 20               # >200% increase in mentions
+  rising_boost: 15              # 100-200% increase
+  increasing_boost: 10           # 50-100% increase
+  ema_span: 7                   # Days for moving average
+  window_days: 30               # Total lookback period
+
+# ── Entity Relationship Scoring ──────────────────────────────────────────────
+# Boosts based on how entities are connected
+entity_relationships:
+  co_occurrence_weight: 10     # Entities appearing in same message
+  shared_phone_weight: 25      # Phone shared across WhatsApp + TG
+  shared_domain_weight: 20     # Domain hosted with other bad domains
+  same_campaign_weight: 15     # Same campaign cluster
+  cross_reference_weight: 30   # Cross-reference match (BNM/SC/SemakMule)
+  min_confidence: 0.5          # Minimum confidence to create relationship
+  same_campaign_max_entities: 100  # Skip pairwise linking above this cluster size
+  same_campaign_max_pairs: 5000    # Hard cap to avoid quadratic write amplification
 
 campaign_clustering:
   entity_similarity_threshold: 0.7

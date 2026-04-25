@@ -1,0 +1,1563 @@
+[
+  {
+    "flagCode": "UZ",
+    "country": "Uzbekistan",
+    "phoneNumberLengthByCountry_CountryCode": 998,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 810",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 8
+  },
+  {
+    "flagCode": "KG",
+    "country": "Kyrgyzstan",
+    "phoneNumberLengthByCountry_CountryCode": 996,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GE",
+    "country": "Georgia",
+    "phoneNumberLengthByCountry_CountryCode": 995,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 8",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 8
+  },
+  {
+    "flagCode": "AZ",
+    "country": "Azerbaijan",
+    "phoneNumberLengthByCountry_CountryCode": 994,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TM",
+    "country": "Turkmenistan",
+    "phoneNumberLengthByCountry_CountryCode": 993,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 810",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 8
+  },
+  {
+    "flagCode": "TJ",
+    "country": "Tajikistan",
+    "phoneNumberLengthByCountry_CountryCode": 992,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 810",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 8
+  },
+  {
+    "flagCode": "NP",
+    "country": "Nepal",
+    "phoneNumberLengthByCountry_CountryCode": 977,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MN",
+    "country": "Mongolia",
+    "phoneNumberLengthByCountry_CountryCode": 976,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BT",
+    "country": "Bhutan",
+    "phoneNumberLengthByCountry_CountryCode": 975,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "QA",
+    "country": "Qatar",
+    "phoneNumberLengthByCountry_CountryCode": 974,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BH",
+    "country": "Bahrain",
+    "phoneNumberLengthByCountry_CountryCode": 973,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "IL",
+    "country": "Israel",
+    "phoneNumberLengthByCountry_CountryCode": 972,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00,012,013,014",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AE",
+    "country": "United Arab Emirates",
+    "phoneNumberLengthByCountry_CountryCode": 971,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "OM",
+    "country": "Oman",
+    "phoneNumberLengthByCountry_CountryCode": 968,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "YE",
+    "country": "Yemen",
+    "phoneNumberLengthByCountry_CountryCode": 967,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SA",
+    "country": "Saudi Arabia",
+    "phoneNumberLengthByCountry_CountryCode": 966,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "KW",
+    "country": "Kuwait",
+    "phoneNumberLengthByCountry_CountryCode": 965,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "IQ",
+    "country": "Iraq",
+    "phoneNumberLengthByCountry_CountryCode": 964,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SY",
+    "country": "Syria",
+    "phoneNumberLengthByCountry_CountryCode": 963,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "JO",
+    "country": "Jordan",
+    "phoneNumberLengthByCountry_CountryCode": 962,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LB",
+    "country": "Lebanon",
+    "phoneNumberLengthByCountry_CountryCode": 961,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MV",
+    "country": "Maldives",
+    "phoneNumberLengthByCountry_CountryCode": 960,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TW",
+    "country": "Taiwan",
+    "phoneNumberLengthByCountry_CountryCode": 886,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 002",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BD",
+    "country": "Bangladesh",
+    "phoneNumberLengthByCountry_CountryCode": 880,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LA",
+    "country": "Laos",
+    "phoneNumberLengthByCountry_CountryCode": 856,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "KH",
+    "country": "Cambodia",
+    "phoneNumberLengthByCountry_CountryCode": 855,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001, 007",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MO",
+    "country": "Macau",
+    "phoneNumberLengthByCountry_CountryCode": 853,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "HK",
+    "country": "Hong Kong",
+    "phoneNumberLengthByCountry_CountryCode": 852,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "KP",
+    "country": "North Korea",
+    "phoneNumberLengthByCountry_CountryCode": 850,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MH",
+    "country": "Marshall Islands",
+    "phoneNumberLengthByCountry_CountryCode": 692,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "FM",
+    "country": "Micronesia",
+    "phoneNumberLengthByCountry_CountryCode": 691,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "TK",
+    "country": "Tokelau",
+    "phoneNumberLengthByCountry_CountryCode": 690,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PF",
+    "country": "French Polynesia",
+    "phoneNumberLengthByCountry_CountryCode": 689,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TV",
+    "country": "Tuvalu",
+    "phoneNumberLengthByCountry_CountryCode": 688,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NC",
+    "country": "New Caledonia",
+    "phoneNumberLengthByCountry_CountryCode": 687,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "KI",
+    "country": "Kiribati",
+    "phoneNumberLengthByCountry_CountryCode": 686,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "WS",
+    "country": "Samoa",
+    "phoneNumberLengthByCountry_CountryCode": 685,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 0",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NU",
+    "country": "Niue",
+    "phoneNumberLengthByCountry_CountryCode": 683,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CK",
+    "country": "Cook Islands",
+    "phoneNumberLengthByCountry_CountryCode": 682,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "WF",
+    "country": "Wallis and Futuna",
+    "phoneNumberLengthByCountry_CountryCode": 681,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PW",
+    "country": "Palau",
+    "phoneNumberLengthByCountry_CountryCode": 680,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "FJ",
+    "country": "Fiji",
+    "phoneNumberLengthByCountry_CountryCode": 679,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "VU",
+    "country": "Vanuatu",
+    "phoneNumberLengthByCountry_CountryCode": 678,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SB",
+    "country": "Solomon Islands",
+    "phoneNumberLengthByCountry_CountryCode": 677,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TO",
+    "country": "Tonga",
+    "phoneNumberLengthByCountry_CountryCode": 676,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PG",
+    "country": "Papua New Guinea",
+    "phoneNumberLengthByCountry_CountryCode": 675,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NR",
+    "country": "Nauru",
+    "phoneNumberLengthByCountry_CountryCode": 674,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BN",
+    "country": "Brunei",
+    "phoneNumberLengthByCountry_CountryCode": 673,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CW",
+    "country": "Curacao",
+    "phoneNumberLengthByCountry_CountryCode": 599,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "UY",
+    "country": "Uruguay",
+    "phoneNumberLengthByCountry_CountryCode": 598,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SR",
+    "country": "Suriname",
+    "phoneNumberLengthByCountry_CountryCode": 597,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MQ",
+    "country": "Martinique",
+    "phoneNumberLengthByCountry_CountryCode": 596,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PY",
+    "country": "Paraguay",
+    "phoneNumberLengthByCountry_CountryCode": 595,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GF",
+    "country": "French Guiana",
+    "phoneNumberLengthByCountry_CountryCode": 594,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "EC",
+    "country": "Ecuador",
+    "phoneNumberLengthByCountry_CountryCode": 593,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GY",
+    "country": "Guyana",
+    "phoneNumberLengthByCountry_CountryCode": 592,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BO",
+    "country": "Bolivia",
+    "phoneNumberLengthByCountry_CountryCode": 591,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GP",
+    "country": "Guadeloupe",
+    "phoneNumberLengthByCountry_CountryCode": 590,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "HT",
+    "country": "Haiti",
+    "phoneNumberLengthByCountry_CountryCode": 509,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PM",
+    "country": "Saint Pierre and Miquelon",
+    "phoneNumberLengthByCountry_CountryCode": 508,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PA",
+    "country": "Panama",
+    "phoneNumberLengthByCountry_CountryCode": 507,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CR",
+    "country": "Costa Rica",
+    "phoneNumberLengthByCountry_CountryCode": 506,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NI",
+    "country": "Nicaragua",
+    "phoneNumberLengthByCountry_CountryCode": 505,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "HN",
+    "country": "Honduras",
+    "phoneNumberLengthByCountry_CountryCode": 504,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SV",
+    "country": "El Salvador",
+    "phoneNumberLengthByCountry_CountryCode": 503,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GT",
+    "country": "Guatemala",
+    "phoneNumberLengthByCountry_CountryCode": 502,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BZ",
+    "country": "Belize",
+    "phoneNumberLengthByCountry_CountryCode": 501,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "FK",
+    "country": "Falkland Islands",
+    "phoneNumberLengthByCountry_CountryCode": 500,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LI",
+    "country": "Liechtenstein",
+    "phoneNumberLengthByCountry_CountryCode": 423,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SK",
+    "country": "Slovakia",
+    "phoneNumberLengthByCountry_CountryCode": 421,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CZ",
+    "country": "Czechia",
+    "phoneNumberLengthByCountry_CountryCode": 420,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BA",
+    "country": "Bosnia and Herzegovina",
+    "phoneNumberLengthByCountry_CountryCode": 387,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SI",
+    "country": "Slovenia",
+    "phoneNumberLengthByCountry_CountryCode": 386,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "HR",
+    "country": "Croatia",
+    "phoneNumberLengthByCountry_CountryCode": 385,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ME",
+    "country": "Montenegro",
+    "phoneNumberLengthByCountry_CountryCode": 382,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "RS",
+    "country": "Serbia",
+    "phoneNumberLengthByCountry_CountryCode": 381,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "UA",
+    "country": "Ukraine",
+    "phoneNumberLengthByCountry_CountryCode": 380,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SM",
+    "country": "San Marino",
+    "phoneNumberLengthByCountry_CountryCode": 378,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MC",
+    "country": "Monaco",
+    "phoneNumberLengthByCountry_CountryCode": 377,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AD",
+    "country": "Andorra",
+    "phoneNumberLengthByCountry_CountryCode": 376,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BY",
+    "country": "Belarus",
+    "phoneNumberLengthByCountry_CountryCode": 375,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 810",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 8
+  },
+  {
+    "flagCode": "AM",
+    "country": "Armenia",
+    "phoneNumberLengthByCountry_CountryCode": 374,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MD",
+    "country": "Moldova",
+    "phoneNumberLengthByCountry_CountryCode": 373,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "EE",
+    "country": "Estonia",
+    "phoneNumberLengthByCountry_CountryCode": 372,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LV",
+    "country": "Latvia",
+    "phoneNumberLengthByCountry_CountryCode": 371,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LT",
+    "country": "Lithuania",
+    "phoneNumberLengthByCountry_CountryCode": 370,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BG",
+    "country": "Bulgaria",
+    "phoneNumberLengthByCountry_CountryCode": 359,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "FI",
+    "country": "Finland",
+    "phoneNumberLengthByCountry_CountryCode": 358,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00,99X",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CY",
+    "country": "Cyprus",
+    "phoneNumberLengthByCountry_CountryCode": 357,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MT",
+    "country": "Malta",
+    "phoneNumberLengthByCountry_CountryCode": 356,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AL",
+    "country": "Albania",
+    "phoneNumberLengthByCountry_CountryCode": 355,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "IS",
+    "country": "Iceland",
+    "phoneNumberLengthByCountry_CountryCode": 354,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "IE",
+    "country": "Ireland",
+    "phoneNumberLengthByCountry_CountryCode": 353,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LU",
+    "country": "Luxembourg",
+    "phoneNumberLengthByCountry_CountryCode": 352,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PT",
+    "country": "Portugal",
+    "phoneNumberLengthByCountry_CountryCode": 351,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GI",
+    "country": "Gibraltar",
+    "phoneNumberLengthByCountry_CountryCode": 350,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GL",
+    "country": "Greenland",
+    "phoneNumberLengthByCountry_CountryCode": 299,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "FO",
+    "country": "Faroe Islands",
+    "phoneNumberLengthByCountry_CountryCode": 298,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AW",
+    "country": "Aruba",
+    "phoneNumberLengthByCountry_CountryCode": 297,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ER",
+    "country": "Eritrea",
+    "phoneNumberLengthByCountry_CountryCode": 291,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "KM",
+    "country": "Comoros",
+    "phoneNumberLengthByCountry_CountryCode": 269,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SZ",
+    "country": "Eswatini",
+    "phoneNumberLengthByCountry_CountryCode": 268,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BW",
+    "country": "Botswana",
+    "phoneNumberLengthByCountry_CountryCode": 267,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LS",
+    "country": "Lesotho",
+    "phoneNumberLengthByCountry_CountryCode": 266,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MW",
+    "country": "Malawi",
+    "phoneNumberLengthByCountry_CountryCode": 265,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NA",
+    "country": "Namibia",
+    "phoneNumberLengthByCountry_CountryCode": 264,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ZW",
+    "country": "Zimbabwe",
+    "phoneNumberLengthByCountry_CountryCode": 263,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MG",
+    "country": "Madagascar",
+    "phoneNumberLengthByCountry_CountryCode": 261,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ZM",
+    "country": "Zambia",
+    "phoneNumberLengthByCountry_CountryCode": 260,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MZ",
+    "country": "Mozambique",
+    "phoneNumberLengthByCountry_CountryCode": 258,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BI",
+    "country": "Burundi",
+    "phoneNumberLengthByCountry_CountryCode": 257,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "UG",
+    "country": "Uganda",
+    "phoneNumberLengthByCountry_CountryCode": 256,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 000",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TZ",
+    "country": "Tanzania",
+    "phoneNumberLengthByCountry_CountryCode": 255,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 000",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "KE",
+    "country": "Kenya",
+    "phoneNumberLengthByCountry_CountryCode": 254,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 000",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "DJ",
+    "country": "Djibouti",
+    "phoneNumberLengthByCountry_CountryCode": 253,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SO",
+    "country": "Somalia",
+    "phoneNumberLengthByCountry_CountryCode": 252,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ET",
+    "country": "Ethiopia",
+    "phoneNumberLengthByCountry_CountryCode": 251,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "RW",
+    "country": "Rwanda",
+    "phoneNumberLengthByCountry_CountryCode": 250,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SD",
+    "country": "Sudan",
+    "phoneNumberLengthByCountry_CountryCode": 249,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SC",
+    "country": "Seychelles",
+    "phoneNumberLengthByCountry_CountryCode": 248,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AO",
+    "country": "Angola",
+    "phoneNumberLengthByCountry_CountryCode": 244,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CD",
+    "country": "DR Congo",
+    "phoneNumberLengthByCountry_CountryCode": 243,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GA",
+    "country": "Gabon",
+    "phoneNumberLengthByCountry_CountryCode": 241,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GQ",
+    "country": "Equatorial Guinea",
+    "phoneNumberLengthByCountry_CountryCode": 240,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ST",
+    "country": "Sao Tome and Principe",
+    "phoneNumberLengthByCountry_CountryCode": 239,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CV",
+    "country": "Cape Verde",
+    "phoneNumberLengthByCountry_CountryCode": 238,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CM",
+    "country": "Cameroon",
+    "phoneNumberLengthByCountry_CountryCode": 237,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CF",
+    "country": "Central African Republic",
+    "phoneNumberLengthByCountry_CountryCode": 236,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TD",
+    "country": "Chad",
+    "phoneNumberLengthByCountry_CountryCode": 235,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NG",
+    "country": "Nigeria",
+    "phoneNumberLengthByCountry_CountryCode": 234,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 009",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GH",
+    "country": "Ghana",
+    "phoneNumberLengthByCountry_CountryCode": 233,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SL",
+    "country": "Sierra Leone",
+    "phoneNumberLengthByCountry_CountryCode": 232,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LR",
+    "country": "Liberia",
+    "phoneNumberLengthByCountry_CountryCode": 231,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MU",
+    "country": "Mauritius",
+    "phoneNumberLengthByCountry_CountryCode": 230,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BJ",
+    "country": "Benin",
+    "phoneNumberLengthByCountry_CountryCode": 229,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TG",
+    "country": "Togo",
+    "phoneNumberLengthByCountry_CountryCode": 228,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NE",
+    "country": "Niger",
+    "phoneNumberLengthByCountry_CountryCode": 227,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BF",
+    "country": "Burkina Faso",
+    "phoneNumberLengthByCountry_CountryCode": 226,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CI",
+    "country": "Ivory Coast",
+    "phoneNumberLengthByCountry_CountryCode": 225,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GN",
+    "country": "Guinea",
+    "phoneNumberLengthByCountry_CountryCode": 224,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ML",
+    "country": "Mali",
+    "phoneNumberLengthByCountry_CountryCode": 223,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MR",
+    "country": "Mauritania",
+    "phoneNumberLengthByCountry_CountryCode": 222,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SN",
+    "country": "Senegal",
+    "phoneNumberLengthByCountry_CountryCode": 221,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GM",
+    "country": "Gambia",
+    "phoneNumberLengthByCountry_CountryCode": 220,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LY",
+    "country": "Libya",
+    "phoneNumberLengthByCountry_CountryCode": 218,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TN",
+    "country": "Tunisia",
+    "phoneNumberLengthByCountry_CountryCode": 216,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "DZ",
+    "country": "Algeria",
+    "phoneNumberLengthByCountry_CountryCode": 213,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MA",
+    "country": "Morocco",
+    "phoneNumberLengthByCountry_CountryCode": 212,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "IR",
+    "country": "Iran",
+    "phoneNumberLengthByCountry_CountryCode": 98,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MM",
+    "country": "Myanmar",
+    "phoneNumberLengthByCountry_CountryCode": 95,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "LK",
+    "country": "Sri Lanka",
+    "phoneNumberLengthByCountry_CountryCode": 94,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AF",
+    "country": "Afghanistan",
+    "phoneNumberLengthByCountry_CountryCode": 93,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PK",
+    "country": "Pakistan",
+    "phoneNumberLengthByCountry_CountryCode": 92,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "IN",
+    "country": "India",
+    "phoneNumberLengthByCountry_CountryCode": 91,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TR",
+    "country": "Turkey",
+    "phoneNumberLengthByCountry_CountryCode": 90,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CN",
+    "country": "China",
+    "phoneNumberLengthByCountry_CountryCode": 86,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "VN",
+    "country": "Vietnam",
+    "phoneNumberLengthByCountry_CountryCode": 84,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "KR",
+    "country": "South Korea",
+    "phoneNumberLengthByCountry_CountryCode": 82,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001,002",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": "0,082"
+  },
+  {
+    "flagCode": "JP",
+    "country": "Japan",
+    "phoneNumberLengthByCountry_CountryCode": 81,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 010",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "TH",
+    "country": "Thailand",
+    "phoneNumberLengthByCountry_CountryCode": 66,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SG",
+    "country": "Singapore",
+    "phoneNumberLengthByCountry_CountryCode": 65,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001,008",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NZ",
+    "country": "New Zealand",
+    "phoneNumberLengthByCountry_CountryCode": 64,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PH",
+    "country": "Philippines",
+    "phoneNumberLengthByCountry_CountryCode": 63,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ID",
+    "country": "Indonesia",
+    "phoneNumberLengthByCountry_CountryCode": 62,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 001,008",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AU",
+    "country": "Australia",
+    "phoneNumberLengthByCountry_CountryCode": 61,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 0011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MY",
+    "country": "Malaysia",
+    "phoneNumberLengthByCountry_CountryCode": 60,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "VE",
+    "country": "Venezuela",
+    "phoneNumberLengthByCountry_CountryCode": 58,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CO",
+    "country": "Colombia",
+    "phoneNumberLengthByCountry_CountryCode": 57,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 009/007/005",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": "09/07/05"
+  },
+  {
+    "flagCode": "CL",
+    "country": "Chile",
+    "phoneNumberLengthByCountry_CountryCode": 56,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 1YZ0",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": "1YZ"
+  },
+  {
+    "flagCode": "BR",
+    "country": "Brazil",
+    "phoneNumberLengthByCountry_CountryCode": 55,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AR",
+    "country": "Argentina",
+    "phoneNumberLengthByCountry_CountryCode": 54,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CU",
+    "country": "Cuba",
+    "phoneNumberLengthByCountry_CountryCode": 53,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 119",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MX",
+    "country": "Mexico",
+    "phoneNumberLengthByCountry_CountryCode": 52,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "PE",
+    "country": "Peru",
+    "phoneNumberLengthByCountry_CountryCode": 51,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "DE",
+    "country": "Germany",
+    "phoneNumberLengthByCountry_CountryCode": 49,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "PL",
+    "country": "Poland",
+    "phoneNumberLengthByCountry_CountryCode": 48,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NO",
+    "country": "Norway",
+    "phoneNumberLengthByCountry_CountryCode": 47,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "SE",
+    "country": "Sweden",
+    "phoneNumberLengthByCountry_CountryCode": 46,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "DK",
+    "country": "Denmark",
+    "phoneNumberLengthByCountry_CountryCode": 45,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GB",
+    "country": "United Kingdom",
+    "phoneNumberLengthByCountry_CountryCode": 44,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "AT",
+    "country": "Austria",
+    "phoneNumberLengthByCountry_CountryCode": 43,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CH",
+    "country": "Switzerland",
+    "phoneNumberLengthByCountry_CountryCode": 41,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "RO",
+    "country": "Romania",
+    "phoneNumberLengthByCountry_CountryCode": 40,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "IT",
+    "country": "Italy",
+    "phoneNumberLengthByCountry_CountryCode": 39,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "VA",
+    "country": "Vatican City",
+    "phoneNumberLengthByCountry_CountryCode": 39,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "HU",
+    "country": "Hungary",
+    "phoneNumberLengthByCountry_CountryCode": 36,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 6
+  },
+  {
+    "flagCode": "ES",
+    "country": "Spain",
+    "phoneNumberLengthByCountry_CountryCode": 34,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "FR",
+    "country": "France",
+    "phoneNumberLengthByCountry_CountryCode": 33,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "BE",
+    "country": "Belgium",
+    "phoneNumberLengthByCountry_CountryCode": 32,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "NL",
+    "country": "Netherlands",
+    "phoneNumberLengthByCountry_CountryCode": 31,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GR",
+    "country": "Greece",
+    "phoneNumberLengthByCountry_CountryCode": 30,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "ZA",
+    "country": "South Africa",
+    "phoneNumberLengthByCountry_CountryCode": 27,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "EG",
+    "country": "Egypt",
+    "phoneNumberLengthByCountry_CountryCode": 20,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "RU",
+    "country": "Russia",
+    "phoneNumberLengthByCountry_CountryCode": 7,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 810",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 8
+  },
+  {
+    "flagCode": "KZ",
+    "country": "Kazakhstan",
+    "phoneNumberLengthByCountry_CountryCode": 7,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 810",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 8
+  },
+  {
+    "flagCode": "US",
+    "country": "United States",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "CA",
+    "country": "Canada",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "DO",
+    "country": "Dominican Republic",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "PR",
+    "country": "Puerto Rico",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "JM",
+    "country": "Jamaica",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "TT",
+    "country": "Trinidad and Tobago",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "BS",
+    "country": "Bahamas",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "BB",
+    "country": "Barbados",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "LC",
+    "country": "Saint Lucia",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "GU",
+    "country": "Guam",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "GD",
+    "country": "Grenada",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "VC",
+    "country": "Saint Vincent and the Grenadines",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "AG",
+    "country": "Antigua and Barbuda",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "VI",
+    "country": "United States Virgin Islands",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "KY",
+    "country": "Cayman Islands",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "DM",
+    "country": "Dominica",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "BM",
+    "country": "Bermuda",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "TC",
+    "country": "Turks and Caicos Islands",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 0",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "KN",
+    "country": "Saint Kitts and Nevis",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "AS",
+    "country": "American Samoa",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "SX",
+    "country": "Sint Maarten",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "VG",
+    "country": "British Virgin Islands",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "AI",
+    "country": "Anguilla",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "MS",
+    "country": "Montserrat",
+    "phoneNumberLengthByCountry_CountryCode": 1,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 011",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": 1
+  },
+  {
+    "flagCode": "TL",
+    "country": "Timor-Leste",
+    "phoneNumberLengthByCountry_CountryCode": null,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "MK",
+    "country": "North Macedonia",
+    "phoneNumberLengthByCountry_CountryCode": null,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "GW",
+    "country": "Guinea-Bissau",
+    "phoneNumberLengthByCountry_CountryCode": null,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  },
+  {
+    "flagCode": "CG",
+    "country": "Republic of the Congo",
+    "phoneNumberLengthByCountry_CountryCode": null,
+    "phoneNumberLengthByCountry_phLength_InternationalPrefix": "+ 00",
+    "phoneNumberLengthByCountry_phLength_NationalPrefix": null
+  }
+]
