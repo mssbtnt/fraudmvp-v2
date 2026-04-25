@@ -1,6 +1,7 @@
 const dom = {
   statusBanner: document.querySelector("#status-banner"),
   generatedAt: document.querySelector("#generated-at"),
+  executiveSummary: document.querySelector("#executive-summary"),
   operationsCards: document.querySelector("#operations-cards"),
   freshnessPill: document.querySelector("#freshness-pill"),
   freshnessDetails: document.querySelector("#freshness-details"),
@@ -21,9 +22,44 @@ const dom = {
   activeChannels: document.querySelector("#active-channels"),
   activePlatforms: document.querySelector("#active-platforms"),
   emptyTemplate: document.querySelector("#empty-template"),
+  sidebarStatus: document.querySelector("#sidebar-status"),
+  mobileMenuBtn: document.querySelector("#mobile-menu-btn"),
+  sidebar: document.querySelector("#sidebar"),
 };
 
 let selectedCampaignId = null;
+
+// Mobile sidebar toggle
+if (dom.mobileMenuBtn && dom.sidebar) {
+  dom.mobileMenuBtn.addEventListener("click", () => {
+    dom.sidebar.classList.toggle("open");
+  });
+  document.addEventListener("click", (e) => {
+    if (dom.sidebar.classList.contains("open") && !dom.sidebar.contains(e.target) && e.target !== dom.mobileMenuBtn) {
+      dom.sidebar.classList.remove("open");
+    }
+  });
+}
+
+// Active nav link tracking via IntersectionObserver
+const navLinks = document.querySelectorAll(".nav-link");
+const sectionIds = ["executive", "intelligence", "campaigns", "operations", "evidence"];
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        navLinks.forEach((link) => {
+          link.classList.toggle("active", link.dataset.section === entry.target.id);
+        });
+      }
+    });
+  },
+  { threshold: 0.2, rootMargin: "-80px 0px -60% 0px" }
+);
+sectionIds.forEach((id) => {
+  const el = document.getElementById(id);
+  if (el) sectionObserver.observe(el);
+});
 
 loadDashboard();
 
@@ -33,13 +69,14 @@ async function loadDashboard() {
     const summary = await fetchJson("/dashboard_api/summary");
     renderDashboard(summary);
     showBanner("Dashboard loaded from live API data.", false);
+    updateSidebarStatus(summary.operations);
     const firstCampaignId = summary.recent_campaigns?.[0]?.id;
     if (firstCampaignId) {
       await loadCampaignDetail(firstCampaignId);
     } else {
       renderEmpty(dom.campaignDetail, "No campaigns available yet.");
       dom.campaignDetailPill.textContent = "No campaigns";
-      dom.campaignDetailPill.className = "pill neutral";
+      dom.campaignDetailPill.className = "pill pill-neutral";
     }
   } catch (error) {
     showBanner(error.message, true);
@@ -56,7 +93,7 @@ async function loadCampaignDetail(campaignId) {
     renderCampaignDetail(detail);
   } catch (error) {
     dom.campaignDetailPill.textContent = "Load failed";
-    dom.campaignDetailPill.className = "pill failed";
+    dom.campaignDetailPill.className = "pill pill-failed";
     renderEmpty(dom.campaignDetail, error.message);
   }
 }
@@ -79,10 +116,24 @@ async function safeJson(response) {
   }
 }
 
-function renderDashboard(summary) {
-  dom.generatedAt.textContent = `Generated ${formatDateTime(summary.generated_at)}`;
+function updateSidebarStatus(operations) {
+  if (!dom.sidebarStatus) return;
+  const freshness = operations?.fresh_data_status;
+  const dot = dom.sidebarStatus.querySelector(".status-dot");
+  const text = dom.sidebarStatus.querySelector(".status-text");
+  if (!freshness || !dot || !text) return;
+  const status = freshness.status;
+  dot.className = "status-dot " + (status === "fresh" ? "live" : status === "degraded" ? "partial" : "stale");
+  text.textContent = freshness.label || "Unknown";
+}
 
-  renderOperationCards(summary.operations);
+function renderDashboard(summary) {
+  const freshnessLabel = summary.operations?.fresh_data_status?.label || "Unknown";
+  document.title = `FraudX Claw — ${freshnessLabel} — ${formatDateTime(summary.generated_at)}`;
+  dom.generatedAt.textContent = `Updated ${formatDateTime(summary.generated_at)}`;
+
+  renderExecutiveSummary(summary);
+  renderOperationCards(summary);
   renderFreshness(summary.operations);
   renderStackList(dom.topCampaigns, summary.intelligence.top_active_campaigns, renderTopCampaignCard);
   renderBars(dom.riskDistribution, summary.intelligence.risk_distribution, "value");
@@ -99,27 +150,75 @@ function renderDashboard(summary) {
   renderPlatforms(summary.intelligence.active_platforms);
 }
 
-function renderOperationCards(operations) {
+function renderExecutiveSummary(summary) {
+  const operations = summary.operations || {};
+  const campaigns = summary.recent_campaigns || [];
+  const riskDistribution = summary.intelligence?.risk_distribution || [];
+  const evidence = summary.evidence || {};
+  const highRiskCount = riskDistribution
+    .filter((item) => ["critical", "high"].includes(String(item.label).toLowerCase()))
+    .reduce((total, item) => total + Number(item.value || 0), 0);
+  const mostUrgent = campaigns[0];
+  const dominantScamType = topByValue(summary.intelligence?.scam_type_distribution);
+  const readiness = operations.fresh_data_status?.label || "Unknown";
+  const queueMode = operations.queue_backend?.mode || "unknown";
+
+  dom.executiveSummary.innerHTML = `
+    <article class="insight-card insight-primary">
+      <div class="insight-label">Immediate focus</div>
+      <div class="insight-title">${mostUrgent ? `Campaign #${mostUrgent.id}: ${humanize(mostUrgent.campaign_type)}` : "No active campaign"}</div>
+      <p>${mostUrgent ? mostUrgent.reason_summary : "No recent campaign requires stakeholder escalation."}</p>
+      <div class="tag-row">
+        ${mostUrgent ? `<span class="pill pill-${mostUrgent.risk_level}">${mostUrgent.risk_level}</span><span class="tag">Score ${mostUrgent.score}</span>` : '<span class="pill pill-neutral">Clear</span>'}
+        <span class="tag">${readiness} data</span>
+      </div>
+    </article>
+    <article class="insight-card">
+      <div class="insight-label">Exposure</div>
+      <div class="insight-number">${formatNumber(highRiskCount)}</div>
+      <p>High or critical campaigns currently visible in the intelligence base.</p>
+    </article>
+    <article class="insight-card">
+      <div class="insight-label">Dominant scam type</div>
+      <div class="insight-title">${dominantScamType ? humanize(dominantScamType.label) : "Unavailable"}</div>
+      <p>${dominantScamType ? `${formatNumber(dominantScamType.value)} campaigns detected in this category.` : "No campaign mix data available yet."}</p>
+    </article>
+    <article class="insight-card">
+      <div class="insight-label">Evidence confidence</div>
+      <div class="insight-number">${evidence.campaigns_with_supporting_evidence_pct ?? 0}%</div>
+      <p>Campaigns backed by cross-references, victim signals, or relationship evidence.</p>
+    </article>
+    <article class="insight-card">
+      <div class="insight-label">Operating mode</div>
+      <div class="insight-title">${humanize(queueMode)}</div>
+      <p>${operations.queue_backend?.available ? "Redis queue is reachable for live workflow handoff." : "Queue is not live; dashboard is reading persisted intelligence."}</p>
+    </article>
+  `;
+}
+
+function renderOperationCards(summary) {
+  const operations = summary.operations || {};
+  const evidence = summary.evidence || {};
   const cards = [
     {
-      label: "Last successful run",
-      value: formatDateTime(operations.last_successful_pipeline_run_at),
-      footnote: operations.next_scheduled_run_label,
-    },
-    {
-      label: "Messages ingested (24h)",
+      label: "Messages screened",
       value: formatNumber(operations.messages_ingested_24h),
-      footnote: "Recent collection throughput",
+      footnote: "New source material reviewed in the last 24 hours",
     },
     {
-      label: "Entities extracted (24h)",
+      label: "Entities extracted",
       value: formatNumber(operations.entities_extracted_24h),
-      footnote: "Recent extraction throughput",
+      footnote: "Phones, accounts, URLs, domains, and related identifiers",
     },
     {
-      label: "Campaigns / alerts (24h)",
-      value: `${formatNumber(operations.campaigns_formed_24h)} / ${formatNumber(operations.alerts_sent_24h)}`,
-      footnote: "Detections and sent alerts",
+      label: "Campaigns formed",
+      value: formatNumber(operations.campaigns_formed_24h),
+      footnote: "Connected fraud activity detected in the last 24 hours",
+    },
+    {
+      label: "Validated evidence",
+      value: formatNumber((evidence.cross_reference_matches || 0) + (evidence.victim_signal_detections || 0)),
+      footnote: "Cross-reference matches plus victim signal detections",
     },
   ];
   dom.operationsCards.innerHTML = cards.map(renderMetricCard).join("");
@@ -154,7 +253,7 @@ function renderEvidenceCards(evidence) {
 function renderFreshness(operations) {
   const freshness = operations.fresh_data_status;
   dom.freshnessPill.textContent = freshness.label;
-  dom.freshnessPill.className = `pill ${freshness.status}`;
+  dom.freshnessPill.className = `pill pill-${freshness.status}`;
 
   const freshnessItems = [
     ["Recent messages", freshness.checks.messages],
@@ -163,9 +262,9 @@ function renderFreshness(operations) {
     ["Recent alerts", freshness.checks.alerts],
   ];
   dom.freshnessDetails.innerHTML = freshnessItems.map(([label, active]) => `
-    <div class="metric-row">
+    <div class="metric-row-item">
       <span>${label}</span>
-      <span class="pill ${active ? "fresh" : "stale"}">${active ? "Yes" : "No"}</span>
+      <span class="pill pill-${active ? "fresh" : "stale"}">${active ? "Yes" : "No"}</span>
     </div>
   `).join("");
 
@@ -176,10 +275,10 @@ function renderFreshness(operations) {
     queueItem("Extracted entities", queue.extracted_entities ?? 0),
     queueItem("Alerts", queue.alerts ?? 0),
     `
-      <div class="stack-item">
+      <div class="list-item">
         <div class="item-head">
           <div class="item-title">Queue backend</div>
-          <span class="pill ${queueBackend.available ? "fresh" : "degraded"}">${queueBackend.mode || "unknown"}</span>
+          <span class="pill pill-${queueBackend.available ? "fresh" : "degraded"}">${queueBackend.mode || "unknown"}</span>
         </div>
         <div class="item-subtitle">${queueBackend.error || "Redis reachable or queue running in expected mode."}</div>
       </div>
@@ -193,13 +292,13 @@ function renderCampaignList(campaigns) {
     return;
   }
   dom.campaignList.innerHTML = campaigns.map((campaign) => `
-    <button type="button" class="stack-item interactive ${campaign.id === selectedCampaignId ? "is-selected" : ""}" data-campaign-id="${campaign.id}">
+    <button type="button" class="list-item interactive ${campaign.id === selectedCampaignId ? "is-selected" : ""}" data-campaign-id="${campaign.id}">
       <div class="item-head">
         <div>
           <div class="item-title">#${campaign.id} · ${humanize(campaign.campaign_type)}</div>
           <div class="item-subtitle">${campaign.reason_summary}</div>
         </div>
-        <span class="pill ${campaign.risk_level}">${campaign.risk_level}</span>
+        <span class="pill pill-${campaign.risk_level}">${campaign.risk_level}</span>
       </div>
       <div class="tag-row">
         <span class="tag">Score ${campaign.score}</span>
@@ -217,7 +316,7 @@ function renderCampaignList(campaigns) {
 
 function renderCampaignDetail(detail) {
   dom.campaignDetailPill.textContent = detail.risk_level;
-  dom.campaignDetailPill.className = `pill ${detail.risk_level}`;
+  dom.campaignDetailPill.className = `pill pill-${detail.risk_level}`;
   dom.campaignDetail.innerHTML = `
     <div class="detail-group">
       <div class="detail-heading">
@@ -301,7 +400,7 @@ function renderAlertList(alerts) {
           <div class="item-title">Campaign #${alert.campaign_id ?? "N/A"} · ${humanize(alert.campaign_type || "unknown")}</div>
           <div class="item-subtitle">${alert.message_preview || "No alert preview available."}</div>
         </div>
-        <span class="pill ${alert.alert_level || alert.risk_level || "neutral"}">${alert.alert_level || alert.risk_level || "unknown"}</span>
+        <span class="pill pill-${alert.alert_level || alert.risk_level || "neutral"}">${alert.alert_level || alert.risk_level || "unknown"}</span>
       </div>
       <div class="tag-row">
         <span class="tag">${alert.status}</span>
@@ -386,13 +485,13 @@ function renderMetricCard({ label, value, footnote }) {
 
 function renderTopCampaignCard(campaign) {
   return `
-    <div class="stack-item">
+    <div class="list-item">
       <div class="item-head">
         <div>
           <div class="item-title">#${campaign.id} · ${humanize(campaign.campaign_type)}</div>
           <div class="item-subtitle">${campaign.reason_summary}</div>
         </div>
-        <span class="pill ${campaign.risk_level}">${campaign.risk_level}</span>
+        <span class="pill pill-${campaign.risk_level}">${campaign.risk_level}</span>
       </div>
       <div class="tag-row">
         <span class="tag">Score ${campaign.score}</span>
@@ -405,7 +504,7 @@ function renderTopCampaignCard(campaign) {
 
 function renderEntityCard(entity) {
   return `
-    <div class="stack-item">
+    <div class="list-item">
       <div class="item-head">
         <div>
           <div class="item-title">${entity.value}</div>
@@ -420,7 +519,7 @@ function renderEntityCard(entity) {
 
 function renderChannelCard(channel) {
   return `
-    <div class="stack-item">
+    <div class="list-item">
       <div class="item-head">
         <div>
           <div class="item-title">${channel.channel}</div>
@@ -443,7 +542,7 @@ function detailStat(label, value) {
 
 function queueItem(label, value) {
   return `
-    <div class="metric-row">
+    <div class="metric-row-item">
       <span>${label}</span>
       <strong>${formatNumber(value)}</strong>
     </div>
@@ -464,6 +563,7 @@ function showBanner(message, isError) {
 
 function clearDashboard() {
   [
+    dom.executiveSummary,
     dom.operationsCards,
     dom.freshnessDetails,
     dom.queueHealth,
@@ -525,4 +625,11 @@ function formatDateTime(value) {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(date);
+}
+
+function topByValue(items = []) {
+  if (!items.length) {
+    return null;
+  }
+  return [...items].sort((a, b) => Number(b.value || 0) - Number(a.value || 0))[0];
 }

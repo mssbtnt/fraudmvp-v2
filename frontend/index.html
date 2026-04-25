@@ -3,107 +3,169 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fraud MVP Dashboard</title>
+  <title>FraudX Claw — Intelligence Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div class="background-grid" aria-hidden="true"></div>
-  <header class="hero">
-    <div class="hero-copy">
-      <h1>i-FraudShield Platform</h1>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">FraudX Claw</span>
+        <span class="brand-sub">Intel Center</span>
+      </div>
     </div>
-  </header>
+    <nav class="sidebar-nav">
+      <a href="#executive" class="nav-link active" data-section="executive">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span>Overview</span>
+      </a>
+      <a href="#intelligence" class="nav-link" data-section="intelligence">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Intelligence</span>
+      </a>
+      <a href="#campaigns" class="nav-link" data-section="campaigns">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Campaigns</span>
+      </a>
+      <a href="#operations" class="nav-link" data-section="operations">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Operations</span>
+      </a>
+      <a href="#evidence" class="nav-link" data-section="evidence">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Evidence</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div id="sidebar-status" class="sidebar-status">
+        <span class="status-dot"></span>
+        <span class="status-text">Connecting</span>
+      </div>
+    </div>
+  </aside>
 
-  <nav class="top-nav" aria-label="Dashboard sections">
-    <a href="#executive">Executive</a>
-    <a href="#campaigns">Campaigns</a>
-    <a href="#alerts">Alerts</a>
-    <a href="#evidence">Evidence</a>
-  </nav>
-
-  <main>
-    <section id="status-banner" class="status-banner hidden"></section>
-
-    <section id="executive" class="panel">
-      <div class="section-head">
+  <main class="main-content">
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
         <div>
-          <p class="section-kicker">Executive Dashboard</p>
-          <h2>Operations and intelligence overview</h2>
+          <h1 class="page-title">Fraud Intelligence</h1>
+          <p id="generated-at" class="page-subtitle">Loading data</p>
         </div>
-        <p id="generated-at" class="generated-at">Waiting for data</p>
+      </div>
+      <div class="top-bar-right">
+        <span id="freshness-pill" class="pill pill-neutral">Unknown</span>
+      </div>
+    </header>
+
+    <section id="status-banner" class="status-banner hidden" role="alert"></section>
+
+    <!-- Executive Overview -->
+    <section id="executive" class="dashboard-section">
+      <div class="section-header">
+        <div class="section-icon critical-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <p class="section-kicker">Executive Overview</p>
+          <h2 class="section-title">What requires attention now</h2>
+        </div>
       </div>
 
-      <div id="operations-cards" class="card-grid"></div>
+      <div id="executive-summary" class="hero-grid"></div>
+      <div id="operations-cards" class="metric-row"></div>
 
-      <div class="split-grid">
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Freshness and queue health</h3>
-            <span id="freshness-pill" class="pill neutral">Unknown</span>
+      <div class="dual-panel">
+        <article class="glass-card glass-card-accent">
+          <div class="card-header">
+            <h3>Priority campaigns</h3>
+            <span class="card-badge">Highest risk</span>
           </div>
-          <div id="freshness-details" class="metric-list"></div>
-          <div id="queue-health" class="queue-list"></div>
+          <div id="top-campaigns" class="card-list"></div>
         </article>
 
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Top active campaigns</h3>
-            <span class="subtle-label">Recent</span>
-          </div>
-          <div id="top-campaigns" class="stack-list"></div>
-        </article>
-      </div>
-
-      <div class="triple-grid">
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Risk distribution</h3>
-            <span class="subtle-label">All campaigns</span>
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Risk posture</h3>
+            <span class="card-badge">All campaigns</span>
           </div>
           <div id="risk-distribution" class="bar-chart"></div>
-        </article>
-
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Campaign trend</h3>
-            <span class="subtle-label">Last 30 days</span>
-          </div>
-          <div id="campaign-trend" class="spark-list"></div>
-        </article>
-
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Scam-type distribution</h3>
-            <span class="subtle-label">All campaigns</span>
-          </div>
-          <div id="scam-types" class="bar-chart compact"></div>
         </article>
       </div>
     </section>
 
-    <section id="campaigns" class="panel">
-      <div class="section-head">
+    <!-- Intelligence -->
+    <section id="intelligence" class="dashboard-section">
+      <div class="section-header">
+        <div class="section-icon intel-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
         <div>
-          <p class="section-kicker">Campaigns</p>
-          <h2>Recent campaigns and drilldown</h2>
+          <p class="section-kicker">Threat Intelligence</p>
+          <h2 class="section-title">Patterns shaping the fraud landscape</h2>
         </div>
       </div>
-      <div class="split-grid">
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Recent campaigns</h3>
-            <span class="subtle-label">Click for evidence</span>
+
+      <div class="triple-panel">
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Campaign trend</h3>
+            <span class="card-badge">30 days</span>
           </div>
-          <div id="campaign-list" class="stack-list interactive"></div>
+          <div id="campaign-trend" class="spark-chart"></div>
         </article>
 
-        <article class="subpanel drilldown">
-          <div class="subpanel-head">
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Scam mix</h3>
+            <span class="card-badge">Detected types</span>
+          </div>
+          <div id="scam-types" class="bar-chart compact"></div>
+        </article>
+
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Reusable assets</h3>
+            <span class="card-badge">Top entities</span>
+          </div>
+          <div id="top-entities" class="card-list compact-list"></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Campaigns -->
+    <section id="campaigns" class="dashboard-section">
+      <div class="section-header">
+        <div class="section-icon campaign-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <p class="section-kicker">Campaign Evidence</p>
+          <h2 class="section-title">Recent campaigns and supporting proof</h2>
+        </div>
+      </div>
+
+      <div class="dual-panel">
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Recent campaigns</h3>
+            <span class="card-badge">Click for details</span>
+          </div>
+          <div id="campaign-list" class="card-list interactive-list"></div>
+        </article>
+
+        <article class="glass-card glass-card-drilldown">
+          <div class="card-header">
             <h3>Campaign detail</h3>
-            <span id="campaign-detail-pill" class="pill neutral">No selection</span>
+            <span id="campaign-detail-pill" class="pill pill-neutral">No selection</span>
           </div>
           <div id="campaign-detail" class="detail-panel empty-state">
             Select a campaign to inspect risk, entities, evidence, and alert history.
@@ -112,67 +174,85 @@
       </div>
     </section>
 
-    <section id="alerts" class="panel">
-      <div class="section-head">
+    <!-- Operations -->
+    <section id="operations" class="dashboard-section">
+      <div class="section-header">
+        <div class="section-icon ops-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
         <div>
-          <p class="section-kicker">Alerts</p>
-          <h2>Recent alert output</h2>
+          <p class="section-kicker">Operations</p>
+          <h2 class="section-title">Readiness and alert delivery</h2>
         </div>
       </div>
-      <div id="alert-list" class="alert-grid"></div>
+
+      <div class="dual-panel">
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Data freshness</h3>
+            <span class="card-badge">Last 24h</span>
+          </div>
+          <div id="freshness-details" class="metric-list"></div>
+          <div id="queue-health" class="queue-list"></div>
+        </article>
+
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Recent alert output</h3>
+            <span class="card-badge">Delivered intelligence</span>
+          </div>
+          <div id="alert-list" class="alert-grid"></div>
+        </article>
+      </div>
     </section>
 
-    <section id="evidence" class="panel">
-      <div class="section-head">
+    <!-- Evidence -->
+    <section id="evidence" class="dashboard-section">
+      <div class="section-header">
+        <div class="section-icon evidence-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
         <div>
           <p class="section-kicker">Evidence & Quality</p>
-          <h2>Why the output should be trusted</h2>
+          <h2 class="section-title">Why the intelligence can be trusted</h2>
         </div>
       </div>
 
-      <div id="evidence-cards" class="card-grid"></div>
+      <div id="evidence-cards" class="metric-row"></div>
 
-      <div class="triple-grid">
-        <article class="subpanel">
-          <div class="subpanel-head">
+      <div class="triple-panel">
+        <article class="glass-card">
+          <div class="card-header">
             <h3>Cross-reference sources</h3>
-            <span class="subtle-label">BNM, SC, internal</span>
+            <span class="card-badge">BNM, SC, internal</span>
           </div>
           <div id="cross-reference-sources" class="bar-chart"></div>
         </article>
 
-        <article class="subpanel">
-          <div class="subpanel-head">
+        <article class="glass-card">
+          <div class="card-header">
             <h3>Victim signal detections</h3>
-            <span class="subtle-label">Pattern breakdown</span>
+            <span class="card-badge">Pattern breakdown</span>
           </div>
           <div id="victim-signal-breakdown" class="bar-chart compact"></div>
         </article>
 
-        <article class="subpanel">
-          <div class="subpanel-head">
+        <article class="glass-card">
+          <div class="card-header">
             <h3>Alert reason breakdown</h3>
-            <span class="subtle-label">Scoring explanations</span>
+            <span class="card-badge">Scoring explanations</span>
           </div>
           <div id="alert-reasons" class="bar-chart compact"></div>
         </article>
       </div>
 
-      <div class="split-grid">
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Top reused entities</h3>
-            <span class="subtle-label">High reuse signals concentration</span>
+      <div class="dual-panel" style="max-width:50%">
+        <article class="glass-card">
+          <div class="card-header">
+            <h3>Most active channels & platforms</h3>
+            <span class="card-badge">30 days</span>
           </div>
-          <div id="top-entities" class="stack-list"></div>
-        </article>
-
-        <article class="subpanel">
-          <div class="subpanel-head">
-            <h3>Most active channels and platforms</h3>
-            <span class="subtle-label">Last 30 days</span>
-          </div>
-          <div id="active-channels" class="stack-list"></div>
+          <div id="active-channels" class="card-list"></div>
           <div id="active-platforms" class="platform-list"></div>
         </article>
       </div>
